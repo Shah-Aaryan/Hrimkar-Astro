@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your Hrimkar Astro Dashboard - View appointments, consultations, and personalized reports.">
+    <title>Dashboard | Hrimkar Astro - Professional Vedic Astrology</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body class="dashboard-body">
+    <!-- Top Navigation Bar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Hrimkar Astro" onerror="this.style.display='none'">
+                <span>Hrimkar Astro</span>
+            </a>
+            <span class="page-title">Dashboard</span>
+        </div>
+        <div class="topbar-right">
+            <!-- Notification button removed -->
+            <div class="user-dropdown" id="userDropdown">
+                <button class="user-btn">
+                    <div class="user-avatar">
+                        <img src="assets/user-avatar.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=1a1f2e&color=d4af37'">
+                    </div>
+                    <span class="user-name" id="userName">User</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="#" data-section="profile"><i class="fas fa-user"></i> My Profile</a>
+                    <a href="#" data-section="settings"><i class="fas fa-cog"></i> Settings</a>
+                    <hr>
+                    <a href="#" class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-section="appointments">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>My Appointments</span>
+                </a>
+                <a href="#" class="nav-item" data-section="review">
+                    <i class="fas fa-star"></i>
+                    <span>Write Review</span>
+                </a>
+                <a href="#" class="nav-item" data-section="profile">
+                    <i class="fas fa-user-cog"></i>
+                    <span>Profile Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="booking.html" class="book-now-btn">
+                    <i class="fas fa-plus"></i>
+                    <span>Book Consultation</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Overview Section -->
+            <section class="content-section active" id="overviewSection">
+                <div class="section-header">
+                    <h1>Welcome back, <span id="welcomeName">User</span></h1>
+                    <p class="section-subtitle">Here's your account overview</p>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="card-icon upcoming">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-label">Upcoming Appointment</span>
+                            <span class="card-value" id="nextAppointment">Dec 25, 10:00 AM</span>
+                        </div>
+                        <a href="#" class="card-action" data-section="appointments">View →</a>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-icon completed">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-label">Total Consultations</span>
+                            <span class="card-value" id="totalConsultations">8</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-icon pending">
+                            <i class="fas fa-file-download"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-label">Pending Reports</span>
+                            <span class="card-value" id="pendingReports">2</span>
+                        </div>
+                        <a href="#" class="card-action" data-section="reports">View →</a>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-icon payment">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-label">Last Payment</span>
+                            <span class="card-value status-success">Paid ₹2,500</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Appointments Table -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-calendar-alt"></i> Upcoming Appointments</h2>
+                        <a href="#" class="view-all-link" data-section="appointments">View All</a>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Astrologer</th>
+                                    <th>Date & Time</th>
+                                    <th>Mode</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="upcomingAppointmentsTable">
+                                <tr>
+                                    <td>Marriage Matching Consultation</td>
+                                    <td>Pandit Ravi Shankar</td>
+                                    <td>Dec 25, 2024 • 10:00 AM</td>
+                                    <td><span class="mode-badge call"><i class="fas fa-phone"></i> Call</span></td>
+                                    <td><span class="status-badge upcoming">Upcoming</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Career Guidance Session</td>
+                                    <td>Pandit Ravi Shankar</td>
+                                    <td>Dec 30, 2024 • 3:00 PM</td>
+                                    <td><span class="mode-badge video"><i class="fas fa-video"></i> Video</span></td>
+                                    <td><span class="status-badge pending">Pending</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="empty-state" id="noUpcomingAppointments" style="display: none;">
+                            <i class="fas fa-calendar-times"></i>
+                            <p>No upcoming appointments</p>
+                            <a href="booking.html" class="btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- My Appointments Section -->
+            <section class="content-section" id="appointmentsSection">
+                <div class="section-header">
+                    <div>
+                        <h1>My Appointments</h1>
+                        <p class="section-subtitle">Manage your consultation schedule</p>
+                    </div>
+                    <a href="booking.html" class="btn-primary"><i class="fas fa-plus"></i> Book New</a>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">All</button>
+                    <button class="filter-tab" data-filter="upcoming">Upcoming</button>
+                    <button class="filter-tab" data-filter="completed">Completed</button>
+                    <button class="filter-tab" data-filter="cancelled">Cancelled</button>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-body">
+                        <table class="data-table" id="appointmentsTable">
+                            <thead>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Date & Time</th>
+                                    <th>Mode</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-status="upcoming">
+                                    <td>
+                                        <div class="service-info">
+                                            <strong>Marriage Matching Consultation</strong>
+                                            <span>60 minutes</span>
+                                        </div>
+                                    </td>
+                                    <td>Dec 25, 2024 • 10:00 AM</td>
+                                    <td><span class="mode-badge call"><i class="fas fa-phone"></i> Call</span></td>
+                                    <td>₹2,500</td>
+                                    <td><span class="status-badge upcoming">Upcoming</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm">Reschedule</button>
+                                        <button class="btn-danger btn-sm">Cancel</button>
+                                    </td>
+                                </tr>
+                                <tr data-status="upcoming">
+                                    <td>
+                                        <div class="service-info">
+                                            <strong>Career Guidance Session</strong>
+                                            <span>45 minutes</span>
+                                        </div>
+                                    </td>
+                                    <td>Dec 30, 2024 • 3:00 PM</td>
+                                    <td><span class="mode-badge video"><i class="fas fa-video"></i> Video</span></td>
+                                    <td>₹1,500</td>
+                                    <td><span class="status-badge pending">Pending Payment</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-primary btn-sm">Pay Now</button>
+                                        <button class="btn-outline btn-sm">Reschedule</button>
+                                        <button class="btn-danger btn-sm">Cancel</button>
+                                    </td>
+                                </tr>
+                                <tr data-status="completed">
+                                    <td>
+                                        <div class="service-info">
+                                            <strong>Birth Chart Analysis</strong>
+                                            <span>45 minutes</span>
+                                        </div>
+                                    </td>
+                                    <td>Dec 15, 2024 • 11:00 AM</td>
+                                    <td><span class="mode-badge call"><i class="fas fa-phone"></i> Call</span></td>
+                                    <td>₹1,500</td>
+                                    <td><span class="status-badge completed">Completed</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm">View Report</button>
+                                        <button class="btn-primary btn-sm">Book Again</button>
+                                    </td>
+                                </tr>
+                                <tr data-status="cancelled">
+                                    <td>
+                                        <div class="service-info">
+                                            <strong>Vastu Consultation</strong>
+                                            <span>30 minutes</span>
+                                        </div>
+                                    </td>
+                                    <td>Dec 5, 2024 • 2:00 PM</td>
+                                    <td><span class="mode-badge chat"><i class="fas fa-comment"></i> Chat</span></td>
+                                    <td>₹1,000</td>
+                                    <td><span class="status-badge cancelled">Cancelled</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-primary btn-sm">Rebook</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section class="content-section" id="reportsSection">
+                <div class="section-header">
+                    <h1>My Reports</h1>
+                    <p class="section-subtitle">Download your personalized astrology reports</p>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Report Name</th>
+                                    <th>Type</th>
+                                    <th>Generated Date</th>
+                                    <th>Size</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportsTable">
+                                <tr>
+                                    <td>
+                                        <div class="report-info">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <strong>Complete Birth Chart (Kundli)</strong>
+                                        </div>
+                                    </td>
+                                    <td>Natal Chart</td>
+                                    <td>Dec 15, 2024</td>
+                                    <td>2.4 MB</td>
+                                    <td><button class="btn-primary btn-sm"><i class="fas fa-download"></i> Download</button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="report-info">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <strong>Marriage Compatibility Report</strong>
+                                        </div>
+                                    </td>
+                                    <td>Kundli Milan</td>
+                                    <td>Dec 10, 2024</td>
+                                    <td>1.8 MB</td>
+                                    <td><button class="btn-primary btn-sm"><i class="fas fa-download"></i> Download</button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="report-info">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <strong>Yearly Predictions 2025</strong>
+                                        </div>
+                                    </td>
+                                    <td>Varshaphal</td>
+                                    <td>Dec 1, 2024</td>
+                                    <td>3.1 MB</td>
+                                    <td><button class="btn-primary btn-sm"><i class="fas fa-download"></i> Download</button></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="report-info">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <strong>Career Analysis Report</strong>
+                                        </div>
+                                    </td>
+                                    <td>Career</td>
+                                    <td>Nov 20, 2024</td>
+                                    <td>1.5 MB</td>
+                                    <td><button class="btn-primary btn-sm"><i class="fas fa-download"></i> Download</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Messages Section -->
+            <section class="content-section" id="messagesSection">
+                <div class="section-header">
+                    <h1>Messages</h1>
+                    <p class="section-subtitle">Communicate with your astrologer</p>
+                </div>
+
+                <div class="messages-container">
+                    <!-- Conversation List -->
+                    <div class="conversation-list">
+                        <div class="conversation-item active">
+                            <div class="conv-avatar">
+                                <img src="assets/astrologer-photo.jpg" alt="Astrologer" onerror="this.src='https://ui-avatars.com/api/?name=Pandit+RS&background=1a1f2e&color=d4af37'">
+                                <span class="online-indicator"></span>
+                            </div>
+                            <div class="conv-info">
+                                <strong>Pandit Ravi Shankar</strong>
+                                <p>Thank you for your consultation...</p>
+                            </div>
+                            <div class="conv-meta">
+                                <span class="time">2h ago</span>
+                                <span class="unread-badge">2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Window -->
+                    <div class="chat-window">
+                        <div class="chat-header">
+                            <div class="chat-user">
+                                <img src="assets/astrologer-photo.jpg" alt="Astrologer" onerror="this.src='https://ui-avatars.com/api/?name=Pandit+RS&background=1a1f2e&color=d4af37'">
+                                <div>
+                                    <strong>Pandit Ravi Shankar</strong>
+                                    <span class="status">Online</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="message received">
+                                <p>Namaste! Thank you for your consultation today. I've prepared your detailed birth chart analysis.</p>
+                                <span class="message-time">10:30 AM</span>
+                            </div>
+                            <div class="message received">
+                                <p>Your report has been uploaded. You can download it from the Reports section.</p>
+                                <span class="message-time">10:32 AM</span>
+                            </div>
+                            <div class="message sent">
+                                <p>Thank you, Panditji! I have downloaded the report. I had a quick question about the Rahu transit mentioned.</p>
+                                <span class="message-time">11:15 AM</span>
+                            </div>
+                            <div class="message received">
+                                <p>Of course! Feel free to ask. The Rahu transit in your 7th house indicates...</p>
+                                <span class="message-time">11:20 AM</span>
+                            </div>
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" placeholder="Type your message..." id="messageInput">
+                            <button class="send-btn" id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Payments Section -->
+            <section class="content-section" id="paymentsSection">
+                <div class="section-header">
+                    <h1>Payment History</h1>
+                    <p class="section-subtitle">View your transactions and invoices</p>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Service</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Invoice</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentsTable">
+                                <tr>
+                                    <td>#TXN-2024-001</td>
+                                    <td>Marriage Matching Consultation</td>
+                                    <td>Dec 20, 2024</td>
+                                    <td>₹2,500</td>
+                                    <td><span class="status-badge completed">Paid</span></td>
+                                    <td><button class="btn-outline btn-sm"><i class="fas fa-download"></i> Download</button></td>
+                                </tr>
+                                <tr>
+                                    <td>#TXN-2024-002</td>
+                                    <td>Birth Chart Analysis</td>
+                                    <td>Dec 14, 2024</td>
+                                    <td>₹1,500</td>
+                                    <td><span class="status-badge completed">Paid</span></td>
+                                    <td><button class="btn-outline btn-sm"><i class="fas fa-download"></i> Download</button></td>
+                                </tr>
+                                <tr>
+                                    <td>#TXN-2024-003</td>
+                                    <td>Yearly Predictions Report</td>
+                                    <td>Dec 1, 2024</td>
+                                    <td>₹3,000</td>
+                                    <td><span class="status-badge completed">Paid</span></td>
+                                    <td><button class="btn-outline btn-sm"><i class="fas fa-download"></i> Download</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Write Review Section -->
+            <section class="content-section" id="reviewSection">
+                <div class="section-header">
+                    <h1>Write a Review</h1>
+                    <p class="section-subtitle">Share your experience with Hrimkar Astro</p>
+                </div>
+
+                <div class="review-section-grid">
+                    <!-- Review Form Card -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-edit"></i> <span id="reviewFormTitle">Submit Your Review</span></h2>
+                        </div>
+                        <div class="card-body">
+                            <form id="dashboardReviewForm" class="review-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="reviewDisplayName">Display Name</label>
+                                        <input type="text" id="reviewDisplayName" placeholder="Your name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reviewOccupation">Occupation</label>
+                                        <input type="text" id="reviewOccupation" placeholder="e.g., Software Engineer">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="reviewLocation">Location</label>
+                                        <input type="text" id="reviewLocation" placeholder="e.g., Mumbai">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reviewCategory">Service Category</label>
+                                        <select id="reviewCategory">
+                                            <option value="general">General</option>
+                                            <option value="vedic">Vedic Astrology</option>
+                                            <option value="marriage">Marriage Matching</option>
+                                            <option value="career">Career Guidance</option>
+                                            <option value="tarot">Tarot Reading</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reviewServiceType">Service Type</label>
+                                    <input type="text" id="reviewServiceType" placeholder="e.g., Birth Chart Analysis, Career Consultation">
+                                </div>
+                                <div class="form-group">
+                                    <label>Your Rating</label>
+                                    <div class="star-rating-input" id="dashboardStarRating">
+                                        <i class="far fa-star" data-rating="1"></i>
+                                        <i class="far fa-star" data-rating="2"></i>
+                                        <i class="far fa-star" data-rating="3"></i>
+                                        <i class="far fa-star" data-rating="4"></i>
+                                        <i class="far fa-star" data-rating="5"></i>
+                                        <span class="rating-text" id="ratingText">Select a rating</span>
+                                    </div>
+                                    <input type="hidden" id="reviewRatingValue" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reviewContent">Your Review</label>
+                                    <textarea id="reviewContent" rows="5" placeholder="Share your experience with our services..." required minlength="10" maxlength="1000"></textarea>
+                                    <small class="char-counter"><span id="reviewCharCount">0</span>/1000 characters</small>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-primary" id="submitReviewBtn">
+                                        <i class="fas fa-paper-plane"></i> Submit Review
+                                    </button>
+                                </div>
+                            </form>
+                            <div id="reviewStatusMessage" class="review-status-message" style="display: none;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Review Guidelines Card -->
+                    <div class="content-card review-guidelines-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-info-circle"></i> Review Guidelines</h2>
+                        </div>
+                        <div class="card-body">
+                            <ul class="guidelines-list">
+                                <li><i class="fas fa-check"></i> Be honest and detailed about your experience</li>
+                                <li><i class="fas fa-check"></i> Mention the specific service you received</li>
+                                <li><i class="fas fa-check"></i> Share how the consultation helped you</li>
+                                <li><i class="fas fa-check"></i> Keep your review respectful and constructive</li>
+                                <li><i class="fas fa-check"></i> Avoid sharing personal or sensitive information</li>
+                            </ul>
+                            <div class="review-note">
+                                <i class="fas fa-lightbulb"></i>
+                                <p>Your review will be visible on our testimonials page after approval. Thank you for helping others!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Settings Section -->
+            <section class="content-section" id="profileSection">
+                <div class="section-header">
+                    <h1>Profile Settings</h1>
+                    <p class="section-subtitle">Manage your account details</p>
+                </div>
+
+                <div class="settings-grid">
+                    <!-- Personal Details -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-user"></i> Personal Details</h2>
+                        </div>
+                        <div class="card-body">
+                            <form class="settings-form" id="personalDetailsForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Full Name</label>
+                                        <input type="text" id="profileName" value="Priya Sharma" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email Address</label>
+                                        <input type="email" id="profileEmail" value="priya@email.com" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Phone Number</label>
+                                        <input type="tel" id="profilePhone" value="+91 99306 76179">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>WhatsApp Number</label>
+                                        <input type="tel" id="profileWhatsapp" value="+91 99306 76179">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Birth Details -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-star"></i> Birth Details</h2>
+                        </div>
+                        <div class="card-body">
+                            <form class="settings-form" id="birthDetailsForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Date of Birth</label>
+                                        <input type="date" id="profileDob" value="1992-08-15" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Time of Birth</label>
+                                        <input type="time" id="profileTob" value="06:30" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Place of Birth</label>
+                                    <input type="text" id="profilePob" value="Mumbai, Maharashtra, India" required>
+                                </div>
+                                <button type="submit" class="btn-primary">Update Birth Details</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Change Password -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-lock"></i> Change Password</h2>
+                        </div>
+                        <div class="card-body">
+                            <form class="settings-form" id="passwordForm">
+                                <div class="form-group">
+                                    <label>Current Password</label>
+                                    <input type="password" id="currentPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>New Password</label>
+                                    <input type="password" id="newPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm New Password</label>
+                                    <input type="password" id="confirmPassword" required>
+                                </div>
+                                <button type="submit" class="btn-primary">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay active">
+        <div class="loader"></div>
+        <p>Loading your dashboard...</p>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/dashboard-api.js"></script>
+    <script src="js/dashboard-review.js"></script>
+</body>
+</html>

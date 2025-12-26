@@ -1,0 +1,3122 @@
+/* ============================================
+   Hrimkar Astro - Premium Astrology Website
+   Main Stylesheet - Light Theme
+   ============================================ */
+
+/* CSS Variables */
+:root {
+    /* Primary Colors - Light Theme */
+    --deep-blue: #1e3a5f;
+    --navy: #2c4a6e;
+    --royal-purple: #6b21a8;
+    --purple-dark: #581c87;
+    --gold: #d4af37;
+    --gold-light: #f4d58d;
+    --gold-dark: #b8860b;
+    
+    /* Background Colors - White Theme */
+    --bg-primary: #FFFFFF;
+    --bg-section: #F9FAFB;
+    --bg-card: #FFFFFF;
+    --divider: #E5E7EB;
+    
+    /* Gradients - Updated for light theme */
+    --gradient-primary: linear-gradient(135deg, #6b21a8 0%, #1e3a5f 100%);
+    --gradient-gold: linear-gradient(135deg, #f4d58d 0%, #d4af37 50%, #b8860b 100%);
+    --gradient-cosmic: linear-gradient(180deg, #FFFFFF 0%, #F9FAFB 100%);
+    --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #F9FAFB 100%);
+    --gradient-hero: linear-gradient(135deg, #1e3a5f 0%, #6b21a8 100%);
+    
+    /* Text Colors - Light Theme */
+    --text-primary: #111827;
+    --text-secondary: #374151;
+    --text-muted: #6B7280;
+    --text-light: #9CA3AF;
+    --text-white: #FFFFFF;
+    
+    /* Legacy support */
+    --bg-dark: #1e3a5f;
+    --bg-card-hover: #F3F4F6;
+    
+    /* Accent Colors */
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --info: #3b82f6;
+    
+    /* Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+    --space-4xl: 6rem;
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+    
+    /* Shadows - Softer for light theme */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 0 30px rgba(212, 175, 55, 0.2);
+    --shadow-glow-purple: 0 0 30px rgba(107, 33, 168, 0.2);
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
+    
+    /* Typography */
+    --font-heading: 'Cormorant Garamond', serif;
+    --font-body: 'Raleway', sans-serif;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Z-Index */
+    --z-navbar: 1000;
+    --z-modal: 2000;
+    --z-toast: 3000;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-section);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--royal-purple);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+}
+
+/* Selection */
+::selection {
+    background: var(--gold);
+    color: var(--text-white);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: var(--space-md);
+}
+
+h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+
+p {
+    margin-bottom: var(--space-md);
+    color: var(--text-secondary);
+}
+
+a {
+    color: var(--royal-purple);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+a:hover {
+    color: var(--gold-dark);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+/* Utility Classes */
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+}
+
+.gradient-text {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+}
+
+.section-header.light h2,
+.section-header.light p {
+    color: var(--text-primary);
+}
+
+.section-badge {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-lg);
+    background: rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: var(--space-md);
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition-normal);
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--gradient-gold);
+    color: var(--text-white);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: var(--text-white);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--royal-purple);
+    border: 2px solid var(--royal-purple);
+}
+
+.btn-secondary:hover {
+    background: var(--royal-purple);
+    color: var(--text-white);
+}
+
+.btn-glow {
+    animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+    50% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.6); }
+}
+
+.btn-sm {
+    padding: var(--space-sm) var(--space-lg);
+    font-size: 0.875rem;
+}
+
+.btn-lg {
+    padding: var(--space-lg) var(--space-2xl);
+    font-size: 1.125rem;
+}
+
+/* Preloader */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.cosmic-loader {
+    text-align: center;
+}
+
+.planet-orbit {
+    width: 80px;
+    height: 80px;
+    border: 2px solid rgba(107, 33, 168, 0.3);
+    border-radius: 50%;
+    position: relative;
+    animation: orbit-spin 2s linear infinite;
+    margin: 0 auto var(--space-lg);
+}
+
+.planet-orbit .planet {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--royal-purple);
+    border-radius: 50%;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 20px var(--royal-purple);
+}
+
+@keyframes orbit-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.cosmic-loader span {
+    color: var(--royal-purple);
+    font-size: 0.875rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--space-md) 0;
+    z-index: var(--z-navbar);
+    transition: var(--transition-normal);
+    background: var(--bg-primary);
+}
+
+.navbar.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    padding: var(--space-sm) 0;
+    box-shadow: var(--shadow-md);
+    border-bottom: 1px solid var(--divider);
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.logo img {
+    height: 40px;
+    width: auto;
+}
+
+.logo:hover {
+    color: var(--royal-purple);
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+}
+
+.nav-menu a {
+    color: var(--text-secondary);
+    font-weight: 500;
+    position: relative;
+    padding: var(--space-sm) 0;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--royal-purple);
+    transition: var(--transition-normal);
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: var(--royal-purple);
+}
+
+.nav-menu a:hover::after,
+.nav-menu a.active::after {
+    width: 100%;
+}
+
+.btn-login {
+    background: rgba(107, 33, 168, 0.1);
+    padding: var(--space-sm) var(--space-lg) !important;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(107, 33, 168, 0.2);
+}
+
+.btn-login:hover {
+    background: var(--royal-purple);
+    color: var(--text-white) !important;
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-sm);
+}
+
+.nav-toggle span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background: var(--text-primary);
+    transition: var(--transition-normal);
+}
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: 100px;
+    overflow: hidden;
+    background: var(--gradient-hero);
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.7), transparent);
+    background-size: 200px 200px;
+    animation: twinkle 5s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.cosmic-dust {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(107, 33, 168, 0.3) 0%, transparent 70%);
+}
+
+.hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4xl);
+    align-items: center;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    color: var(--gold-light);
+    margin-bottom: var(--space-lg);
+}
+
+.hero-badge i {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.hero-text h1 {
+    margin-bottom: var(--space-lg);
+    color: var(--text-white);
+}
+
+.hero-subtitle {
+    font-size: 1.125rem;
+    margin-bottom: var(--space-xl);
+    max-width: 500px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-stats {
+    display: flex;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-xl);
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--gold-light);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-cta {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+}
+
+.certifications {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.certifications span {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.certifications img {
+    height: 40px;
+    opacity: 0.7;
+    transition: var(--transition-normal);
+}
+
+.certifications img:hover {
+    opacity: 1;
+}
+
+.hero-image {
+    display: flex;
+    justify-content: center;
+}
+
+.astrologer-frame {
+    position: relative;
+    width: 350px;
+    height: 450px;
+}
+
+.astrologer-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-xl);
+    border: 3px solid var(--gold);
+}
+
+.frame-glow {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+    border-radius: var(--radius-xl);
+    z-index: -1;
+    animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.frame-badge {
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gradient-gold);
+    color: var(--deep-blue);
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.hero-scroll {
+    position: absolute;
+    bottom: var(--space-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.hero-scroll a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.hero-scroll i {
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+/* Planetary Widget */
+.planetary-widget {
+    padding: var(--space-3xl) 0;
+    margin-top: -60px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Cosmic Fortune Card */
+.cosmic-card {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e3a5f 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 25px 60px rgba(30, 27, 75, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.cosmic-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.cosmic-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.5;
+}
+
+.cosmic-orb.orb-1 {
+    width: 200px;
+    height: 200px;
+    background: #8b5cf6;
+    top: -50px;
+    right: -50px;
+    animation: float 8s ease-in-out infinite;
+}
+
+.cosmic-orb.orb-2 {
+    width: 150px;
+    height: 150px;
+    background: #d4af37;
+    bottom: -30px;
+    left: 20%;
+    animation: float 6s ease-in-out infinite reverse;
+}
+
+.cosmic-orb.orb-3 {
+    width: 100px;
+    height: 100px;
+    background: #3b82f6;
+    top: 50%;
+    left: -30px;
+    animation: float 7s ease-in-out infinite 1s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.1); }
+}
+
+.cosmic-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-xl);
+    position: relative;
+    z-index: 2;
+}
+
+.cosmic-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+}
+
+/* Revolving Rashi Wheel */
+.rashi-wheel-container {
+    width: 140px;
+    height: 140px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rashi-wheel {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    animation: rotate-wheel 30s linear infinite;
+}
+
+@keyframes rotate-wheel {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.rashi-sign {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    left: 50%;
+    top: 50%;
+    transform: rotate(calc(30deg * var(--i))) translateY(-55px) rotate(calc(-30deg * var(--i)));
+    margin-left: -20px;
+    margin-top: -20px;
+    transition: all 0.3s ease;
+    animation: counter-rotate 30s linear infinite;
+    animation-delay: calc(var(--i) * -2.5s);
+}
+
+@keyframes counter-rotate {
+    from { 
+        transform: rotate(calc(30deg * var(--i))) translateY(-55px) rotate(calc(-30deg * var(--i) - 0deg)); 
+    }
+    to { 
+        transform: rotate(calc(30deg * var(--i))) translateY(-55px) rotate(calc(-30deg * var(--i) - 360deg)); 
+    }
+}
+
+.rashi-sign:hover {
+    background: linear-gradient(135deg, #8b5cf6, #d4af37);
+    border-color: #d4af37;
+    color: white;
+    transform: rotate(calc(30deg * var(--i))) translateY(-55px) rotate(calc(-30deg * var(--i))) scale(1.2);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+    z-index: 10;
+}
+
+.rashi-center {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #d4af37, #f4d58d, #d4af37);
+    background-size: 200% 200%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 5;
+    animation: center-glow 3s ease-in-out infinite;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+}
+
+@keyframes center-glow {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        background-position: 0% 50%;
+    }
+    50% { 
+        box-shadow: 0 0 40px rgba(212, 175, 55, 0.8), 0 0 60px rgba(139, 92, 246, 0.4);
+        background-position: 100% 50%;
+    }
+}
+
+.rashi-center i {
+    font-size: 1.5rem;
+    color: #1e1b4b;
+}
+
+/* Legacy cosmic icon (keeping for compatibility) */
+.cosmic-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #8b5cf6, #d4af37);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.cosmic-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.5); }
+    50% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.7); }
+}
+
+.cosmic-header h3 {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.cosmic-tagline {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+}
+
+.zodiac-wheel {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.zodiac-sign {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+}
+
+.zodiac-sign:hover,
+.zodiac-sign.active {
+    background: linear-gradient(135deg, #8b5cf6, #d4af37);
+    color: white;
+    transform: scale(1.15);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+.cosmic-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    position: relative;
+    z-index: 2;
+}
+
+.cosmic-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transition: all 0.3s ease;
+}
+
+.cosmic-feature:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-5px);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.feature-icon.purple {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+}
+
+.feature-icon.gold {
+    background: linear-gradient(135deg, #d4af37, #b8860b);
+}
+
+.feature-icon.blue {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.feature-icon i {
+    font-size: 1.25rem;
+    color: white;
+}
+
+.feature-text h4 {
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.feature-text p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+    margin-bottom: 0;
+    line-height: 1.4;
+}
+
+.cosmic-cta {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.btn-cosmic {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: linear-gradient(135deg, #d4af37, #f4d58d, #d4af37);
+    background-size: 200% 100%;
+    color: #1e1b4b;
+    font-weight: 600;
+    padding: var(--space-md) var(--space-2xl);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+}
+
+.btn-cosmic:hover {
+    background-position: 100% 0;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+}
+
+.btn-cosmic i {
+    transition: transform 0.3s ease;
+}
+
+.btn-cosmic:hover i {
+    transform: translateX(5px);
+}
+
+.cosmic-trust {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    margin-top: var(--space-md);
+    margin-bottom: 0;
+}
+
+.cosmic-trust i {
+    color: #10b981;
+    margin-right: 0.25rem;
+}
+
+/* Responsive for cosmic card */
+@media (max-width: 768px) {
+    .cosmic-card {
+        padding: var(--space-xl);
+    }
+    
+    .cosmic-header {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--space-md);
+    }
+    
+    .cosmic-title {
+        flex-direction: column;
+    }
+    
+    .cosmic-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .rashi-wheel-container {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .rashi-sign {
+        width: 32px;
+        height: 32px;
+        font-size: 0.55rem;
+        transform: rotate(calc(30deg * var(--i))) translateY(-45px) rotate(calc(-30deg * var(--i)));
+        margin-left: -16px;
+        margin-top: -16px;
+    }
+    
+    .rashi-center {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .rashi-center i {
+        font-size: 1.2rem;
+    }
+}
+
+/* Legacy widget styles */
+.widget-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: var(--shadow-lg);
+}
+
+.widget-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--divider);
+}
+
+.widget-header i {
+    font-size: 1.5rem;
+    color: var(--royal-purple);
+}
+
+.widget-header h3 {
+    flex: 1;
+    margin-bottom: 0;
+    color: var(--text-primary);
+}
+
+.widget-header .date {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.widget-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-lg);
+}
+
+.planet-position {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.planet-icon {
+    font-size: 2rem;
+    color: var(--royal-purple);
+}
+
+.planet-info strong {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+
+.planet-info p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+
+.daily-quote {
+    background: rgba(107, 33, 168, 0.05);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--royal-purple);
+}
+
+.daily-quote i {
+    color: var(--royal-purple);
+    font-size: 0.875rem;
+    margin-bottom: var(--space-sm);
+}
+
+.daily-quote p {
+    font-style: italic;
+    font-size: 0.875rem;
+    margin-bottom: var(--space-xs);
+    color: var(--text-secondary);
+}
+
+.daily-quote cite {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* ============================================
+   Nakshatra Chakra Section
+   ============================================ */
+.nakshatra-section {
+    padding: var(--space-4xl) 0;
+    background: linear-gradient(180deg, #0f0a1e 0%, #1a1035 50%, #0f0a1e 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.nakshatra-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 20% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.nakshatra-section .section-header.light h2 {
+    color: #fff;
+}
+
+.nakshatra-section .section-header.light p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.nakshatra-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3xl);
+    margin-top: var(--space-2xl);
+    position: relative;
+    z-index: 2;
+}
+
+.nakshatra-chakra {
+    width: 450px;
+    height: 450px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.chakra-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: rotate-chakra 120s linear infinite;
+}
+
+@keyframes rotate-chakra {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.nakshatra {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    left: 50%;
+    top: 50%;
+    transform: rotate(calc(13.33deg * var(--i))) translateY(-200px) rotate(calc(-13.33deg * var(--i)));
+    margin-left: -27.5px;
+    margin-top: -27.5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    animation: counter-rotate-nakshatra 120s linear infinite;
+    text-align: center;
+    line-height: 1.2;
+}
+
+@keyframes counter-rotate-nakshatra {
+    from { 
+        transform: rotate(calc(13.33deg * var(--i))) translateY(-200px) rotate(calc(-13.33deg * var(--i) - 0deg)); 
+    }
+    to { 
+        transform: rotate(calc(13.33deg * var(--i))) translateY(-200px) rotate(calc(-13.33deg * var(--i) - 360deg)); 
+    }
+}
+
+.nakshatra:hover {
+    background: linear-gradient(135deg, #8b5cf6, #d4af37);
+    border-color: #d4af37;
+    color: white;
+    transform: rotate(calc(13.33deg * var(--i))) translateY(-200px) rotate(calc(-13.33deg * var(--i))) scale(1.2);
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+    z-index: 10;
+    animation: none;
+}
+
+.chakra-center {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    border: 3px solid rgba(212, 175, 55, 0.5);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.4), inset 0 0 30px rgba(139, 92, 246, 0.2);
+}
+
+.center-glow {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+    animation: center-pulse 3s ease-in-out infinite;
+}
+
+@keyframes center-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.chakra-center i {
+    font-size: 2rem;
+    color: #d4af37;
+    margin-bottom: 0.25rem;
+    position: relative;
+    z-index: 2;
+}
+
+.chakra-center span {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+}
+
+.nakshatra-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    max-width: 320px;
+}
+
+.nakshatra-info .info-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    transition: all 0.3s ease;
+}
+
+.nakshatra-info .info-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(212, 175, 55, 0.5);
+    transform: translateX(5px);
+}
+
+.nakshatra-info .info-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(212, 175, 55, 0.3));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.nakshatra-info .info-icon i {
+    font-size: 1.25rem;
+    color: #d4af37;
+}
+
+.nakshatra-info .info-card h4 {
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.nakshatra-info .info-card p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+.nakshatra-cta {
+    text-align: center;
+    margin-top: var(--space-2xl);
+    position: relative;
+    z-index: 2;
+}
+
+/* Responsive Nakshatra */
+@media (max-width: 992px) {
+    .nakshatra-wrapper {
+        flex-direction: column;
+    }
+    
+    .nakshatra-info {
+        flex-direction: row;
+        max-width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nakshatra-info .info-card {
+        flex: 1 1 280px;
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 576px) {
+    .nakshatra-chakra {
+        width: 320px;
+        height: 320px;
+    }
+    
+    .nakshatra {
+        width: 42px;
+        height: 42px;
+        font-size: 0.5rem;
+        transform: rotate(calc(13.33deg * var(--i))) translateY(-140px) rotate(calc(-13.33deg * var(--i)));
+        margin-left: -21px;
+        margin-top: -21px;
+    }
+    
+    @keyframes counter-rotate-nakshatra {
+        from { 
+            transform: rotate(calc(13.33deg * var(--i))) translateY(-140px) rotate(calc(-13.33deg * var(--i) - 0deg)); 
+        }
+        to { 
+            transform: rotate(calc(13.33deg * var(--i))) translateY(-140px) rotate(calc(-13.33deg * var(--i) - 360deg)); 
+        }
+    }
+    
+    .nakshatra:hover {
+        transform: rotate(calc(13.33deg * var(--i))) translateY(-140px) rotate(calc(-13.33deg * var(--i))) scale(1.2);
+    }
+    
+    .chakra-center {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .chakra-center i {
+        font-size: 1.5rem;
+    }
+    
+    .chakra-center span {
+        font-size: 0.75rem;
+    }
+    
+    .nakshatra-info .info-card {
+        flex: 1 1 100%;
+    }
+}
+
+/* Services Preview */
+.services-preview {
+    padding: var(--space-4xl) 0;
+    background: var(--bg-section);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+}
+
+.service-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    position: relative;
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-card);
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(107, 33, 168, 0.3);
+    box-shadow: var(--shadow-lg);
+}
+
+.service-card.featured {
+    border-color: var(--royal-purple);
+    background: linear-gradient(145deg, rgba(107, 33, 168, 0.05) 0%, var(--bg-card) 100%);
+}
+
+.featured-badge {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    background: var(--gradient-gold);
+    color: var(--text-white);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(107, 33, 168, 0.1);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-lg);
+}
+
+.service-icon i {
+    font-size: 1.5rem;
+    color: var(--royal-purple);
+}
+
+.service-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+}
+
+.service-card > p {
+    font-size: 0.875rem;
+    margin-bottom: var(--space-lg);
+    color: var(--text-secondary);
+}
+
+.service-features {
+    margin-bottom: var(--space-lg);
+}
+
+.service-features li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.875rem;
+    margin-bottom: var(--space-sm);
+    color: var(--text-secondary);
+}
+
+.service-features i {
+    color: var(--success);
+    font-size: 0.75rem;
+}
+
+.service-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--royal-purple);
+}
+
+.service-link:hover {
+    gap: var(--space-md);
+    color: var(--gold-dark);
+}
+
+.services-cta {
+    text-align: center;
+}
+
+/* Navagraha Section */
+.navagraha-section {
+    padding: var(--space-4xl) 0;
+    position: relative;
+    background: var(--gradient-primary);
+    overflow: hidden;
+}
+
+.navagraha-section .section-badge {
+    background: rgba(212, 175, 55, 0.25);
+    border: 1px solid rgba(212, 175, 55, 0.6);
+    color: #f4d58d;
+    font-weight: 600;
+}
+
+.navagraha-section .section-header h2 {
+    color: #FFFFFF;
+}
+
+.navagraha-section .section-header p {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.cosmic-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at 20% 50%, rgba(74, 26, 107, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(15, 40, 71, 0.4) 0%, transparent 50%);
+}
+
+.planets-container {
+    position: relative;
+    margin-bottom: var(--space-2xl);
+}
+
+.planets-3d {
+    width: 100%;
+    height: 500px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, rgba(10, 22, 40, 0.8) 0%, rgba(10, 22, 40, 0.95) 100%);
+    border: none;
+}
+
+.planet-info-panel {
+    position: absolute;
+    top: var(--space-lg);
+    right: var(--space-lg);
+    width: 350px;
+    background: rgba(10, 22, 40, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(20px);
+    transition: var(--transition-normal);
+}
+
+.planet-info-panel.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.close-panel {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+}
+
+.close-panel:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.planet-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.planet-icon-large {
+    width: 50px;
+    height: 50px;
+    background: rgba(212, 175, 55, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.planet-title h3 {
+    margin-bottom: 0;
+    font-size: 1.25rem;
+}
+
+.planet-title span {
+    font-size: 0.875rem;
+    color: var(--gold);
+}
+
+.detail-section {
+    margin-bottom: var(--space-lg);
+}
+
+.detail-section h4 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.875rem;
+    color: var(--gold);
+    margin-bottom: var(--space-sm);
+}
+
+.detail-section p {
+    font-size: 0.875rem;
+    margin-bottom: 0;
+}
+
+.detail-section ul {
+    padding-left: var(--space-lg);
+}
+
+.detail-section li {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+    position: relative;
+}
+
+.detail-section li::before {
+    content: '•';
+    color: var(--gold);
+    position: absolute;
+    left: -15px;
+}
+
+.planet-selector {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.planet-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition-normal);
+    min-width: 80px;
+}
+
+.planet-btn:hover,
+.planet-btn.active {
+    background: rgba(212, 175, 55, 0.3);
+    border-color: var(--gold-light);
+}
+
+.planet-symbol {
+    font-size: 1.5rem;
+    color: var(--gold-light);
+}
+
+.planet-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Why Choose Us */
+.why-choose-us {
+    padding: var(--space-4xl) 0;
+    background: var(--bg-primary);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+}
+
+.feature-card {
+    text-align: center;
+    padding: var(--space-2xl);
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-lg);
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-card);
+}
+
+.feature-card:hover {
+    border-color: rgba(107, 33, 168, 0.3);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(107, 33, 168, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-lg);
+}
+
+.feature-icon i {
+    font-size: 1.75rem;
+    color: var(--royal-purple);
+}
+
+.feature-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+}
+
+.feature-card p {
+    font-size: 0.875rem;
+    margin-bottom: 0;
+    color: var(--text-secondary);
+}
+
+/* Testimonials Preview */
+.testimonials-preview {
+    padding: var(--space-4xl) 0;
+    background: var(--bg-section);
+}
+
+.testimonials-slider {
+    display: flex;
+    gap: var(--space-xl);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: var(--space-md);
+    margin: 0 calc(-1 * var(--space-lg));
+    padding-left: var(--space-lg);
+    padding-right: var(--space-lg);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.testimonials-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.testimonial-card {
+    flex: 0 0 calc(33.333% - var(--space-lg));
+    min-width: 300px;
+    scroll-snap-align: start;
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-card);
+}
+
+.testimonial-rating {
+    display: flex;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+}
+
+.testimonial-rating i {
+    color: var(--gold);
+    font-size: 0.875rem;
+}
+
+.testimonial-text {
+    font-style: italic;
+    margin-bottom: var(--space-lg);
+    color: var(--text-secondary);
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.testimonial-author img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.author-initials {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: var(--text-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.testimonials-loading,
+.testimonials-error,
+.testimonials-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--space-2xl);
+    color: var(--text-muted);
+}
+
+.testimonials-loading i {
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: var(--space-md);
+}
+
+.author-info strong {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+
+.author-info span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.slider-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+}
+
+.slider-btn {
+    width: 40px;
+    height: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-radius: 50%;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+}
+
+.slider-btn:hover {
+    background: var(--royal-purple);
+    color: var(--text-white);
+    border-color: var(--royal-purple);
+}
+
+.slider-dots {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.slider-dots .dot {
+    width: 10px;
+    height: 10px;
+    background: var(--divider);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.slider-dots .dot.active {
+    background: var(--gold);
+}
+
+.google-reviews {
+    text-align: center;
+    margin-top: var(--space-2xl);
+}
+
+.google-reviews-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-xl);
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+}
+
+.google-reviews-link:hover {
+    background: var(--bg-section);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.google-reviews-link img {
+    height: 24px;
+}
+
+/* Horoscope Section */
+.horoscope-section {
+    padding: var(--space-4xl) 0;
+    background: var(--bg-primary);
+}
+
+.horoscope-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-xl);
+    padding: var(--space-3xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.horoscope-content h2 {
+    margin-bottom: var(--space-md);
+    color: var(--text-primary);
+}
+
+.horoscope-content > p {
+    margin-bottom: var(--space-xl);
+    color: var(--text-secondary);
+}
+
+.horoscope-form .form-row {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.form-group {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--space-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--bg-section);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: var(--transition-fast);
+}
+
+.form-group input::placeholder {
+    color: var(--text-muted);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--royal-purple);
+    box-shadow: 0 0 0 3px rgba(107, 33, 168, 0.1);
+}
+
+.form-group select option {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.horoscope-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.zodiac-wheel {
+    width: 300px;
+    height: 300px;
+    animation: rotate-slow 60s linear infinite;
+}
+
+.zodiac-wheel img {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* CTA Section */
+.cta-section {
+    padding: var(--space-4xl) 0;
+    background: var(--gradient-primary);
+    text-align: center;
+}
+
+.cta-content h2 {
+    margin-bottom: var(--space-md);
+    color: var(--text-white);
+}
+
+.cta-content > p {
+    margin-bottom: var(--space-xl);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.cta-trust {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2xl);
+}
+
+.cta-trust span {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.cta-trust i {
+    color: var(--success);
+}
+
+/* Footer */
+.footer {
+    background: var(--bg-section);
+    padding: var(--space-4xl) 0 var(--space-xl);
+    border-top: 1px solid var(--divider);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-3xl);
+}
+
+.footer-brand p {
+    margin: var(--space-lg) 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.social-links {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background: var(--divider);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: var(--transition-fast);
+}
+
+.social-links a:hover {
+    background: var(--royal-purple);
+    color: var(--text-white);
+}
+
+.footer-links h4,
+.footer-contact h4 {
+    font-size: 1rem;
+    margin-bottom: var(--space-lg);
+    color: var(--royal-purple);
+}
+
+.footer-links li,
+.footer-contact li {
+    margin-bottom: var(--space-sm);
+}
+
+.footer-links a,
+.footer-contact a,
+.footer-contact span {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.footer-links a:hover,
+.footer-contact a:hover {
+    color: var(--royal-purple);
+}
+
+.footer-contact i {
+    color: var(--royal-purple);
+    width: 20px;
+}
+
+.footer-bottom {
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--divider);
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-sm);
+}
+
+.disclaimer-short {
+    font-size: 0.75rem !important;
+    color: var(--text-muted) !important;
+}
+
+/* WhatsApp Float Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: var(--space-xl);
+    right: var(--space-xl);
+    width: 60px;
+    height: 60px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    z-index: 999;
+    transition: var(--transition-normal);
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-float i {
+    font-size: 1.75rem;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .footer-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .footer-brand {
+        grid-column: span 3;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .hero-text {
+        order: 1;
+    }
+    
+    .hero-image {
+        order: 0;
+    }
+    
+    .hero-subtitle {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .hero-stats {
+        justify-content: center;
+    }
+    
+    .hero-cta {
+        justify-content: center;
+    }
+    
+    .certifications {
+        justify-content: center;
+    }
+    
+    .astrologer-frame {
+        width: 280px;
+        height: 350px;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .horoscope-card {
+        grid-template-columns: 1fr;
+    }
+    
+    .horoscope-visual {
+        display: none;
+    }
+    
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-brand {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 22, 40, 0.98);
+        flex-direction: column;
+        padding: var(--space-xl);
+        gap: var(--space-lg);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition-normal);
+    }
+    
+    .nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .nav-toggle {
+        display: flex;
+    }
+    
+    .nav-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .nav-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .nav-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+    
+    .widget-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .planet-info-panel {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        max-height: 70vh;
+        overflow-y: auto;
+        transform: translateY(100%);
+    }
+    
+    .planet-info-panel.active {
+        transform: translateY(0);
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .testimonial-card {
+        flex: 0 0 calc(100% - var(--space-xl));
+    }
+    
+    .horoscope-form .form-row {
+        flex-direction: column;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-trust {
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-brand {
+        grid-column: span 1;
+        text-align: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding: 0 var(--space-md);
+    }
+    
+    .hero {
+        padding-top: 80px;
+    }
+    
+    .hero-stats {
+        flex-wrap: wrap;
+        gap: var(--space-lg);
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .astrologer-frame {
+        width: 220px;
+        height: 280px;
+    }
+    
+    .planets-3d {
+        height: 350px;
+    }
+    
+    .planet-selector {
+        gap: var(--space-sm);
+    }
+    
+    .planet-btn {
+        min-width: 60px;
+        padding: var(--space-sm);
+    }
+    
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: var(--space-md);
+        right: var(--space-md);
+    }
+    
+    .whatsapp-float i {
+        font-size: 1.5rem;
+    }
+}
+
+/* ============================================
+   Enhanced Hover Effects & Animations
+   ============================================ */
+
+/* Smooth Fade In Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animate on Scroll Classes */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Button Hover Effects */
+.btn {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-primary {
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+    transform: translateY(-3px);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.btn-secondary {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-secondary::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: var(--royal-purple);
+    transition: height 0.3s ease;
+    z-index: -1;
+}
+
+.btn-secondary:hover::after {
+    height: 100%;
+}
+
+.btn-secondary:hover {
+    color: var(--text-white);
+    border-color: var(--royal-purple);
+}
+
+/* Card Hover Effects */
+.service-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gradient-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.service-card:hover::before {
+    transform: scaleX(1);
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.service-card:hover .service-icon {
+    transform: scale(1.1) rotate(5deg);
+    background: var(--royal-purple);
+}
+
+.service-card:hover .service-icon i {
+    color: var(--text-white);
+}
+
+.service-icon {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Feature Card Effects */
+.feature-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(107, 33, 168, 0.05);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.feature-card:hover::after {
+    width: 300%;
+    height: 300%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card:hover .feature-icon {
+    animation: float 2s ease-in-out infinite;
+    background: var(--royal-purple);
+}
+
+.feature-card:hover .feature-icon i {
+    color: var(--text-white);
+}
+
+/* Testimonial Card Effects */
+.testimonial-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.testimonial-card:hover .testimonial-author img {
+    transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(107, 33, 168, 0.3);
+}
+
+.testimonial-author img {
+    transition: all 0.3s ease;
+}
+
+/* Link Underline Animation */
+.animated-link {
+    position: relative;
+    display: inline-block;
+}
+
+.animated-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--royal-purple);
+    transition: width 0.3s ease;
+}
+
+.animated-link:hover::after {
+    width: 100%;
+}
+
+/* Navigation Link Effects */
+.nav-menu a {
+    position: relative;
+}
+
+.nav-menu a::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: var(--gradient-gold);
+    border-radius: 2px;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.nav-menu a:hover::before,
+.nav-menu a.active::before {
+    width: 100%;
+}
+
+/* Image Hover Effects */
+.image-hover-zoom {
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+}
+
+.image-hover-zoom img {
+    transition: transform 0.5s ease;
+}
+
+.image-hover-zoom:hover img {
+    transform: scale(1.1);
+}
+
+/* Astrologer Frame Effects */
+.astrologer-frame {
+    transition: transform 0.4s ease;
+}
+
+.astrologer-frame:hover {
+    transform: scale(1.02);
+}
+
+.astrologer-frame:hover .frame-glow {
+    animation: pulse-ring 1.5s ease-in-out infinite;
+}
+
+/* Icon Hover Effects */
+.icon-hover {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.icon-hover:hover {
+    transform: scale(1.2) rotate(10deg);
+    color: var(--royal-purple);
+}
+
+/* Social Links Effects */
+.social-links a {
+    position: relative;
+    overflow: hidden;
+}
+
+.social-links a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: var(--royal-purple);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.social-links a:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+.social-links a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(107, 33, 168, 0.3);
+}
+
+/* Input Focus Effects */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(107, 33, 168, 0.15);
+}
+
+/* Stats Number Counter Effect */
+.stat-number {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.stat:hover .stat-number {
+    transform: scale(1.1);
+}
+
+/* Section Badge Shimmer - only for light backgrounds */
+.section-badge:not(.navagraha-section .section-badge) {
+    background: linear-gradient(90deg, 
+        rgba(212, 175, 55, 0.15) 0%, 
+        rgba(212, 175, 55, 0.25) 50%, 
+        rgba(212, 175, 55, 0.15) 100%);
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
+}
+
+/* Widget Card Effects */
+.widget-card {
+    transition: all 0.4s ease;
+}
+
+.widget-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Planet Button Effects */
+.planet-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.planet-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.planet-btn:hover::after {
+    left: 100%;
+}
+
+.planet-btn:hover .planet-symbol {
+    transform: scale(1.2);
+}
+
+.planet-symbol {
+    transition: transform 0.3s ease;
+}
+
+/* Logo Hover Effect */
+.logo {
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* Ripple Effect for Clickable Elements */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+.ripple:active::after {
+    opacity: 1;
+    transform: scale(50) translate(-50%, -50%);
+    transition: transform 0.5s, opacity 0.5s;
+}
+
+/* Glow Effect on Hover */
+.glow-hover {
+    transition: all 0.3s ease;
+}
+
+.glow-hover:hover {
+    box-shadow: 0 0 30px rgba(107, 33, 168, 0.4);
+}
+
+/* Text Gradient Animation */
+.gradient-text-animated {
+    background: linear-gradient(90deg, var(--royal-purple), var(--gold), var(--royal-purple));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+}
+
+/* Floating Animation for Elements */
+.floating {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Pulse Animation for CTAs */
+.pulse-cta {
+    animation: pulse-cta 2s ease-in-out infinite;
+}
+
+@keyframes pulse-cta {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 15px rgba(212, 175, 55, 0);
+    }
+}
+
+/* Tilt Effect on Cards */
+.tilt-card {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+}
+
+.tilt-card:hover {
+    transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+}
+
+/* Border Animation */
+.border-animate {
+    position: relative;
+}
+
+.border-animate::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid transparent;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--royal-purple), var(--gold), var(--royal-purple)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.border-animate:hover::before {
+    opacity: 1;
+}
+
+/* Magnetic Button Effect */
+.magnetic-btn {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Reveal on Scroll Animation Classes */
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s ease;
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s ease;
+}
+
+.reveal-up {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease;
+}
+
+.reveal-left.revealed,
+.reveal-right.revealed,
+.reveal-up.revealed {
+    opacity: 1;
+    transform: translate(0);
+}
+
+/* Stagger Animation for Lists */
+.stagger-item {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.stagger-item.visible {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0.1s; }
+.stagger-item:nth-child(2) { animation-delay: 0.2s; }
+.stagger-item:nth-child(3) { animation-delay: 0.3s; }
+.stagger-item:nth-child(4) { animation-delay: 0.4s; }
+.stagger-item:nth-child(5) { animation-delay: 0.5s; }
+.stagger-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* Hover Lift Effect */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Text Highlight on Hover */
+.text-highlight {
+    position: relative;
+    display: inline;
+}
+
+.text-highlight::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: rgba(212, 175, 55, 0.3);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+.text-highlight:hover::before {
+    transform: scaleX(1);
+}
+
+/* Arrow Animation for Links */
+.arrow-link i {
+    transition: transform 0.3s ease;
+}
+
+.arrow-link:hover i {
+    transform: translateX(5px);
+}
+
+/* Scale Icon on Parent Hover */
+.scale-icon-parent:hover .scale-icon {
+    transform: scale(1.2);
+}
+
+.scale-icon {
+    transition: transform 0.3s ease;
+}
+
+/* Smooth Color Transition */
+.color-transition {
+    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Zoom Container Effect */
+.zoom-container {
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+}
+
+.zoom-container img,
+.zoom-container .zoom-content {
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.zoom-container:hover img,
+.zoom-container:hover .zoom-content {
+    transform: scale(1.08);
+}
+
+/* WhatsApp Float Enhanced */
+.whatsapp-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.whatsapp-float::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    border-radius: inherit;
+    animation: pulse-ring 2s ease-out infinite;
+    z-index: -1;
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

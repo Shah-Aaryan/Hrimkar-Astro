@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Refund Policy - Hrimkar Astro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <style>
+        .legal-hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-primary);
+            text-align: center;
+            padding: 120px 2rem 2rem;
+        }
+
+        .legal-hero h1 {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .legal-hero p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        .legal-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .no-refund-banner {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.15), rgba(220, 53, 69, 0.05));
+            border: 2px solid #dc3545;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .no-refund-banner .icon {
+            font-size: 4rem;
+            color: #dc3545;
+            margin-bottom: 1rem;
+        }
+
+        .no-refund-banner h2 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: #dc3545;
+            margin-bottom: 1rem;
+        }
+
+        .no-refund-banner p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .policy-card {
+            background: var(--gradient-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .policy-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .policy-card h3 i {
+            font-size: 1.2rem;
+        }
+
+        .policy-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .policy-card ul {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .policy-card li {
+            margin-bottom: 0.75rem;
+        }
+
+        .policy-card li strong {
+            color: var(--text-primary);
+        }
+
+        .highlight-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        .highlight-box strong {
+            color: var(--gold);
+        }
+
+        .reschedule-option {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .reschedule-option h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: #28a745;
+            margin-bottom: 1rem;
+        }
+
+        .reschedule-option p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .reschedule-option ul {
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto;
+            color: var(--text-secondary);
+        }
+
+        .reschedule-option li {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-section {
+            background: var(--gradient-card);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .contact-section h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .contact-section p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gold);
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-links a:hover {
+            background: var(--gold);
+            color: var(--deep-blue);
+        }
+
+        @media (max-width: 768px) {
+            .legal-hero h1 {
+                font-size: 2rem;
+            }
+
+            .no-refund-banner {
+                padding: 1.5rem;
+            }
+
+            .no-refund-banner h2 {
+                font-size: 1.5rem;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Hrimkar Astro Logo">
+                <span>Hrimkar Astro</span>
+            </a>
+            
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="planets.html">Navagraha</a></li>
+                <li><a href="testimonials.html">Testimonials</a></li>
+                <li><a href="dashboard.html">Book Now</a></li>
+                <li class="nav-user">
+                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="legal-hero">
+        <div>
+            <h1>Refund Policy</h1>
+            <p>Last Updated: December 2024</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <div class="legal-content">
+        <!-- No Refund Banner -->
+        <div class="no-refund-banner">
+            <div class="icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h2>Strict No Refund Policy</h2>
+            <p>At Hrimkar Astro, <strong>all payments are final and non-refundable</strong> once a consultation is booked. By proceeding with a booking, you acknowledge and agree to this policy.</p>
+        </div>
+
+        <!-- Policy Details -->
+        <div class="policy-card">
+            <h3><i class="fas fa-ban"></i> No Refunds Under Any Circumstances</h3>
+            <p>Once payment is made for any consultation or service at Hrimkar Astro:</p>
+            <ul>
+                <li><strong>No refunds</strong> will be provided under any circumstances</li>
+                <li>This applies to <strong>all services</strong> including:
+                    <ul>
+                        <li>Vedic Astrology Consultations</li>
+                        <li>Marriage Astrology</li>
+                        <li>Career Astrology</li>
+                        <li>Medical/Health Astrology</li>
+                        <li>Numerology</li>
+                        <li>Numerology + Astro Combo</li>
+                        <li>Tarot Card Reading</li>
+                    </ul>
+                </li>
+                <li><strong>No partial refunds</strong> are available</li>
+                <li><strong>No credit notes</strong> will be issued in lieu of refund</li>
+            </ul>
+        </div>
+
+        <div class="policy-card">
+            <h3><i class="fas fa-question-circle"></i> Why No Refunds?</h3>
+            <p>Our astrologers dedicate significant time and effort to prepare for each consultation. This includes:</p>
+            <ul>
+                <li><strong>Pre-consultation preparation:</strong> Detailed analysis of birth charts before your session</li>
+                <li><strong>Time allocation:</strong> Exclusive time blocked for your consultation that cannot be given to other clients</li>
+                <li><strong>Personalized research:</strong> Individual study based on your specific birth details and questions</li>
+                <li><strong>Resource investment:</strong> Preparation of charts, calculations, and remedial suggestions</li>
+            </ul>
+            <div class="highlight-box">
+                <p><strong>Important:</strong> Due to the personalized nature of astrological consultations, once a booking is confirmed and preparation begins, the service is considered rendered in part.</p>
+            </div>
+        </div>
+
+        <!-- Rescheduling Option -->
+        <div class="reschedule-option">
+            <h3><i class="fas fa-calendar-alt"></i> Rescheduling Available</h3>
+            <p>While we do not offer refunds, we understand that circumstances may change. Therefore, we offer a <strong>one-time rescheduling option</strong>:</p>
+            <ul>
+                <li>Request rescheduling at least <strong>24 hours in advance</strong></li>
+                <li>New appointment must be within <strong>15 days</strong> of original booking</li>
+                <li>Only <strong>one reschedule</strong> allowed per booking</li>
+                <li><strong>No-shows</strong> will forfeit the consultation entirely with no rescheduling option</li>
+            </ul>
+        </div>
+
+        <div class="policy-card">
+            <h3><i class="fas fa-user-times"></i> No-Show Policy</h3>
+            <p>If you fail to attend your scheduled consultation without prior notice:</p>
+            <ul>
+                <li>The consultation will be marked as <strong>completed</strong></li>
+                <li><strong>No refund</strong> will be provided</li>
+                <li><strong>No rescheduling</strong> will be allowed</li>
+                <li>You will need to book and pay for a new consultation</li>
+            </ul>
+        </div>
+
+        <div class="policy-card">
+            <h3><i class="fas fa-times-circle"></i> Cancellation by Hrimkar Astro</h3>
+            <p>In the rare event that we need to cancel your appointment (due to astrologer unavailability or unforeseen circumstances):</p>
+            <ul>
+                <li>We will offer an <strong>alternative time slot</strong> at your convenience</li>
+                <li>If no suitable alternative is available, a <strong>full refund</strong> will be provided</li>
+                <li>This is the <strong>only exception</strong> to our no-refund policy</li>
+            </ul>
+        </div>
+
+        <div class="policy-card">
+            <h3><i class="fas fa-check-circle"></i> By Booking, You Agree</h3>
+            <p>By completing a booking on Hrimkar Astro, you acknowledge and agree that:</p>
+            <ul>
+                <li>You have read and understood this No Refund Policy</li>
+                <li>All payments are final and non-refundable</li>
+                <li>You will attend your scheduled consultation or request rescheduling at least 24 hours in advance</li>
+                <li>No-shows will result in forfeiture of the consultation</li>
+            </ul>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h3>Questions About Our Policy?</h3>
+            <p>If you have any questions about our refund policy or need to reschedule your appointment, please contact us.</p>
+            <div class="contact-links">
+                <a href="mailto:hrimkarastro@gmail.com">
+                    <i class="fas fa-envelope"></i>
+                    hrimkarastro@gmail.com
+                </a>
+                <a href="tel:+919930676179">
+                    <i class="fas fa-phone"></i>
+                    +91 99306 76179
+                </a>
+                <a href="https://wa.me/919930676179">
+                    <i class="fab fa-whatsapp"></i>
+                    WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/logo.png" alt="Hrimkar Astro">
+                        <span>Hrimkar Astro</span>
+                    </a>
+                    <p>Guiding lives through authentic Vedic astrology.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="testimonials.html">Testimonials</a></li>
+                        <li><a href="dashboard.html">Book Consultation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="refund.html">Refund Policy</a></li>
+                        <li><a href="disclaimer.html">Disclaimer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> <a href="tel:+919930676179">+91 99306 76179</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:hrimkarastro@gmail.com">hrimkarastro@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hrimkar Astro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919930676179" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

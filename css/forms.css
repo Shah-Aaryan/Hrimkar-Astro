@@ -1,0 +1,952 @@
+/* ============================================
+   Hrimkar Astro - Form & Booking Styles
+   ============================================ */
+
+/* Form Elements */
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-section {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-xl);
+    box-shadow: var(--shadow-card);
+}
+
+.form-section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--divider);
+}
+
+.form-section-title i {
+    width: 40px;
+    height: 40px;
+    background: rgba(107, 33, 168, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--royal-purple);
+}
+
+.form-section-title h3 {
+    margin-bottom: 0;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+}
+
+.form-row.single {
+    grid-template-columns: 1fr;
+}
+
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--space-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-group label .required {
+    color: var(--error);
+    margin-left: 4px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--bg-section);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: var(--transition-fast);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--royal-purple);
+    box-shadow: 0 0 0 3px rgba(107, 33, 168, 0.1);
+}
+
+.form-group select option {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
+}
+
+.form-error {
+    font-size: 0.75rem;
+    color: var(--error);
+    margin-top: var(--space-xs);
+    display: none;
+}
+
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+    border-color: var(--error);
+}
+
+.form-group.error .form-error {
+    display: block;
+}
+
+/* Radio & Checkbox Groups */
+.option-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.option-card {
+    flex: 1;
+    min-width: 150px;
+    position: relative;
+}
+
+.option-card input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.option-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-lg);
+    background: var(--bg-section);
+    border: 2px solid var(--divider);
+    border-radius: var(--radius-md);
+    transition: var(--transition-normal);
+    cursor: pointer;
+}
+
+.option-card input:checked + .option-card-content {
+    border-color: var(--royal-purple);
+    background: rgba(107, 33, 168, 0.05);
+}
+
+.option-card-content i {
+    font-size: 1.5rem;
+    color: var(--royal-purple);
+    margin-bottom: var(--space-sm);
+}
+
+.option-card-content span {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.option-card-content small {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
+}
+
+/* Calendar Widget */
+.calendar-container {
+    background: var(--bg-section);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-lg);
+}
+
+.calendar-nav {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.calendar-nav button {
+    width: 36px;
+    height: 36px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-radius: 50%;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+}
+
+.calendar-nav button:hover {
+    background: var(--royal-purple);
+    color: var(--text-white);
+    border-color: var(--royal-purple);
+}
+
+.calendar-title {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: var(--space-sm);
+}
+
+.calendar-weekdays span {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: var(--space-sm);
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    color: var(--text-primary);
+}
+
+.calendar-day:hover:not(.disabled):not(.empty) {
+    background: rgba(107, 33, 168, 0.1);
+    border-color: var(--royal-purple);
+}
+
+.calendar-day.today {
+    border-color: var(--royal-purple);
+}
+
+.calendar-day.selected {
+    background: var(--royal-purple);
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+.calendar-day.disabled {
+    color: var(--text-muted);
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.calendar-day.empty {
+    cursor: default;
+}
+
+.calendar-day.has-slots::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    width: 4px;
+    height: 4px;
+    background: var(--success);
+    border-radius: 50%;
+}
+
+/* Time Slots */
+.time-slots-container {
+    margin-top: var(--space-lg);
+}
+
+.time-slots-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    color: var(--royal-purple);
+}
+
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-sm);
+}
+
+.time-slot {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    color: var(--text-primary);
+}
+
+.time-slot:hover:not(.disabled) {
+    border-color: var(--royal-purple);
+    background: rgba(107, 33, 168, 0.05);
+}
+
+.time-slot.selected {
+    background: var(--royal-purple);
+    color: var(--text-white);
+    border-color: var(--royal-purple);
+    font-weight: 600;
+}
+
+.time-slot.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Timezone Selector */
+.timezone-selector {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: rgba(107, 33, 168, 0.05);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-md);
+}
+
+.timezone-selector i {
+    color: var(--royal-purple);
+}
+
+.timezone-selector select {
+    flex: 1;
+    padding: var(--space-sm);
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+}
+
+.timezone-fixed {
+    font-weight: 500;
+    color: var(--text-primary);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-sm);
+}
+
+/* Booking Summary */
+.booking-summary {
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    position: sticky;
+    top: 100px;
+    box-shadow: var(--shadow-card);
+}
+
+.booking-summary h3 {
+    margin-bottom: var(--space-lg);
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--divider);
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.summary-value {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.summary-total {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 2px solid var(--royal-purple);
+}
+
+.summary-total .summary-label {
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.summary-total .summary-value {
+    font-size: 1.5rem;
+    color: var(--royal-purple);
+}
+
+/* Coupon Code */
+.coupon-section {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--divider);
+}
+
+.coupon-input {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.coupon-input input {
+    flex: 1;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-section);
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+}
+
+.coupon-input button {
+    padding: var(--space-sm) var(--space-md);
+    background: transparent;
+    border: 1px solid var(--royal-purple);
+    border-radius: var(--radius-sm);
+    color: var(--royal-purple);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.coupon-input button:hover {
+    background: var(--royal-purple);
+    color: var(--text-white);
+}
+
+.coupon-applied {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-sm);
+}
+
+.coupon-applied span {
+    color: var(--success);
+    font-size: 0.875rem;
+}
+
+.coupon-applied button {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+/* Payment Methods */
+.payment-methods {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+}
+
+.payment-method {
+    position: relative;
+}
+
+.payment-method input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.payment-method-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-lg);
+    background: var(--bg-section);
+    border: 2px solid var(--divider);
+    border-radius: var(--radius-md);
+    transition: var(--transition-normal);
+}
+
+.payment-method input:checked + .payment-method-content {
+    border-color: var(--royal-purple);
+    background: rgba(107, 33, 168, 0.05);
+}
+
+.payment-method-content img {
+    height: 30px;
+    margin-bottom: var(--space-sm);
+}
+
+.payment-method-content span {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+
+/* Progress Steps */
+.booking-steps {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-3xl);
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.step-circle {
+    width: 40px;
+    height: 40px;
+    background: var(--bg-section);
+    border: 2px solid var(--divider);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: var(--transition-normal);
+    color: var(--text-muted);
+}
+
+.step.active .step-circle,
+.step.completed .step-circle {
+    background: var(--royal-purple);
+    border-color: var(--royal-purple);
+    color: var(--text-white);
+}
+
+.step.completed .step-circle i {
+    display: block;
+}
+
+.step-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.step.active .step-label {
+    color: var(--royal-purple);
+    font-weight: 600;
+}
+
+.step-line {
+    width: 60px;
+    height: 2px;
+    background: var(--divider);
+    margin: 0 var(--space-md);
+}
+
+.step.completed + .step-line,
+.step-line.completed {
+    background: var(--royal-purple);
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-actions .btn {
+    min-width: 150px;
+}
+
+/* Confirmation Page */
+.confirmation-card {
+    text-align: center;
+    background: var(--gradient-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: var(--radius-xl);
+    padding: var(--space-3xl);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.confirmation-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(16, 185, 129, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-xl);
+}
+
+.confirmation-icon i {
+    font-size: 2.5rem;
+    color: var(--success);
+}
+
+.confirmation-card h2 {
+    margin-bottom: var(--space-md);
+}
+
+.booking-id {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-lg);
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: var(--radius-full);
+    font-family: monospace;
+    font-size: 1rem;
+    color: var(--gold);
+    margin-bottom: var(--space-xl);
+}
+
+.confirmation-details {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.confirmation-details .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.confirmation-details .detail-row:last-child {
+    border-bottom: none;
+}
+
+.confirmation-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+}
+
+/* Responsive Forms */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .option-group {
+        flex-direction: column;
+    }
+    
+    .time-slots {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .payment-methods {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .booking-steps {
+        flex-wrap: wrap;
+        gap: var(--space-md);
+    }
+    
+    .step-line {
+        display: none;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+    }
+    
+    .confirmation-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .time-slots {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ============================================
+   Enhanced Hover Effects for Forms
+   ============================================ */
+
+/* Form Section Hover */
+.form-section {
+    transition: all 0.3s ease;
+}
+
+.form-section:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Service Option Card Effects */
+.service-option {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-color: var(--royal-purple);
+}
+
+.service-option:hover .option-icon {
+    transform: scale(1.1);
+    background: var(--royal-purple);
+}
+
+.service-option:hover .option-icon i {
+    color: var(--text-white);
+}
+
+.option-icon {
+    transition: all 0.3s ease;
+}
+
+/* Calendar Day Effects */
+.calendar-day {
+    transition: all 0.2s ease;
+}
+
+.calendar-day:not(.disabled):hover {
+    transform: scale(1.1);
+    background: rgba(107, 33, 168, 0.1);
+    color: var(--royal-purple);
+}
+
+.calendar-day.selected {
+    animation: pulse-soft 0.3s ease;
+}
+
+@keyframes pulse-soft {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* Time Slot Effects */
+.time-slot {
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.time-slot:not(.disabled):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(107, 33, 168, 0.2);
+    border-color: var(--royal-purple);
+}
+
+/* Payment Method Card Effects */
+.payment-method {
+    transition: all 0.3s ease;
+}
+
+.payment-method:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.payment-method:hover i {
+    transform: scale(1.2);
+    color: var(--royal-purple);
+}
+
+.payment-method i {
+    transition: all 0.3s ease;
+}
+
+/* Input Focus Animation */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(107, 33, 168, 0.15);
+}
+
+/* Label Float Effect (for floating labels) */
+.form-group.float-label label {
+    transition: all 0.3s ease;
+}
+
+.form-group.float-label input:focus + label,
+.form-group.float-label input:not(:placeholder-shown) + label {
+    transform: translateY(-25px) scale(0.85);
+    color: var(--royal-purple);
+}
+
+/* Step Indicator Effects */
+.step {
+    transition: all 0.3s ease;
+}
+
+.step:hover .step-number {
+    transform: scale(1.1);
+}
+
+.step-number {
+    transition: all 0.3s ease;
+}
+
+/* Booking Summary Card Effect */
+.booking-summary {
+    transition: all 0.3s ease;
+}
+
+.booking-summary:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Contact Option Effects */
+.contact-option {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.contact-option:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.contact-option:hover .option-icon {
+    animation: float 2s ease-in-out infinite;
+}
+
+/* Checkbox & Radio Custom Effects */
+.custom-checkbox:hover,
+.custom-radio:hover {
+    border-color: var(--royal-purple);
+    box-shadow: 0 0 0 4px rgba(107, 33, 168, 0.1);
+}
+
+/* Submit Button Ripple */
+.form-actions .btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.form-actions .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.form-actions .btn-primary:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* File Upload Hover */
+.file-upload-area {
+    transition: all 0.3s ease;
+}
+
+.file-upload-area:hover {
+    border-color: var(--royal-purple);
+    background: rgba(107, 33, 168, 0.05);
+}
+
+.file-upload-area:hover i {
+    transform: scale(1.2);
+}
+
+.file-upload-area i {
+    transition: transform 0.3s ease;
+}
+
+/* Error Messages */
+.field-error {
+    color: #dc2626;
+    font-size: 0.95em;
+    margin-top: 4px;
+    display: none;
+}
+
+#termsError.field-error {
+    display: block !important;
+    color: #dc2626;
+    font-size: 1em;
+    margin-top: 8px;
+}

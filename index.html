@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Vedic Astrology Consultation - Guiding lives through Hrimkar Astro. Expert birth chart analysis, marriage matching, career guidance, and spiritual remedies.">
+    <meta name="keywords" content="vedic astrology, horoscope, kundli, birth chart, marriage matching, tarot reading, numerology">
+    <meta name="author" content="Pandit Shastri Ji">
+    <title>Hrimkar Astro | Professional Astrology Consultation</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Three.js for 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/planets.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="cosmic-loader">
+            <div class="planet-orbit">
+                <div class="planet"></div>
+            </div>
+            <span>Loading Hrimkar Astro...</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Hrimkar Astro Logo">
+                <span>Hrimkar Astro</span>
+            </a>
+            
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="planets.html">Navagraha</a></li>
+                <li><a href="testimonials.html">Testimonials</a></li>
+                <li><a href="dashboard.html">Book Now</a></li>
+                <li class="nav-user">
+                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="stars"></div>
+            <div class="cosmic-dust"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <span class="hero-badge">
+                        <i class="fas fa-star"></i> Trusted by 5000+ Clients
+                    </span>
+                    <h1>Guiding Lives Through <span class="gradient-text">Hrimkar Astro</span></h1>
+                    <p class="hero-subtitle">Unlock the secrets of your destiny with authentic Vedic astrology. Expert guidance for marriage, career, health, and spiritual growth.</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">10+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">5K+</span>
+                            <span class="stat-label">Consultations</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">4.9</span>
+                            <span class="stat-label">Rating <i class="fas fa-star"></i></span>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-cta">
+                        <a href="dashboard.html" class="btn btn-primary btn-glow">
+                            <i class="fas fa-calendar-check"></i> Book Consultation
+                        </a>
+                    </div>
+                    
+                    <div class="certifications">
+                        <span>Certified by:</span>
+                        <img src="assets/cert-1.svg" alt="Jyotish Acharya">
+                        <img src="assets/cert-2.svg" alt="ICAS Certified">
+                        <img src="assets/cert-3.svg" alt="All India Federation">
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <div class="astrologer-frame">
+                        <div class="frame-glow"></div>
+                        <img src="assets/astrologer.jpg" alt="Pandit Kavita Shah JI - Professional Astrologer">
+                        <div class="frame-badge">
+                            <i class="fas fa-check-circle"></i> Verified Expert
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-scroll">
+            <a href="#services-preview">
+                <span>Explore</span>
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Cosmic Fortune Card -->
+    <section class="planetary-widget">
+        <div class="container">
+            <div class="cosmic-card">
+                <div class="cosmic-bg">
+                    <div class="cosmic-orb orb-1"></div>
+                    <div class="cosmic-orb orb-2"></div>
+                    <div class="cosmic-orb orb-3"></div>
+                </div>
+                
+                <div class="cosmic-header">
+                    <div class="cosmic-title">
+                        <div class="rashi-wheel-container">
+                            <div class="rashi-wheel">
+                                <span class="rashi-sign" style="--i:0;">मेष</span>
+                                <span class="rashi-sign" style="--i:1;">वृषभ</span>
+                                <span class="rashi-sign" style="--i:2;">मिथुन</span>
+                                <span class="rashi-sign" style="--i:3;">कर्क</span>
+                                <span class="rashi-sign" style="--i:4;">सिंह</span>
+                                <span class="rashi-sign" style="--i:5;">कन्या</span>
+                                <span class="rashi-sign" style="--i:6;">तुला</span>
+                                <span class="rashi-sign" style="--i:7;">वृश्चिक</span>
+                                <span class="rashi-sign" style="--i:8;">धनु</span>
+                                <span class="rashi-sign" style="--i:9;">मकर</span>
+                                <span class="rashi-sign" style="--i:10;">कुंभ</span>
+                                <span class="rashi-sign" style="--i:11;">मीन</span>
+                            </div>
+                            <div class="rashi-center">
+                                <i class="fas fa-om"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>Your Cosmic Guidance</h3>
+                            <span class="cosmic-tagline">Unlock the secrets of the stars</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cosmic-content">
+                    <div class="cosmic-feature">
+                        <div class="feature-icon purple">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Birth Chart Analysis</h4>
+                            <p>Decode your destiny through planetary positions</p>
+                        </div>
+                    </div>
+                    
+                    <div class="cosmic-feature">
+                        <div class="feature-icon gold">
+                            <i class="fas fa-om"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Karma & Life Path</h4>
+                            <p>Understand your karmic journey & purpose</p>
+                        </div>
+                    </div>
+                    
+                    <div class="cosmic-feature">
+                        <div class="feature-icon blue">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Lucky Numbers</h4>
+                            <p>Numerology & mobile number selection</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cosmic-cta">
+                    <a href="dashboard.html" class="btn btn-cosmic">
+                        <span>Start Your Journey</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <p class="cosmic-trust"><i class="fas fa-shield-alt"></i> 10+ Years Experience • 1000+ Lives Transformed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nakshatra Chakra Section -->
+    <section class="nakshatra-section" id="nakshatra-chakra">
+        <div class="container">
+            <div class="section-header light">
+                <span class="section-badge">27 Lunar Mansions</span>
+                <h2>The <span class="gradient-text">Nakshatra Chakra</span></h2>
+                <p>Discover the celestial constellations that guide your destiny</p>
+            </div>
+            
+            <div class="nakshatra-wrapper">
+                <div class="nakshatra-chakra">
+                    <div class="chakra-ring outer-ring">
+                        <span class="nakshatra" style="--i:0;" data-nakshatra="Ashwini">अश्विनी</span>
+                        <span class="nakshatra" style="--i:1;" data-nakshatra="Bharani">भरणी</span>
+                        <span class="nakshatra" style="--i:2;" data-nakshatra="Krittika">कृत्तिका</span>
+                        <span class="nakshatra" style="--i:3;" data-nakshatra="Rohini">रोहिणी</span>
+                        <span class="nakshatra" style="--i:4;" data-nakshatra="Mrigashira">मृगशिरा</span>
+                        <span class="nakshatra" style="--i:5;" data-nakshatra="Ardra">आर्द्रा</span>
+                        <span class="nakshatra" style="--i:6;" data-nakshatra="Punarvasu">पुनर्वसु</span>
+                        <span class="nakshatra" style="--i:7;" data-nakshatra="Pushya">पुष्य</span>
+                        <span class="nakshatra" style="--i:8;" data-nakshatra="Ashlesha">आश्लेषा</span>
+                        <span class="nakshatra" style="--i:9;" data-nakshatra="Magha">मघा</span>
+                        <span class="nakshatra" style="--i:10;" data-nakshatra="Purva Phalguni">पू.फा.</span>
+                        <span class="nakshatra" style="--i:11;" data-nakshatra="Uttara Phalguni">उ.फा.</span>
+                        <span class="nakshatra" style="--i:12;" data-nakshatra="Hasta">हस्त</span>
+                        <span class="nakshatra" style="--i:13;" data-nakshatra="Chitra">चित्रा</span>
+                        <span class="nakshatra" style="--i:14;" data-nakshatra="Swati">स्वाति</span>
+                        <span class="nakshatra" style="--i:15;" data-nakshatra="Vishakha">विशाखा</span>
+                        <span class="nakshatra" style="--i:16;" data-nakshatra="Anuradha">अनुराधा</span>
+                        <span class="nakshatra" style="--i:17;" data-nakshatra="Jyeshtha">ज्येष्ठा</span>
+                        <span class="nakshatra" style="--i:18;" data-nakshatra="Mula">मूल</span>
+                        <span class="nakshatra" style="--i:19;" data-nakshatra="Purva Ashadha">पू.आ.</span>
+                        <span class="nakshatra" style="--i:20;" data-nakshatra="Uttara Ashadha">उ.आ.</span>
+                        <span class="nakshatra" style="--i:21;" data-nakshatra="Shravana">श्रवण</span>
+                        <span class="nakshatra" style="--i:22;" data-nakshatra="Dhanishta">धनिष्ठा</span>
+                        <span class="nakshatra" style="--i:23;" data-nakshatra="Shatabhisha">शतभिषा</span>
+                        <span class="nakshatra" style="--i:24;" data-nakshatra="Purva Bhadrapada">पू.भा.</span>
+                        <span class="nakshatra" style="--i:25;" data-nakshatra="Uttara Bhadrapada">उ.भा.</span>
+                        <span class="nakshatra" style="--i:26;" data-nakshatra="Revati">रेवती</span>
+                    </div>
+                    <div class="chakra-center">
+                        <div class="center-glow"></div>
+                        <i class="fas fa-star-of-life"></i>
+                        <span>नक्षत्र</span>
+                    </div>
+                </div>
+                
+                <div class="nakshatra-info">
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-moon"></i></div>
+                        <h4>Moon's Journey</h4>
+                        <p>The Moon traverses all 27 Nakshatras in approximately 27.3 days</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-baby"></i></div>
+                        <h4>Birth Star</h4>
+                        <p>Your Janma Nakshatra reveals your core personality and life path</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-calendar-check"></i></div>
+                        <h4>Muhurta</h4>
+                        <p>Nakshatras determine auspicious timings for important events</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nakshatra-cta">
+                <a href="dashboard.html" class="btn btn-primary btn-glow">
+                    <i class="fas fa-star"></i> Discover Your Nakshatra
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Preview -->
+    <section class="services-preview" id="services-preview">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Our Expertise</span>
+                <h2>Sacred <span class="gradient-text">Astrology Services</span></h2>
+                <p>Comprehensive cosmic guidance tailored to your unique journey</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card" data-aos="fade-up">
+                    <div class="featured-badge">Most Popular</div>
+                    <div class="service-icon">
+                        <i class="fas fa-scroll"></i>
+                    </div>
+                    <h3>Vedic Astrology</h3>
+                    <p>Authentic birth chart analysis following ancient Jyotish traditions for life guidance.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Birth Chart Reading</li>
+                        <li><i class="fas fa-check"></i> Dasha Predictions</li>
+                        <li><i class="fas fa-check"></i> Remedial Solutions</li>
+                    </ul>
+                    <a href="services.html#vedic" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="service-card featured" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Marriage Matching</h3>
+                    <p>Comprehensive Kundli matching for harmonious and blessed unions.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Gun Milan (36 Points)</li>
+                        <li><i class="fas fa-check"></i> Manglik Analysis</li>
+                        <li><i class="fas fa-check"></i> Compatibility Report</li>
+                    </ul>
+                    <a href="services.html#marriage" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Career Guidance</h3>
+                    <p>Discover your true calling and optimal career path through planetary insights.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Career Analysis</li>
+                        <li><i class="fas fa-check"></i> Business Timing</li>
+                        <li><i class="fas fa-check"></i> Success Strategies</li>
+                    </ul>
+                    <a href="services.html#career" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3>Tarot Reading</h3>
+                    <p>Intuitive card readings for clarity on life's pressing questions.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Love & Relationships</li>
+                        <li><i class="fas fa-check"></i> Career Decisions</li>
+                        <li><i class="fas fa-check"></i> Spiritual Guidance</li>
+                    </ul>
+                    <a href="services.html#tarot" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Numerology</h3>
+                    <p>Unlock the power of numbers to understand your life path and destiny.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Life Path Number</li>
+                        <li><i class="fas fa-check"></i> Name Correction</li>
+                        <li><i class="fas fa-check"></i> Lucky Numbers</li>
+                    </ul>
+                    <a href="services.html#numerology" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="services-cta">
+                <a href="services.html" class="btn btn-primary">View All Services <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Navagraha Section -->
+    <section class="navagraha-section" id="navagraha">
+        <div class="cosmic-bg"></div>
+        <div class="container">
+           
+           
+            
+            <div class="planet-selector">
+                <button class="planet-btn" data-planet="sun">
+                    <span class="planet-symbol">☉</span>
+                    <span class="planet-label">Sun</span>
+                </button>
+                <button class="planet-btn" data-planet="moon">
+                    <span class="planet-symbol">☽</span>
+                    <span class="planet-label">Moon</span>
+                </button>
+                <button class="planet-btn" data-planet="mars">
+                    <span class="planet-symbol">♂</span>
+                    <span class="planet-label">Mars</span>
+                </button>
+                <button class="planet-btn" data-planet="mercury">
+                    <span class="planet-symbol">☿</span>
+                    <span class="planet-label">Mercury</span>
+                </button>
+                <button class="planet-btn" data-planet="jupiter">
+                    <span class="planet-symbol">♃</span>
+                    <span class="planet-label">Jupiter</span>
+                </button>
+                <button class="planet-btn" data-planet="venus">
+                    <span class="planet-symbol">♀</span>
+                    <span class="planet-label">Venus</span>
+                </button>
+                <button class="planet-btn" data-planet="saturn">
+                    <span class="planet-symbol">♄</span>
+                    <span class="planet-label">Saturn</span>
+                </button>
+                <button class="planet-btn" data-planet="rahu">
+                    <span class="planet-symbol">☊</span>
+                    <span class="planet-label">Rahu</span>
+                </button>
+                <button class="planet-btn" data-planet="ketu">
+                    <span class="planet-symbol">☋</span>
+                    <span class="planet-label">Ketu</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose-us">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Why Trust Us</span>
+                <h2>Your Journey to <span class="gradient-text">Cosmic Clarity</span></h2>
+                <p>Experience authentic astrology with modern convenience</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>10+ Years Expertise</h3>
+                    <p>Deeply rooted in Vedic traditions with contemporary understanding.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Certified Astrologer</h3>
+                    <p>Jyotish Acharya with extensive training and practical experience in Vedic Astrology</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>100% Confidential</h3>
+                    <p>Your personal information and readings are completely private.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>Multiple Modes</h3>
+                    <p>Consult via phone call or chat - whatever suits you best.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Global Clients</h3>
+                    <p>Trusted by clients across many countries worldwide.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>Compassionate Guidance</h3>
+                    <p>Empathetic approach to help you navigate life's challenges.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Preview -->
+    <section class="testimonials-preview">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Client Stories</span>
+                <h2>Transformed <span class="gradient-text">Lives</span></h2>
+                <p>Hear from those who found clarity through cosmic guidance</p>
+            </div>
+            
+            <div class="testimonials-slider" id="testimonialsSlider">
+                <!-- Testimonials loaded dynamically from database -->
+                <div class="testimonials-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading testimonials...</p>
+                </div>
+            </div>
+            
+            <div class="slider-controls">
+                <button class="slider-btn prev" id="prevTestimonial">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="slider-dots" id="sliderDots"></div>
+                <button class="slider-btn next" id="nextTestimonial">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Discover Your <span class="gradient-text">Cosmic Path</span>?</h2>
+                <p>Book your personalized consultation today and unlock the wisdom of the stars.</p>
+                <div class="cta-buttons">
+                    <a href="dashboard.html" class="btn btn-primary btn-lg btn-glow">
+                        <i class="fas fa-calendar-check"></i> Book Consultation
+                    </a>
+                    <a href="services.html" class="btn btn-primary btn-lg btn-glow">
+                        <i class="fas fa-list"></i> View Services
+                    </a>
+                </div>
+                <div class="cta-trust">
+                    <span><i class="fas fa-lock"></i> Secure & Confidential</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/logo.png" alt="Hrimkar Astro">
+                        <span>Hrimkar Astro</span>
+                    </a>
+                    <p>Guiding lives through authentic Vedic astrology and Hrimkar Astro since 1999.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="planets.html">Navagraha</a></li>
+                        <li><a href="testimonials.html">Testimonials</a></li>
+                        <li><a href="dashboard.html">Book Consultation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="services.html#vedic">Vedic Astrology</a></li>
+                        <li><a href="services.html#marriage">Marriage Matching</a></li>
+                        <li><a href="services.html#career">Career Guidance</a></li>
+                        <li><a href="services.html#tarot">Tarot Reading</a></li>
+                        <li><a href="services.html#numerology">Numerology</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="refund.html">Refund Policy</a></li>
+                        <li><a href="disclaimer.html">Disclaimer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+919930676179">+91 9930676179</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:hrimkarastro@gmail.com">hrimkarastro@gmail.com</a>
+                        </li>
+                        <li>
+                            <i class="fab fa-whatsapp"></i>
+                            <a href="https://wa.me/9930676179">WhatsApp Us</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Mumbai, Maharashtra, India</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hrimkar Astro. All rights reserved.</p>
+                <p class="disclaimer-short">Astrology services are advisory in nature. Results may vary based on individual circumstances.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/planets.js"></script>
+    <script src="js/home-testimonials.js"></script>
+</body>
+</html>

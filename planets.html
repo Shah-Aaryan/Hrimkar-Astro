@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the mystical Navagraha - Nine Planetary Deities in Vedic Astrology. Interactive 3D visualization of celestial bodies and their influence.">
+    <title>Navagraha - Nine Planets | Hrimkar Astro - Vedic Astrology</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/planets.css">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        /* Realistic Solar System Styles */
+        .solar-system-section {
+            position: relative;
+            background: linear-gradient(180deg, #000008 0%, #0a0a15 100%);
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .solar-system-container {
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+            position: relative;
+            cursor: grab;
+        }
+        
+        .solar-system-container:active {
+            cursor: grabbing;
+        }
+        
+        .solar-system-container canvas {
+            display: block;
+        }
+        
+        .solar-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+            background: rgba(10, 15, 30, 0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: 1px solid rgba(100, 150, 200, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .solar-control-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(100, 150, 200, 0.3);
+            border-radius: 25px;
+            color: #a0c4e8;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .solar-control-btn:hover {
+            background: rgba(100, 150, 200, 0.2);
+            border-color: rgba(100, 150, 200, 0.5);
+            color: #fff;
+        }
+        
+        .solar-control-btn.active {
+            background: rgba(100, 150, 200, 0.3);
+            border-color: #4a90d9;
+        }
+        
+        .solar-control-btn i {
+            font-size: 1rem;
+        }
+        
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .speed-control input[type="range"] {
+            width: 100px;
+            accent-color: #4a90d9;
+        }
+        
+        .speed-label {
+            color: #7aa3cc;
+            font-size: 0.85rem;
+            min-width: 30px;
+        }
+        
+        .solar-info-panel {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(10, 15, 30, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(100, 150, 200, 0.2);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            max-width: 280px;
+            z-index: 100;
+        }
+        
+        .solar-info-panel h3 {
+            font-family: 'Cinzel', serif;
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .solar-info-panel p {
+            font-size: 0.85rem;
+            color: #a0c4e8;
+            line-height: 1.6;
+        }
+        
+        .solar-instructions {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(100, 150, 200, 0.2);
+        }
+        
+        .solar-instructions li {
+            font-size: 0.8rem;
+            color: #7aa3cc;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .solar-instructions li i {
+            color: #4a90d9;
+            width: 16px;
+        }
+        
+        /* Planet Details Modal - Enhanced */
+        .solar-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .solar-modal.active {
+            display: flex;
+        }
+        
+        .solar-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 5, 0.9);
+            backdrop-filter: blur(5px);
+        }
+        
+        .solar-modal-content {
+            position: relative;
+            background: linear-gradient(135deg, rgba(15, 25, 45, 0.98) 0%, rgba(5, 10, 25, 0.98) 100%);
+            border: 1px solid rgba(100, 150, 200, 0.3);
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .solar-modal-header {
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(30, 50, 80, 0.5) 0%, rgba(15, 25, 45, 0.5) 100%);
+            border-bottom: 1px solid rgba(100, 150, 200, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        .solar-modal-planet {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 30px rgba(100, 150, 200, 0.3);
+        }
+        
+        .solar-modal-title h2 {
+            font-family: 'Cinzel', serif;
+            color: #fff;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .solar-modal-title span {
+            color: #7aa3cc;
+            font-size: 1rem;
+        }
+        
+        .solar-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #7aa3cc;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .solar-modal-close:hover {
+            color: #fff;
+        }
+        
+        .solar-modal-body {
+            padding: 30px;
+        }
+        
+        .solar-modal-section {
+            margin-bottom: 25px;
+        }
+        
+        .solar-modal-section h4 {
+            font-family: 'Cinzel', serif;
+            color: #ffd700;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .solar-modal-section h4 i {
+            color: #4a90d9;
+        }
+        
+        .solar-modal-section p,
+        .solar-modal-section li {
+            color: #a0c4e8;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        .solar-modal-facts {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .solar-fact {
+            background: rgba(30, 50, 80, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(100, 150, 200, 0.15);
+        }
+        
+        .solar-fact label {
+            display: block;
+            color: #7aa3cc;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        .solar-fact span {
+            color: #fff;
+            font-size: 1.1rem;
+            font-family: 'Cinzel', serif;
+        }
+        
+        /* Loading state */
+        .solar-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #7aa3cc;
+            font-size: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .solar-loading .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(100, 150, 200, 0.2);
+            border-top-color: #4a90d9;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .solar-system-container {
+                height: 50vh;
+                min-height: 400px;
+            }
+            
+            .solar-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 12px 15px;
+                gap: 10px;
+            }
+            
+            .solar-control-btn {
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .solar-control-btn span {
+                display: none;
+            }
+            
+            .solar-info-panel {
+                display: none;
+            }
+            
+            .speed-control input[type="range"] {
+                width: 80px;
+            }
+            
+            .solar-modal-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .solar-modal-facts {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Hrimkar Astro Logo">
+                <span>Hrimkar Astro</span>
+            </a>
+            
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="planets.html" class="active">Navagraha</a></li>
+                <li><a href="testimonials.html">Testimonials</a></li>
+                <li><a href="dashboard.html" class="btn btn-primary nav-cta">Book Now</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header planets-header">
+        <div class="cosmic-bg"></div>
+        <div class="container">
+            <h1>The <span class="gradient-text">Solar System</span></h1>
+            <p>Explore Our Cosmic Neighborhood in Stunning 3D</p>
+        </div>
+    </header>
+
+    <!-- Realistic 3D Solar System -->
+    <section class="solar-system-section">
+        <div class="solar-info-panel">
+            <h3><i class="fas fa-sun"></i> Interactive Solar System</h3>
+            <p>Experience a scientifically accurate representation of our solar system with realistic textures and orbital mechanics.</p>
+            <ul class="solar-instructions">
+                <li><i class="fas fa-mouse"></i> Drag to rotate view</li>
+                <li><i class="fas fa-search-plus"></i> Scroll to zoom</li>
+                <li><i class="fas fa-hand-pointer"></i> Click planet for details</li>
+            </ul>
+        </div>
+        
+        <div class="solar-system-container" id="solarSystemContainer">
+            <div class="solar-loading" id="solarLoading">
+                <div class="spinner"></div>
+                <span>Initializing Solar System...</span>
+            </div>
+        </div>
+        
+        <div class="solar-controls">
+            <button class="solar-control-btn" id="pauseBtn" title="Pause/Play">
+                <i class="fas fa-pause"></i>
+                <span>Pause</span>
+            </button>
+            <button class="solar-control-btn" id="resetBtn" title="Reset View">
+                <i class="fas fa-sync"></i>
+                <span>Reset</span>
+            </button>
+            <div class="speed-control">
+                <span class="speed-label">1x</span>
+                <input type="range" id="speedSlider" min="0.1" max="5" step="0.1" value="1" title="Animation Speed">
+                <span class="speed-label">5x</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planet Details Grid (Navagraha Focus) -->
+    <section class="planets-grid-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Vedic Astrology</span>
+                <h2>The Nine <span class="gradient-text">Celestial Rulers</span></h2>
+                <p>Navagraha - The cosmic forces that influence your destiny</p>
+            </div>
+            
+            <div class="planets-detail-grid">
+                <!-- Sun - Surya -->
+                <div class="planet-detail-card" data-planet="sun">
+                    <div class="planet-visual sun">
+                        <div class="planet-glow"></div>
+                        <div class="planet-sphere"></div>
+                    </div>
+                    <div class="planet-info">
+                        <h3>सूर्य (Surya)</h3>
+                        <span class="planet-english">The Sun</span>
+                        <p>King of planets, represents soul, authority, and vitality. Governs self-confidence and leadership.</p>
+                        <div class="planet-meta">
+                            <span><i class="fas fa-gem"></i> Ruby</span>
+                            <span><i class="fas fa-calendar-day"></i> Sunday</span>
+                            <span><i class="fas fa-compass"></i> East</span>
+                        </div>
+                        <button class="btn btn-ghost btn-sm" onclick="openPlanetModal('sun')">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Moon - Chandra -->
+                <div class="planet-detail-card" data-planet="moon">
+                    <div class="planet-visual moon">
+                        <div class="planet-glow"></div>
+                        <div class="planet-sphere"></div>
+                    </div>
+                    <div class="planet-info">
+                        <h3>चन्द्र (Chandra)</h3>
+                        <span class="planet-english">The Moon</span>
+                        <p>Governs mind, emotions, and nurturing instincts. Represents mother and mental peace.</p>
+                        <div class="planet-meta">
+                            <span><i class="fas fa-gem"></i> Pearl</span>
+                            <span><i class="fas fa-calendar-day"></i> Monday</span>
+                            <span><i class="fas fa-compass"></i> Northwest</span>
+                        </div>
+                        <button class="btn btn-ghost btn-sm" onclick="openPlanetModal('moon')">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mars - Mangal -->
+                <div class="planet-detail-card" data-planet="mars">
+                    <div class="planet-visual mars">
+                        <div class="planet-glow"></div>
+                        <div class="planet-sphere"></div>
+                    </div>
+                    <div class="planet-info">
+                        <h3>मंगल (Mangal)</h3>
+                        <span class="planet-english">Mars</span>
+                        <p>Planet of courage, energy, and action. Rules over siblings and represents warrior spirit.</p>
+                        <div class="planet-meta">
+                            <span><i class="fas fa-gem"></i> Red Coral</span>
+                            <span><i class="fas fa-calendar-day"></i> Tuesday</span>
+                            <span><i class="fas fa-compass"></i> South</span>
+                        </div>
+                        <button class="btn btn-ghost btn-sm" onclick="openPlanetModal('mars')">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mercury - Budh -->
+                <div class="planet-detail-card" data-planet="mercury">
+                    <div class="planet-visual mercury">
+                        <div class="planet-glow"></div>
+                        <div class="planet-sphere"></div>
+                    </div>
+                    <div class="planet-info">
+                        <h3>बुध (Budh)</h3>
+                        <span class="planet-english">Mercury</span>
+                        <p>Intelligence, communication, and business acumen. Governs education and speech.</p>
+                        <div class="planet-meta">
+                            <span><i class="fas fa-gem"></i> Emerald</span>
+                            <span><i class="fas fa-calendar-day"></i> Wednesday</span>
+                            <span><i class="fas fa-compass"></i> North</span>
+                        </div>
+                        <button class="btn btn-ghost btn-sm" onclick="openPlanetModal('mercury')">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Jupiter - Guru -->
+                <div class="planet-detail-card" data-planet="jupiter">
+                    <div class="planet-visual jupiter">
+                        <div class="planet-glow"></div>
+                        <div class="planet-sphere"></div>
+                    </div>
+                    <div class="planet-info">
+                        <h3>बृहस्पति (Guru)</h3>
+                        <span class="planet-english">Jupiter</span>
+                        <p>The great teacher. Brings wisdom, fortune, and spiritual growth. Most benefic planet.</p>
+                        <div class="planet-meta">
+                            <span><i class="fas fa-gem"></i> Yellow Sapphire</span>
+                            <span><i class="fas fa-calendar-day"></i> Thursday</span>
+                            <span><i class="fas fa-compass"></i> Northeast</span>
+                        </div>
+                        <button class="btn btn-ghost btn-sm" onclick="openPlanetModal('jupiter')">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Venus - Shukra -->
+                <div class="planet-detail-card" data-planet="venus">
+                    <div class="planet-visual venus">
+                        <div class="planet-glow"></div>
+                        <div class="planet-sphere"></div>
+                    </div>
+                    <div class="planet-info">
+                        <h3>शुक्र (Shukra)</h3>
+                        <span class="planet-english">Venus</span>
+                        <p>Planet of love, beauty, and luxury. Governs romance, arts, and material pleasures.</p>
+                        <div class="planet-meta">
+                            <span><i class="fas fa-gem"></i> Diamond</span>
+                            <span><i class="fas fa-calendar-day"></i> Friday</span>
+                            <span><i class="fas fa-compass"></i> Southeast</span>
+                        </div>
+                        <button class="btn btn-ghost btn-sm" onclick="openPlanetModal('venus')">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Saturn - Shani -->
+                <div class="planet-detail-card" data-planet="saturn">
+                    <div class="planet-visual saturn">
+                        <div class="planet-glow"></div>
+                        <div class="planet-sphere"></div>
+                        <div class="saturn-rings"></div>
+                    </div>
+                    <div class="planet-info">
+                        <h3>शनि (Shani)</h3>
+                        <span class="planet-english">Saturn</span>
+                        <p>Lord of karma and discipline. Teaches through hardship and rewards patience.</p>
+                        <div class="planet-meta">
+                            <span><i class="fas fa-gem"></i> Blue Sapphire</span>
+                            <span><i class="fas fa-calendar-day"></i> Saturday</span>
+                            <span><i class="fas fa-compass"></i> West</span>
+                        </div>
+                        <button class="btn btn-ghost btn-sm" onclick="openPlanetModal('saturn')">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rahu -->
+                <div class="planet-detail-card" data-planet="rahu">
+                    <div class="planet-visual rahu">
+                        <div class="planet-glow"></div>
+                        <div class="planet-sphere"></div>
+                    </div>
+                    <div class="planet-info">
+                        <h3>राहु (Rahu)</h3>
+                        <span class="planet-english">North Node</span>
+                        <p>Shadow planet of obsession and material desires. Creates illusion and unconventional paths.</p>
+                        <div class="planet-meta">
+                            <span><i class="fas fa-gem"></i> Hessonite</span>
+                            <span><i class="fas fa-calendar-day"></i> Saturday</span>
+                            <span><i class="fas fa-compass"></i> Southwest</span>
+                        </div>
+                        <button class="btn btn-ghost btn-sm" onclick="openPlanetModal('rahu')">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ketu -->
+                <div class="planet-detail-card" data-planet="ketu">
+                    <div class="planet-visual ketu">
+                        <div class="planet-glow"></div>
+                        <div class="planet-sphere"></div>
+                    </div>
+                    <div class="planet-info">
+                        <h3>केतु (Ketu)</h3>
+                        <span class="planet-english">South Node</span>
+                        <p>Shadow planet of spirituality and detachment. Grants moksha and psychic abilities.</p>
+                        <div class="planet-meta">
+                            <span><i class="fas fa-gem"></i> Cat's Eye</span>
+                            <span><i class="fas fa-calendar-day"></i> Tuesday</span>
+                            <span><i class="fas fa-compass"></i> Northwest</span>
+                        </div>
+                        <button class="btn btn-ghost btn-sm" onclick="openPlanetModal('ketu')">
+                            Learn More <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solar System Planet Modal -->
+    <div class="solar-modal" id="solarModal">
+        <div class="solar-modal-overlay" onclick="closeSolarModal()"></div>
+        <div class="solar-modal-content">
+            <button class="solar-modal-close" onclick="closeSolarModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="solar-modal-header">
+                <div class="solar-modal-planet" id="solarModalPlanet"></div>
+                <div class="solar-modal-title">
+                    <h2 id="solarModalName">Planet Name</h2>
+                    <span id="solarModalSubtitle">Subtitle</span>
+                </div>
+            </div>
+            <div class="solar-modal-body">
+                <div class="solar-modal-section">
+                    <h4><i class="fas fa-info-circle"></i> About</h4>
+                    <p id="solarModalDescription"></p>
+                </div>
+                <div class="solar-modal-facts" id="solarModalFacts">
+                    <!-- Facts will be populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Planet Modal (Vedic) -->
+    <div class="planet-modal" id="planetModal">
+        <div class="modal-overlay" onclick="closePlanetModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePlanetModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <div class="modal-planet-visual" id="modalPlanetVisual"></div>
+                <div class="modal-title">
+                    <h2 id="modalPlanetName">Planet Name</h2>
+                    <span id="modalPlanetSanskrit">Sanskrit Name</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4><i class="fas fa-star"></i> Significance</h4>
+                    <p id="modalSignificance"></p>
+                </div>
+                <div class="modal-section">
+                    <h4><i class="fas fa-chart-line"></i> Effects</h4>
+                    <p id="modalEffects"></p>
+                </div>
+                <div class="modal-section">
+                    <h4><i class="fas fa-pray"></i> Remedies</h4>
+                    <ul id="modalRemedies"></ul>
+                </div>
+                <div class="modal-attributes">
+                    <div class="attribute">
+                        <span class="label">Gemstone</span>
+                        <span class="value" id="modalGemstone"></span>
+                    </div>
+                    <div class="attribute">
+                        <span class="label">Day</span>
+                        <span class="value" id="modalDay"></span>
+                    </div>
+                    <div class="attribute">
+                        <span class="label">Direction</span>
+                        <span class="value" id="modalDirection"></span>
+                    </div>
+                    <div class="attribute">
+                        <span class="label">Color</span>
+                        <span class="value" id="modalColor"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="dashboard.html" class="btn btn-primary">
+                    <i class="fas fa-calendar-check"></i> Get Planetary Consultation
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Discover Your <span class="gradient-text">Planetary Balance</span></h2>
+                <p>Get a comprehensive analysis of how the Navagraha influence your birth chart and life path.</p>
+                <div class="cta-buttons">
+                    <a href="dashboard.html" class="btn btn-primary btn-lg btn-glow">
+                        <i class="fas fa-calendar-check"></i> Book Consultation
+                    </a>
+                    <a href="services.html" class="btn btn-primary btn-lg btn-glow">
+                        <i class="fas fa-list"></i> View Services
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/logo.png" alt="Hrimkar Astro">
+                        <span>Hrimkar Astro</span>
+                    </a>
+                    <p>Guiding souls through celestial wisdom since generations.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="dashboard.html">Book Consultation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="privacy.html">Privacy Policy</a></li>
+                            <li><a href="terms.html">Terms of Service</a></li>
+                            <li><a href="disclaimer.html">Disclaimer</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hrimkar Astro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/solar-system.js"></script>
+    <script src="js/planets.js"></script>
+    <script>
+        // Initialize Solar System
+        let solarSystem;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the realistic 3D solar system
+            try {
+                solarSystem = new SolarSystem('solarSystemContainer');
+                
+                // Hide loading indicator
+                const loading = document.getElementById('solarLoading');
+                if (loading) {
+                    setTimeout(() => {
+                        loading.style.opacity = '0';
+                        setTimeout(() => loading.style.display = 'none', 300);
+                    }, 500);
+                }
+                
+                // Handle planet selection from 3D view
+                const container = document.getElementById('solarSystemContainer');
+                container.addEventListener('planetSelected', function(e) {
+                    showSolarModal(e.detail.key, e.detail.data);
+                });
+                
+                // Control buttons
+                const pauseBtn = document.getElementById('pauseBtn');
+                const resetBtn = document.getElementById('resetBtn');
+                const speedSlider = document.getElementById('speedSlider');
+                
+                if (pauseBtn) {
+                    pauseBtn.addEventListener('click', function() {
+                        const isPaused = solarSystem.togglePause();
+                        this.innerHTML = isPaused 
+                            ? '<i class="fas fa-play"></i><span>Play</span>'
+                            : '<i class="fas fa-pause"></i><span>Pause</span>';
+                        this.classList.toggle('active', isPaused);
+                    });
+                }
+                
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', function() {
+                        solarSystem.resetView();
+                    });
+                }
+                
+                if (speedSlider) {
+                    speedSlider.addEventListener('input', function() {
+                        solarSystem.setTimeScale(parseFloat(this.value));
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Failed to initialize solar system:', error);
+                const container = document.getElementById('solarSystemContainer');
+                container.innerHTML = `
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #7aa3cc;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem; color: #ffd700;"></i>
+                        <p>Unable to load 3D visualization</p>
+                        <p style="font-size: 0.85rem; opacity: 0.7;">Please try refreshing the page</p>
+                    </div>
+                `;
+            }
+        });
+        
+        // Solar System Planet Modal
+        function showSolarModal(key, data) {
+            const modal = document.getElementById('solarModal');
+            const planetDiv = document.getElementById('solarModalPlanet');
+            const nameEl = document.getElementById('solarModalName');
+            const subtitleEl = document.getElementById('solarModalSubtitle');
+            const descEl = document.getElementById('solarModalDescription');
+            const factsEl = document.getElementById('solarModalFacts');
+            
+            // Set planet visual gradient
+            const planetColors = {
+                mercury: 'linear-gradient(135deg, #8c8c8c, #5a5a5a)',
+                venus: 'linear-gradient(135deg, #e6c87a, #c4a862)',
+                earth: 'linear-gradient(135deg, #6b93d6, #3d6b3d)',
+                mars: 'linear-gradient(135deg, #c1440e, #8b3208)',
+                jupiter: 'linear-gradient(135deg, #d8ca9d, #c4a882)',
+                saturn: 'linear-gradient(135deg, #ead6b8, #d8c098)',
+                uranus: 'linear-gradient(135deg, #d1e7e7, #a8d0d0)',
+                neptune: 'linear-gradient(135deg, #5b5ddf, #3a5cd0)'
+            };
+            
+            planetDiv.style.background = planetColors[key] || 'linear-gradient(135deg, #666, #333)';
+            nameEl.textContent = data.name;
+            subtitleEl.textContent = data.description;
+            descEl.textContent = `${data.name} is one of the eight planets in our solar system. ${data.description}`;
+            
+            // Populate facts
+            if (data.facts) {
+                factsEl.innerHTML = `
+                    <div class="solar-fact">
+                        <label>Diameter</label>
+                        <span>${data.facts.diameter}</span>
+                    </div>
+                    <div class="solar-fact">
+                        <label>Day Length</label>
+                        <span>${data.facts.dayLength}</span>
+                    </div>
+                    <div class="solar-fact">
+                        <label>Year Length</label>
+                        <span>${data.facts.yearLength}</span>
+                    </div>
+                    <div class="solar-fact">
+                        <label>Moons</label>
+                        <span>${data.facts.moons}</span>
+                    </div>
+                `;
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeSolarModal() {
+            const modal = document.getElementById('solarModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Close modals on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePlanetModal();
+                closeSolarModal();
+            }
+        });
+    </script>
+</body>
+</html>

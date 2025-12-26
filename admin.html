@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Panel | Hrimkar Astro</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body class="dashboard-body admin-body">
+    <!-- Top Navigation Bar -->
+    <header class="topbar admin-topbar">
+        <div class="topbar-left">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Hrimkar Astro" onerror="this.style.display='none'">
+                <span>Admin Panel</span>
+            </a>
+        </div>
+        <div class="topbar-right">
+            <div class="admin-status">
+                <span class="status-dot online"></span>
+                <span>Online</span>
+            </div>
+            <button class="topbar-btn notification-btn" id="notificationBtn">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">5</span>
+            </button>
+            <div class="user-dropdown" id="userDropdown">
+                <button class="user-btn">
+                    <div class="user-avatar">
+                        <img src="assets/astrologer-photo.jpg" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=1a1f2e&color=d4af37'">
+                    </div>
+                    <span class="user-name">Administrator</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="index.html"><i class="fas fa-globe"></i> View Website</a>
+                    <a href="#" data-section="settings"><i class="fas fa-cog"></i> Settings</a>
+                    <hr>
+                    <a href="login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar admin-sidebar" id="sidebar">
+            <nav class="sidebar-nav">
+                <a href="javascript:void(0)" class="nav-item active" data-section="dashboard" onclick="navigateSection('dashboard')">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" data-section="pendingPayments" onclick="navigateSection('pendingPayments')">
+                    <i class="fas fa-clock"></i>
+                    <span>Pending Payments</span>
+                    <span class="nav-badge pending-badge" id="pendingPaymentsBadge">0</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" data-section="appointments" onclick="navigateSection('appointments')">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Appointments</span>
+                    <span class="nav-badge">3</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" data-section="users" onclick="navigateSection('users')">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" data-section="reports" onclick="navigateSection('reports')">
+                    <i class="fas fa-file-upload"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" data-section="availability" onclick="navigateSection('availability')">
+                    <i class="fas fa-clock"></i>
+                    <span>Availability</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" data-section="earnings" onclick="navigateSection('earnings')">
+                    <i class="fas fa-wallet"></i>
+                    <span>Payments & Earnings</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" data-section="reviews" onclick="navigateSection('reviews')">
+                    <i class="fas fa-star"></i>
+                    <span>Reviews</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" data-section="settings" onclick="navigateSection('settings')">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Pending Payments Section -->
+            <section class="content-section" id="pendingPaymentsSection">
+                <div class="section-header">
+                    <h2><i class="fas fa-clock"></i> Pending Payment Approvals</h2>
+                    <p>Review and approve payment screenshots from users</p>
+                </div>
+                
+                <div class="pending-payments-container">
+                    <div class="pending-payments-list" id="pendingPaymentsList">
+                        <div class="loading-state">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading pending payments...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Dashboard Overview Section -->
+            <section class="content-section active" id="dashboardSection">
+                <div class="section-header">
+                    <h1>Admin Dashboard</h1>
+                    <p class="section-subtitle">Overview of your consultation practice</p>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="summary-cards admin-kpi">
+                    <div class="summary-card">
+                        <div class="card-icon today">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-label">Today's Appointments</span>
+                            <span class="card-value" id="todayAppointments">4</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-icon users">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-label">Total Active Users</span>
+                            <span class="card-value" id="totalUsers">156</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-icon earnings">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-label">Monthly Earnings</span>
+                            <span class="card-value" id="monthlyEarnings">₹1,25,000</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-icon pending">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-label">Pending Reports</span>
+                            <span class="card-value" id="pendingReports">3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's Schedule -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-calendar-check"></i> Today's Schedule</h2>
+                        <a href="#" class="view-all-link" data-section="appointments">View All Appointments</a>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Client</th>
+                                    <th>Service</th>
+                                    <th>Mode</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="todayScheduleTable">
+                                <tr data-id="static-1">
+                                    <td><strong>10:00 AM</strong></td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://ui-avatars.com/api/?name=Priya+S&background=1a1f2e&color=d4af37" alt="User">
+                                            <span>Priya Sharma</span>
+                                        </div>
+                                    </td>
+                                    <td>Marriage Matching</td>
+                                    <td><span class="mode-badge call"><i class="fas fa-phone"></i> Call</span></td>
+                                    <td><span class="status-badge upcoming">Upcoming</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-primary btn-sm">Start</button>
+                                        <button class="btn-outline btn-sm">View</button>
+                                    </td>
+                                </tr>
+                                <tr data-id="static-2">
+                                    <td><strong>12:00 PM</strong></td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://ui-avatars.com/api/?name=Rahul+V&background=1a1f2e&color=d4af37" alt="User">
+                                            <span>Rahul Verma</span>
+                                        </div>
+                                    </td>
+                                    <td>Career Guidance</td>
+                                    <td><span class="mode-badge video"><i class="fas fa-video"></i> Video</span></td>
+                                    <td><span class="status-badge upcoming">Upcoming</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm">View</button>
+                                        <button class="btn-outline btn-sm">Reschedule</button>
+                                    </td>
+                                </tr>
+                                <tr data-id="static-3">
+                                    <td><strong>3:00 PM</strong></td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://ui-avatars.com/api/?name=Sneha+P&background=1a1f2e&color=d4af37" alt="User">
+                                            <span>Sneha Patel</span>
+                                        </div>
+                                    </td>
+                                    <td>Birth Chart Analysis</td>
+                                    <td><span class="mode-badge call"><i class="fas fa-phone"></i> Call</span></td>
+                                    <td><span class="status-badge pending">Pending</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm">View</button>
+                                        <button class="btn-danger btn-sm">Cancel</button>
+                                    </td>
+                                </tr>
+                                <tr data-id="static-4">
+                                    <td><strong>5:30 PM</strong></td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://ui-avatars.com/api/?name=Amit+K&background=1a1f2e&color=d4af37" alt="User">
+                                            <span>Amit Kumar</span>
+                                        </div>
+                                    </td>
+                                    <td>Vastu Consultation</td>
+                                    <td><span class="mode-badge chat"><i class="fas fa-comment"></i> Chat</span></td>
+                                    <td><span class="status-badge upcoming">Upcoming</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm">View</button>
+                                        <button class="btn-outline btn-sm">Reschedule</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Two Column Layout -->
+                <div class="two-column-grid">
+                    <!-- Pending Actions -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-exclamation-circle"></i> Pending Actions</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="pending-list">
+                                <div class="pending-item">
+                                    <div class="pending-icon report">
+                                        <i class="fas fa-file-upload"></i>
+                                    </div>
+                                    <div class="pending-info">
+                                        <strong>Upload Report</strong>
+                                        <p>Priya Sharma - Birth Chart</p>
+                                        <span class="pending-time">Due in 2 hours</span>
+                                    </div>
+                                    <button class="btn-primary btn-sm">Upload</button>
+                                </div>
+                                <div class="pending-item">
+                                    <div class="pending-icon confirm">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="pending-info">
+                                        <strong>Confirm Booking</strong>
+                                        <p>New request from Amit Kumar</p>
+                                        <span class="pending-time">Received 1 hour ago</span>
+                                    </div>
+                                    <button class="btn-primary btn-sm">Review</button>
+                                </div>
+                                <div class="pending-item">
+                                    <div class="pending-icon reply">
+                                        <i class="fas fa-reply"></i>
+                                    </div>
+                                    <div class="pending-info">
+                                        <strong>Reply to Query</strong>
+                                        <p>Sneha Patel asking about transit</p>
+                                        <span class="pending-time">3 hours ago</span>
+                                    </div>
+                                    <button class="btn-outline btn-sm">Reply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Earnings -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-chart-line"></i> Earnings This Week</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="earnings-summary">
+                                <div class="earning-row">
+                                    <span>Monday</span>
+                                    <div class="earning-bar" style="--width: 60%;"></div>
+                                    <strong>₹4,500</strong>
+                                </div>
+                                <div class="earning-row">
+                                    <span>Tuesday</span>
+                                    <div class="earning-bar" style="--width: 80%;"></div>
+                                    <strong>₹6,000</strong>
+                                </div>
+                                <div class="earning-row">
+                                    <span>Wednesday</span>
+                                    <div class="earning-bar" style="--width: 45%;"></div>
+                                    <strong>₹3,500</strong>
+                                </div>
+                                <div class="earning-row">
+                                    <span>Thursday</span>
+                                    <div class="earning-bar" style="--width: 90%;"></div>
+                                    <strong>₹7,000</strong>
+                                </div>
+                                <div class="earning-row today">
+                                    <span>Today</span>
+                                    <div class="earning-bar" style="--width: 50%;"></div>
+                                    <strong>₹4,000</strong>
+                                </div>
+                            </div>
+                            <div class="earnings-total">
+                                <span>Week Total</span>
+                                <strong>₹25,000</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Appointments Management Section -->
+            <section class="content-section" id="appointmentsSection">
+                <div class="section-header">
+                    <div>
+                        <h1>Appointments Management</h1>
+                        <p class="section-subtitle">View and manage all client bookings</p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search bookings..." id="bookingSearch">
+                        </div>
+                        <select class="filter-select" id="statusFilter">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Client</th>
+                                    <th>Service</th>
+                                    <th>Date & Time</th>
+                                    <th>Mode</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bookingsTableBody">
+                                <tr data-id="booking-1" data-status="confirmed">
+                                    <td>#BK-2024-001</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://ui-avatars.com/api/?name=Priya+S&background=1a1f2e&color=d4af37" alt="User">
+                                            <span>Priya Sharma</span>
+                                        </div>
+                                    </td>
+                                    <td>Marriage Matching</td>
+                                    <td>Dec 25, 2024 • 10:00 AM</td>
+                                    <td><span class="mode-badge call"><i class="fas fa-phone"></i> Call</span></td>
+                                    <td>₹2,500</td>
+                                    <td><span class="status-badge upcoming">Confirmed</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm">View</button>
+                                        <button class="btn-outline btn-sm">Reschedule</button>
+                                        <button class="btn-danger btn-sm">Cancel</button>
+                                    </td>
+                                </tr>
+                                <tr data-id="booking-2" data-status="pending">
+                                    <td>#BK-2024-002</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://ui-avatars.com/api/?name=Rahul+V&background=1a1f2e&color=d4af37" alt="User">
+                                            <span>Rahul Verma</span>
+                                        </div>
+                                    </td>
+                                    <td>Career Guidance</td>
+                                    <td>Dec 26, 2024 • 12:00 PM</td>
+                                    <td><span class="mode-badge video"><i class="fas fa-video"></i> Video</span></td>
+                                    <td>₹1,500</td>
+                                    <td><span class="status-badge pending">Pending</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-primary btn-sm">Confirm</button>
+                                        <button class="btn-outline btn-sm">View</button>
+                                        <button class="btn-danger btn-sm">Reject</button>
+                                    </td>
+                                </tr>
+                                <tr data-id="booking-3" data-status="completed">
+                                    <td>#BK-2024-003</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://ui-avatars.com/api/?name=Sneha+P&background=1a1f2e&color=d4af37" alt="User">
+                                            <span>Sneha Patel</span>
+                                        </div>
+                                    </td>
+                                    <td>Birth Chart Analysis</td>
+                                    <td>Dec 20, 2024 • 3:00 PM</td>
+                                    <td><span class="mode-badge call"><i class="fas fa-phone"></i> Call</span></td>
+                                    <td>₹1,500</td>
+                                    <td><span class="status-badge completed">Completed</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm">View</button>
+                                        <button class="btn-primary btn-sm">Upload Report</button>
+                                    </td>
+                                </tr>
+                                <tr data-id="booking-4" data-status="cancelled">
+                                    <td>#BK-2024-004</td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://ui-avatars.com/api/?name=Amit+K&background=1a1f2e&color=d4af37" alt="User">
+                                            <span>Amit Kumar</span>
+                                        </div>
+                                    </td>
+                                    <td>Vastu Consultation</td>
+                                    <td>Dec 18, 2024 • 4:00 PM</td>
+                                    <td><span class="mode-badge chat"><i class="fas fa-comment"></i> Chat</span></td>
+                                    <td>₹1,000</td>
+                                    <td><span class="status-badge cancelled">Cancelled</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm">View Details</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer">
+                        <span class="showing-info">Showing 1-4 of 47 bookings</span>
+                        <div class="pagination">
+                            <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                            <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Management Section -->
+            <section class="content-section" id="usersSection">
+                <div class="section-header">
+                    <div>
+                        <h1>User Management</h1>
+                        <p class="section-subtitle">View all registered clients and their history</p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search users..." id="userSearch">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Contact</th>
+                                    <th>Total Bookings</th>
+                                    <th>Total Spent</th>
+                                    <th>Last Booking</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <tr data-id="user-1">
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://ui-avatars.com/api/?name=Priya+S&background=1a1f2e&color=d4af37" alt="User">
+                                            <div>
+                                                <strong>Priya Sharma</strong>
+                                                <span>Member since Jan 2024</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="contact-info">
+                                            <span>priya@email.com</span>
+                                            <span>+91 98765 43210</span>
+                                        </div>
+                                    </td>
+                                    <td>12</td>
+                                    <td>₹18,500</td>
+                                    <td>Dec 25, 2024</td>
+                                    <td><span class="status-badge completed">Active</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm">View History</button>
+                                        <button class="btn-danger btn-sm">Block</button>
+                                    </td>
+                                </tr>
+                                <tr data-id="user-2">
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://ui-avatars.com/api/?name=Rahul+V&background=1a1f2e&color=d4af37" alt="User">
+                                            <div>
+                                                <strong>Rahul Verma</strong>
+                                                <span>Member since Mar 2024</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="contact-info">
+                                            <span>rahul@email.com</span>
+                                            <span>+91 98765 12345</span>
+                                        </div>
+                                    </td>
+                                    <td>8</td>
+                                    <td>₹12,000</td>
+                                    <td>Dec 20, 2024</td>
+                                    <td><span class="status-badge completed">Active</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm">View History</button>
+                                        <button class="btn-danger btn-sm">Block</button>
+                                    </td>
+                                </tr>
+                                <tr data-id="user-3">
+                                    <td>
+                                        <div class="user-cell">
+                                            <img src="https://ui-avatars.com/api/?name=Sneha+P&background=1a1f2e&color=d4af37" alt="User">
+                                            <div>
+                                                <strong>Sneha Patel</strong>
+                                                <span>Member since Jun 2024</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="contact-info">
+                                            <span>sneha@email.com</span>
+                                            <span>+91 99887 76655</span>
+                                        </div>
+                                    </td>
+                                    <td>5</td>
+                                    <td>₹7,500</td>
+                                    <td>Dec 18, 2024</td>
+                                    <td><span class="status-badge completed">Active</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm">View History</button>
+                                        <button class="btn-danger btn-sm">Block</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports Management Section -->
+            <section class="content-section" id="reportsSection">
+                <div class="section-header">
+                    <div>
+                        <h1>Reports Management</h1>
+                        <p class="section-subtitle">Upload and manage client reports</p>
+                    </div>
+                    <button class="btn-primary" id="uploadReportBtn">
+                        <i class="fas fa-upload"></i> Upload New Report
+                    </button>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Report</th>
+                                    <th>Client</th>
+                                    <th>Type</th>
+                                    <th>Upload Date</th>
+                                    <th>Downloaded</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportsTableBody">
+                                <tr>
+                                    <td>
+                                        <div class="report-info">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <strong>Birth Chart Analysis</strong>
+                                        </div>
+                                    </td>
+                                    <td>Priya Sharma</td>
+                                    <td>Natal Chart</td>
+                                    <td>Dec 15, 2024</td>
+                                    <td><span class="status-badge completed">Yes</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm"><i class="fas fa-eye"></i> View</button>
+                                        <button class="btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="report-info">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <strong>Marriage Compatibility</strong>
+                                        </div>
+                                    </td>
+                                    <td>Rahul Verma</td>
+                                    <td>Kundli Milan</td>
+                                    <td>Dec 12, 2024</td>
+                                    <td><span class="status-badge pending">No</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm"><i class="fas fa-eye"></i> View</button>
+                                        <button class="btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="report-info">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <strong>Career Guidance Report</strong>
+                                        </div>
+                                    </td>
+                                    <td>Sneha Patel</td>
+                                    <td>Career</td>
+                                    <td>Dec 10, 2024</td>
+                                    <td><span class="status-badge completed">Yes</span></td>
+                                    <td class="action-buttons">
+                                        <button class="btn-outline btn-sm"><i class="fas fa-eye"></i> View</button>
+                                        <button class="btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Upload Report Modal -->
+                <div class="modal" id="uploadReportModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Upload Report</h3>
+                            <button class="modal-close" id="closeUploadModal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="uploadReportForm">
+                                <div class="form-group">
+                                    <label>Select Client</label>
+                                    <select required>
+                                        <option value="">Choose client...</option>
+                                        <option>Priya Sharma</option>
+                                        <option>Rahul Verma</option>
+                                        <option>Sneha Patel</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Report Type</label>
+                                    <select required>
+                                        <option value="">Select type...</option>
+                                        <option>Birth Chart</option>
+                                        <option>Marriage Compatibility</option>
+                                        <option>Career Guidance</option>
+                                        <option>Yearly Predictions</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Upload PDF</label>
+                                    <div class="file-upload">
+                                        <input type="file" accept=".pdf" required>
+                                        <span><i class="fas fa-cloud-upload-alt"></i> Choose file or drag here</span>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn-outline" id="cancelUpload">Cancel</button>
+                                    <button type="submit" class="btn-primary">Upload Report</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slot Management Section -->
+            <section class="content-section" id="availabilitySection">
+                <div class="section-header">
+                    <h1>Slot Management</h1>
+                    <p class="section-subtitle">View upcoming appointments and block time slots</p>
+                </div>
+
+                <div class="two-column-grid">
+                    <!-- Monthly Appointments -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-calendar-alt"></i> Monthly Appointments</h2>
+                        </div>
+                        <div class="card-body">
+                            <!-- Month Navigation -->
+                            <div class="monthly-nav">
+                                <div class="month-navigation">
+                                    <button class="btn-icon" id="prevMonthBtn" title="Previous Month">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <span id="currentMonthLabel">December 2025</span>
+                                    <button class="btn-icon" id="nextMonthBtn" title="Next Month">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <div class="status-filter">
+                                    <select id="appointmentStatusFilter">
+                                        <option value="all">All Status</option>
+                                        <option value="confirmed">Confirmed</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="awaiting_payment_approval">Awaiting Payment</option>
+                                        <option value="completed">Completed</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Monthly Summary -->
+                            <div class="monthly-summary">
+                                <div class="summary-item total">
+                                    <span class="count" id="monthlyTotalCount">0</span>
+                                    <span class="label">Total</span>
+                                </div>
+                                <div class="summary-item pending">
+                                    <span class="count" id="monthlyPendingCount">0</span>
+                                    <span class="label">Pending</span>
+                                </div>
+                                <div class="summary-item confirmed">
+                                    <span class="count" id="monthlyConfirmedCount">0</span>
+                                    <span class="label">Confirmed</span>
+                                </div>
+                                <div class="summary-item completed">
+                                    <span class="count" id="monthlyCompletedCount">0</span>
+                                    <span class="label">Completed</span>
+                                </div>
+                                <div class="summary-item cancelled">
+                                    <span class="count" id="monthlyCancelledCount">0</span>
+                                    <span class="label">Cancelled</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Appointments List -->
+                            <div id="monthlyAppointmentsList" class="appointments-list">
+                                <div class="loading-state">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>Loading appointments...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Block Time Slots -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-ban"></i> Block Time Slots</h2>
+                        </div>
+                        <div class="card-body">
+                            <form id="blockSlotForm" class="block-slot-form">
+                                <div class="form-group">
+                                    <label>Select Date</label>
+                                    <input type="date" id="blockDate" required min="">
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="blockFullDay"> Block Entire Day
+                                    </label>
+                                </div>
+                                <div class="form-group" id="timeSlotGroup">
+                                    <label>Select Time Slot</label>
+                                    <select id="blockTimeSlot">
+                                        <option value="">-- Select a time slot --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Reason (Optional)</label>
+                                    <input type="text" id="blockReason" placeholder="e.g., Personal work, Holiday">
+                                </div>
+                                <button type="submit" class="btn-primary btn-block">
+                                    <i class="fas fa-ban"></i> Block Slot
+                                </button>
+                            </form>
+
+                            <div class="blocked-slots-section">
+                                <h4><i class="fas fa-list"></i> Currently Blocked Slots</h4>
+                                <div id="blockedSlotsList" class="blocked-slots-list">
+                                    <p class="text-muted">No blocked slots</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Payments & Earnings Section -->
+            <section class="content-section" id="earningsSection">
+                <div class="section-header">
+                    <div>
+                        <h1>Payments & Earnings</h1>
+                        <p class="section-subtitle">Track your income and transactions</p>
+                    </div>
+                    <div class="header-actions">
+                        <select class="filter-select" id="earningsFilter">
+                            <option value="month">This Month</option>
+                            <option value="quarter">Last 3 Months</option>
+                            <option value="year">This Year</option>
+                        </select>
+                        <button class="btn-outline"><i class="fas fa-download"></i> Export</button>
+                    </div>
+                </div>
+
+                <!-- Earnings Summary Cards -->
+                <div class="summary-cards earnings-summary-cards">
+                    <div class="summary-card">
+                        <div class="card-icon earnings">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-label">Total Earnings</span>
+                            <span class="card-value">₹1,25,000</span>
+                            <span class="card-change positive">+18% from last month</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-icon completed">
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-label">Completed Sessions</span>
+                            <span class="card-value">47</span>
+                            <span class="card-change positive">+5 from last month</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-icon average">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-label">Average per Session</span>
+                            <span class="card-value">₹2,660</span>
+                            <span class="card-change positive">+₹160</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-list-alt"></i> Transaction History</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Client</th>
+                                    <th>Service</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Invoice</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#TXN-2024-047</td>
+                                    <td>Priya Sharma</td>
+                                    <td>Marriage Matching</td>
+                                    <td>Dec 24, 2024</td>
+                                    <td class="amount-credit">+₹2,500</td>
+                                    <td><span class="status-badge completed">Paid</span></td>
+                                    <td><button class="btn-outline btn-sm"><i class="fas fa-download"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>#TXN-2024-046</td>
+                                    <td>Rahul Verma</td>
+                                    <td>Career Guidance</td>
+                                    <td>Dec 23, 2024</td>
+                                    <td class="amount-credit">+₹1,500</td>
+                                    <td><span class="status-badge completed">Paid</span></td>
+                                    <td><button class="btn-outline btn-sm"><i class="fas fa-download"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>#TXN-2024-045</td>
+                                    <td>Sneha Patel</td>
+                                    <td>Birth Chart Analysis</td>
+                                    <td>Dec 20, 2024</td>
+                                    <td class="amount-credit">+₹1,500</td>
+                                    <td><span class="status-badge completed">Paid</span></td>
+                                    <td><button class="btn-outline btn-sm"><i class="fas fa-download"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>#TXN-2024-044</td>
+                                    <td>Platform Fee</td>
+                                    <td>December Processing</td>
+                                    <td>Dec 21, 2024</td>
+                                    <td class="amount-debit">-₹500</td>
+                                    <td><span class="status-badge pending">Deducted</span></td>
+                                    <td><button class="btn-outline btn-sm"><i class="fas fa-download"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reviews Section -->
+            <section class="content-section" id="reviewsSection">
+                <div class="section-header">
+                    <h1>Reviews & Feedback</h1>
+                    <p class="section-subtitle">View and moderate client reviews</p>
+                </div>
+                <div class="reviews-list"></div>
+            </section>
+
+            <!-- Settings Section -->
+            <section class="content-section" id="settingsSection">
+                <div class="section-header">
+                    <h1>Settings</h1>
+                    <p class="section-subtitle">Manage your admin preferences</p>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-user"></i> Profile Settings</h2>
+                        </div>
+                        <div class="card-body">
+                            <form class="settings-form">
+                                <div class="form-group">
+                                    <label>Display Name</label>
+                                    <input type="text" value="Pandit Ravi Shankar">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" value="admin@hrimkarastro.com">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="tel" value="+91 99306 76179">
+                                </div>
+                                <button type="submit" class="btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-bell"></i> Notification Settings</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="toggle-list">
+                                <div class="toggle-item">
+                                    <div>
+                                        <strong>New Booking Alerts</strong>
+                                        <p>Get notified for new bookings</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div>
+                                        <strong>Payment Notifications</strong>
+                                        <p>Alerts for payments received</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div>
+                                        <strong>Review Notifications</strong>
+                                        <p>Get notified for new reviews</p>
+                                    </div>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay active">
+        <div class="loader"></div>
+        <p>Loading admin panel...</p>
+    </div>
+
+    <!-- Global Navigation Function -->
+    <script>
+        function navigateSection(sectionName) {
+            console.log('navigateSection called with:', sectionName);
+            
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-section') === sectionName) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+                section.classList.remove('active');
+            });
+            
+            // Show target section
+            const targetSection = document.getElementById(sectionName + 'Section');
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                targetSection.classList.add('active');
+                console.log('Showing section:', sectionName + 'Section');
+                
+                // Trigger section-specific loading
+                if (sectionName === 'pendingPayments') {
+                    console.log('Loading pending payments...');
+                    if (typeof loadPendingPayments === 'function') {
+                        loadPendingPayments();
+                    }
+                } else if (sectionName === 'appointments') {
+                    if (typeof loadAppointments === 'function') {
+                        loadAppointments();
+                    }
+                } else if (sectionName === 'users') {
+                    if (typeof loadUsers === 'function') {
+                        loadUsers();
+                    }
+                } else if (sectionName === 'dashboard') {
+                    if (typeof loadDashboardStats === 'function') {
+                        loadDashboardStats();
+                    }
+                }
+            } else {
+                console.error('Section not found:', sectionName + 'Section');
+            }
+        }
+    </script>
+
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/admin-api.js"></script>
+</body>
+</html>
