@@ -1,19 +1,7 @@
-const { requestOtp, registerWithOtp } = require('../controllers/authController');
-router.post('/request-otp', [body('email').isEmail().withMessage('Valid email required')], requestOtp);
-router.post('/register-with-otp', [...registerValidation, body('otp').notEmpty().withMessage('OTP required')], registerWithOtp);
 const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
-const {
-    register,
-    login,
-    logout,
-    getMe,
-    updateDetails,
-    updatePassword,
-    verifyToken
-} = require('../controllers/authController');
-const { protect } = require('../middleware/auth');
+const { requestOtp, registerWithOtp } = require('../controllers/authController');
 
 // Validation rules
 const registerValidation = [
@@ -37,6 +25,20 @@ const registerValidation = [
         .notEmpty().withMessage('Password is required')
         .isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
 ];
+
+router.post('/request-otp', [body('email').isEmail().withMessage('Valid email required')], requestOtp);
+router.post('/register-with-otp', [...registerValidation, body('otp').notEmpty().withMessage('OTP required')], registerWithOtp);
+const {
+    register,
+    login,
+    logout,
+    getMe,
+    updateDetails,
+    updatePassword,
+    verifyToken
+} = require('../controllers/authController');
+const { protect } = require('../middleware/auth');
+
 
 const loginValidation = [
     body('email')

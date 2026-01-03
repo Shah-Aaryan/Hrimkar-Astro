@@ -1,17 +1,40 @@
 const Otp = require('../models/Otp');
 const sendOtpEmail = require('../utils/sendOtpEmail');
 const crypto = require('crypto');
+const User = require('../models/User');
+
 // @desc    Send OTP to email for signup
 // @route   POST /api/auth/request-otp
 // @access  Public
 exports.requestOtp = async (req, res) => {
-    const { email } = req.body;
-    if (!email) return res.status(400).json({ success: false, message: 'Email required' });
-    const otp = (Math.floor(100000 + Math.random() * 900000)).toString();
-    await Otp.deleteMany({ email }); // Remove old OTPs
-    await Otp.create({ email, otp });
-    await sendOtpEmail(email, otp);
-    res.json({ success: true, message: 'OTP sent to email' });
+    try {
+        const { email } = req.body;
+        if (!email) return res.status(400).json({ success: false, message: 'Email required' });
+        
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'An account with this email already exists. Please login instead.' 
+            });
+        }
+        
+        const otp = (Math.floor(100000 + Math.random() * 900000)).toString();
+        await Otp.deleteMany({ email }); // Remove old OTPs
+        await Otp.create({ email, otp });
+        
+        await sendOtpEmail(email, otp);
+        res.json({ success: true, message: 'OTP sent to email' });
+    } catch (error) {
+        console.error('Request OTP error:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: error.message === 'Email service not configured' 
+                ? 'Email service is not configured. Please contact support.' 
+                : 'Failed to send OTP. Please try again.' 
+        });
+    }
 };
 
 // @desc    Register user with OTP verification
@@ -39,7 +62,6 @@ exports.registerWithOtp = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error registering user' });
     }
 };
-const User = require('../models/User');
 const { validationResult } = require('express-validator');
 
 // @desc    Register user

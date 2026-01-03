@@ -9,14 +9,20 @@ async function requestOtp() {
         const btn = document.querySelector('#otpRequestGroup button');
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending OTP...';
+        console.log('Requesting OTP for:', email);
         const res = await window.API.Auth.requestOtp(email);
+        console.log('OTP response:', res);
         if (res.success) {
+            showNotification('OTP sent to your email!', 'success');
             document.getElementById('otpSentMsg').style.display = '';
             document.getElementById('otpInputGroup').style.display = '';
             document.getElementById('registerBtn').style.display = '';
+        } else {
+            showNotification(res.message || 'Failed to send OTP', 'error');
         }
     } catch (e) {
-        showNotification('Failed to send OTP', 'error');
+        console.error('OTP Error:', e);
+        showNotification(e.message || 'Failed to send OTP', 'error');
     } finally {
         const btn = document.querySelector('#otpRequestGroup button');
         btn.disabled = false;

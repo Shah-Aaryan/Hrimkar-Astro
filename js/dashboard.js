@@ -1,5 +1,10 @@
 // ==================== SETTINGS/BACKEND INTEGRATION ====================
 document.addEventListener('DOMContentLoaded', function() {
+    // AUTH CHECK: Redirect to login if not authenticated
+    if (!window.API?.Token?.isLoggedIn() || !window.API?.Token?.getUser()) {
+        window.location.href = 'login.html?redirect=dashboard.html';
+        return;
+    }
     // Personal Details Form
     const personalForm = document.getElementById('personalDetailsForm');
     if (personalForm) {

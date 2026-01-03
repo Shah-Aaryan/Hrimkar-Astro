@@ -1,12 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 const cookieParser = require('cookie-parser');
+
+// Load environment variables from .env file in the same directory as server.js
+dotenv.config({ path: path.join(__dirname, '.env') });
+
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
-
-// Load environment variables
-dotenv.config();
 
 // Connect to database
 connectDB();

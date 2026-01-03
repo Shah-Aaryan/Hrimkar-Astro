@@ -1,31 +1,6 @@
-    // Request OTP for signup
-    requestOtp: async (email) => {
-        return await apiRequest('/auth/request-otp', {
-            method: 'POST',
-            body: JSON.stringify({ email })
-        });
-    },
 
-    // Register with OTP
-    registerWithOtp: async (userData) => {
-        const response = await apiRequest('/auth/register-with-otp', {
-            method: 'POST',
-            body: JSON.stringify(userData)
-        });
-        if (response.success && response.token) {
-            TokenService.setToken(response.token);
-            TokenService.setUser(response.data);
-        }
-        return response;
-    },
-/**
- * Hrimkar Astro - API Service
- * Handles all API calls to the backend
- */
-
+// Define API_BASE_URL and TokenService at the top so they are available everywhere
 const API_BASE_URL = 'http://localhost:5000/api';
-
-// Store token in localStorage
 const TokenService = {
     getToken: () => localStorage.getItem('cosmic_token'),
     setToken: (token) => localStorage.setItem('cosmic_token', token),
@@ -42,15 +17,12 @@ const TokenService = {
 // API request helper
 async function apiRequest(endpoint, options = {}) {
     const token = TokenService.getToken();
-    
     const defaultHeaders = {
         'Content-Type': 'application/json'
     };
-    
     if (token) {
         defaultHeaders['Authorization'] = `Bearer ${token}`;
     }
-    
     const config = {
         ...options,
         headers: {
@@ -58,15 +30,12 @@ async function apiRequest(endpoint, options = {}) {
             ...options.headers
         }
     };
-    
     try {
         const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
         const data = await response.json();
-        
         if (!response.ok) {
             throw new Error(data.message || 'Something went wrong');
         }
-        
         return data;
     } catch (error) {
         console.error('API Error:', error);
@@ -76,6 +45,29 @@ async function apiRequest(endpoint, options = {}) {
 
 // ==================== AUTH API ====================
 const AuthAPI = {
+    // Request OTP for registration
+    requestOtp: async (email) => {
+        return await apiRequest('/auth/request-otp', {
+            method: 'POST',
+            body: JSON.stringify({ email })
+        });
+    },
+
+    // Register with OTP verification
+    registerWithOtp: async (userData) => {
+        const response = await apiRequest('/auth/register-with-otp', {
+            method: 'POST',
+            body: JSON.stringify(userData)
+        });
+        
+        if (response.success && response.token) {
+            TokenService.setToken(response.token);
+            TokenService.setUser(response.data);
+        }
+        
+        return response;
+    },
+
     // Register new user
     register: async (userData) => {
         const response = await apiRequest('/auth/register', {

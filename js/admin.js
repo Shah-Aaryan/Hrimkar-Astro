@@ -4,6 +4,11 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    // AUTH CHECK: Redirect to login if not authenticated or not admin/astrologer
+    if (!window.API?.Token?.isLoggedIn() || !window.API?.Token?.getUser() || !['admin','astrologer'].includes(window.API.Token.getUser()?.role)) {
+        window.location.href = 'login.html?redirect=admin.html';
+        return;
+    }
     console.log('Admin.js DOMContentLoaded');
     try { initializeSidebar(); } catch(e) { console.error('initializeSidebar error:', e); }
     try { initializeAdminNav(); } catch(e) { console.error('initializeAdminNav error:', e); }
