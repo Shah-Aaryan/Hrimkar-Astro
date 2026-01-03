@@ -205,12 +205,34 @@ class DashboardAPI {
             pendingReportsEl.textContent = stats.pendingBookings || 0;
         }
 
-        // Last Payment
-        if (this.bookings.length > 0) {
-            const lastPaidBooking = this.bookings.find(b => b.payment?.status === 'completed');
-            const paymentValueEl = document.querySelector('.summary-card:last-child .card-value');
-            if (paymentValueEl && lastPaidBooking) {
-                paymentValueEl.textContent = `Paid ₹${lastPaidBooking.payment.total.toLocaleString('en-IN')}`;
+        // Last Payment - find most recent completed payment
+        const paymentValueEl = document.getElementById('lastPaymentValue');
+        if (paymentValueEl) {
+            if (this.bookings.length > 0) {
+                // Sort bookings by date and find the most recent completed payment
+                const paidBookings = this.bookings
+                    .filter(b => b.payment?.status === 'completed' && b.payment?.paidAt)
+                    .sort((a, b) => new Date(b.payment.paidAt) - new Date(a.payment.paidAt));
+                
+                if (paidBookings.length > 0) {
+                    const lastPaidBooking = paidBookings[0];
+                    const paidDate = new Date(lastPaidBooking.payment.paidAt);
+                    const formattedDate = paidDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+                    paymentValueEl.textContent = `₹${lastPaidBooking.payment.total.toLocaleString('en-IN')}`;
+                    paymentValueEl.classList.add('status-success');
+                    
+                    // Update date if element exists
+                    const paymentDateEl = document.getElementById('lastPaymentDate');
+                    if (paymentDateEl) {
+                        paymentDateEl.textContent = formattedDate;
+                    }
+                } else {
+                    paymentValueEl.textContent = 'No payments';
+                    paymentValueEl.classList.remove('status-success');
+                }
+            } else {
+                paymentValueEl.textContent = 'No payments';
+                paymentValueEl.classList.remove('status-success');
             }
         }
     }

@@ -62,10 +62,10 @@ const services = {
         duration: 30
     },
     'numerology-astro': {
-        name: 'Numerology + Astro',
-        description: 'Combined numerology and astrology consultation',
-        icon: 'fa-star',
-        price: 2500,
+        name: 'Relationship Harmony Consultation',
+        description: 'Comprehensive relationship and compatibility guidance',
+        icon: 'fa-heart',
+        price: 1000,
         duration: 30
     }
 };

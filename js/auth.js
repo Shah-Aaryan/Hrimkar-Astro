@@ -110,6 +110,7 @@ function showRegister() {
 // Show Forgot Password Form
 function showForgotPassword() {
     hideAllForms();
+    resetForgotPasswordForm();
     document.getElementById('forgotForm').style.display = 'block';
 }
 
@@ -299,34 +300,132 @@ async function handleRegister() {
     }
 }
 
+// Forgot Password state
+let forgotPasswordStep = 'email'; // 'email', 'otp', 'password'
+let forgotPasswordEmail = '';
+
 // Handle Forgot Password
 async function handleForgotPassword() {
-    const email = document.getElementById('forgotEmail').value.trim();
-    
-    if (!email) {
-        showNotification('Please enter your email', 'error');
-        return;
-    }
-    
-    if (!validateEmail(email)) {
-        showNotification('Please enter a valid email', 'error');
-        return;
-    }
-    
-    const btn = document.querySelector('#forgotForm button[type="submit"]');
+    const btn = document.getElementById('forgotSubmitBtn');
     const originalText = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    btn.disabled = true;
     
-    // Simulate sending reset email (backend endpoint can be added later)
-    setTimeout(() => {
-        showSuccess(
-            'Email Sent!',
-            'If an account exists with this email, password reset instructions have been sent.'
-        );
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-    }, 1500);
+    if (forgotPasswordStep === 'email') {
+        // Step 1: Send OTP
+        const email = document.getElementById('forgotEmail').value.trim();
+        
+        if (!email) {
+            showNotification('Please enter your email', 'error');
+            return;
+        }
+        
+        if (!validateEmail(email)) {
+            showNotification('Please enter a valid email', 'error');
+            return;
+        }
+        
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending OTP...';
+        btn.disabled = true;
+        
+        try {
+            const response = await window.API.Auth.forgotPassword(email);
+            if (response.success) {
+                forgotPasswordEmail = email;
+                forgotPasswordStep = 'otp';
+                document.getElementById('forgotEmail').disabled = true;
+                document.getElementById('forgotOtpGroup').style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Verify OTP';
+                showNotification('OTP sent to your email!', 'success');
+            } else {
+                showNotification(response.message || 'Failed to send OTP', 'error');
+            }
+        } catch (error) {
+            showNotification(error.message || 'Failed to send reset OTP', 'error');
+        } finally {
+            btn.disabled = false;
+            if (forgotPasswordStep === 'email') {
+                btn.innerHTML = originalText;
+            }
+        }
+    } else if (forgotPasswordStep === 'otp') {
+        // Step 2: Verify OTP
+        const otp = document.getElementById('forgotOtp').value.trim();
+        
+        if (!otp || otp.length !== 6) {
+            showNotification('Please enter a valid 6-digit OTP', 'error');
+            return;
+        }
+        
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+        btn.disabled = true;
+        
+        try {
+            const response = await window.API.Auth.verifyResetOtp(forgotPasswordEmail, otp);
+            if (response.success) {
+                forgotPasswordStep = 'password';
+                document.getElementById('forgotOtp').disabled = true;
+                document.getElementById('newPasswordGroup').style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-key"></i> Reset Password';
+                showNotification('OTP verified! Enter your new password.', 'success');
+            } else {
+                showNotification(response.message || 'Invalid OTP', 'error');
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Verify OTP';
+            }
+        } catch (error) {
+            showNotification(error.message || 'Invalid or expired OTP', 'error');
+            btn.innerHTML = '<i class="fas fa-check-circle"></i> Verify OTP';
+        } finally {
+            btn.disabled = false;
+        }
+    } else if (forgotPasswordStep === 'password') {
+        // Step 3: Reset Password
+        const otp = document.getElementById('forgotOtp').value.trim();
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmNewPassword').value;
+        
+        if (!newPassword || newPassword.length < 6) {
+            showNotification('Password must be at least 6 characters', 'error');
+            return;
+        }
+        
+        if (newPassword !== confirmPassword) {
+            showNotification('Passwords do not match', 'error');
+            return;
+        }
+        
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Resetting...';
+        btn.disabled = true;
+        
+        try {
+            const response = await window.API.Auth.resetPassword(forgotPasswordEmail, otp, newPassword);
+            if (response.success) {
+                showSuccess('Password Reset!', 'Your password has been reset successfully. You can now login with your new password.');
+                resetForgotPasswordForm();
+            } else {
+                showNotification(response.message || 'Failed to reset password', 'error');
+                btn.innerHTML = '<i class="fas fa-key"></i> Reset Password';
+            }
+        } catch (error) {
+            showNotification(error.message || 'Failed to reset password', 'error');
+            btn.innerHTML = '<i class="fas fa-key"></i> Reset Password';
+        } finally {
+            btn.disabled = false;
+        }
+    }
+}
+
+// Reset forgot password form
+function resetForgotPasswordForm() {
+    forgotPasswordStep = 'email';
+    forgotPasswordEmail = '';
+    document.getElementById('forgotEmail').value = '';
+    document.getElementById('forgotEmail').disabled = false;
+    document.getElementById('forgotOtp').value = '';
+    document.getElementById('forgotOtp').disabled = false;
+    document.getElementById('newPassword').value = '';
+    document.getElementById('confirmNewPassword').value = '';
+    document.getElementById('forgotOtpGroup').style.display = 'none';
+    document.getElementById('newPasswordGroup').style.display = 'none';
+    document.getElementById('forgotSubmitBtn').innerHTML = '<i class="fas fa-paper-plane"></i> Send Reset OTP';
 }
 
 // Validate Email

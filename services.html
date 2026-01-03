@@ -367,26 +367,26 @@
         </div>
     </section>
 
-            <!-- Numerology + Astro -->
+            <!-- Relationship Harmony Consultation -->
             <div class="service-detail" id="numerology-astro">
                 <div class="service-detail-content">
                     <div class="service-badge">
-                        <i class="fas fa-star"></i>
+                        <i class="fas fa-heart"></i>
                     </div>
-                    <h2>Numerology + Astro</h2>
-                    <p class="service-tagline">Complete Life Guidance</p>
-                    <p>Experience the ultimate combination of numerology and Vedic astrology for comprehensive life guidance. This premium consultation combines the power of numbers with planetary influences to provide you with personalized insights and remedies for all aspects of life.</p>
+                    <h2>Relationship Harmony Consultation</h2>
+                    <p class="service-tagline">Love & Compatibility Guidance</p>
+                    <p>Discover the secrets to harmonious relationships through our comprehensive consultation. Get deep insights into love compatibility, marriage prospects, and ways to strengthen your bond with your partner for a fulfilling relationship.</p>
                     
                     <div class="service-includes">
                         <h4>What's Included:</h4>
                         <ul>
-                            <li><i class="fas fa-check"></i> Complete birth chart analysis</li>
-                            <li><i class="fas fa-check"></i> Full numerology reading</li>
-                            <li><i class="fas fa-check"></i> Astro-numerology synchronization</li>
-                            <li><i class="fas fa-check"></i> Personalized remedies</li>
-                            <li><i class="fas fa-check"></i> Lucky dates & numbers</li>
-                            <li><i class="fas fa-check"></i> Career & relationship guidance</li>
-                            <li><i class="fas fa-check"></i> Comprehensive life report</li>
+                            <li><i class="fas fa-check"></i> Compatibility analysis</li>
+                            <li><i class="fas fa-check"></i> Relationship strength assessment</li>
+                            <li><i class="fas fa-check"></i> Communication guidance</li>
+                            <li><i class="fas fa-check"></i> Harmony remedies</li>
+                            <li><i class="fas fa-check"></i> Auspicious timing for decisions</li>
+                            <li><i class="fas fa-check"></i> Partner understanding insights</li>
+                            <li><i class="fas fa-check"></i> Long-term relationship advice</li>
                         </ul>
                     </div>
                     
@@ -397,7 +397,7 @@
                         </div>
                         <div class="meta-item">
                             <i class="fas fa-rupee-sign"></i>
-                            <span class="price">₹2,500</span>
+                            <span class="price">₹1,000</span>
                         </div>
                     </div>
                     
@@ -415,7 +415,7 @@
                     </a>
                 </div>
                 <div class="service-detail-image">
-                    <img src="assets/service-numerology-astro.jpg" alt="Numerology + Astro Consultation">
+                    <img src="assets/service-numerology-astro.jpg" alt="Relationship Harmony Consultation">
                 </div>
             </div>
         </div>
@@ -508,9 +508,9 @@
                             <td><a href="dashboard.html?service=numerology" class="btn btn-sm btn-primary">Book</a></td>
                         </tr>
                         <tr class="featured">
-                            <td><i class="fas fa-star"></i> Numerology + Astro <span class="popular-badge">Popular</span></td>
+                            <td><i class="fas fa-heart"></i> Relationship Harmony <span class="popular-badge">Popular</span></td>
                             <td>30 min</td>
-                            <td class="price">₹2,500</td>
+                            <td class="price">₹1,000</td>
                             <td>
                                 <i class="fas fa-phone" title="Phone"></i>
                                 
@@ -610,12 +610,10 @@
                         <img src="assets/logo.png" alt="Hrimkar Astro">
                         <span>Hrimkar Astro</span>
                     </a>
-                    <p>Guiding lives through authentic Vedic astrology since 1999.</p>
+                    <p>Guiding lives through authentic Vedic astrology since 2015.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 
@@ -711,7 +709,7 @@
         
         .service-detail {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.2fr 0.8fr;
             gap: var(--space-4xl);
             align-items: center;
             padding: var(--space-4xl) 0;
@@ -724,6 +722,7 @@
         
         .service-detail.reverse {
             direction: rtl;
+            grid-template-columns: 0.8fr 1.2fr;
         }
         
         .service-detail.reverse > * {
@@ -842,10 +841,19 @@
             color: var(--gold);
         }
         
+        .service-detail-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .service-detail-image img {
             width: 100%;
+            max-width: 350px;
+            height: auto;
             border-radius: var(--radius-xl);
             border: 2px solid rgba(212, 175, 55, 0.3);
+            box-shadow: var(--shadow-lg);
         }
 
         /* Pricing Table */
@@ -981,6 +989,10 @@
             
             .service-detail-image {
                 order: -1;
+            }
+
+            .service-detail-image img {
+                max-width: 280px;
             }
         }
         

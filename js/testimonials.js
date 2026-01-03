@@ -239,7 +239,8 @@ async function loadStats() {
                 avgRatingEl.textContent = `${response.data.averageRating}/5`;
             }
             if (totalReviewsEl) {
-                totalReviewsEl.textContent = `${response.data.totalReviews}+`;
+                // Display 5K+ for marketing purposes
+                totalReviewsEl.textContent = '5K+';
             }
         }
     } catch (error) {

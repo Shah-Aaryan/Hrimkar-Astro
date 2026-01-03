@@ -35,7 +35,10 @@ const {
     getMe,
     updateDetails,
     updatePassword,
-    verifyToken
+    verifyToken,
+    forgotPassword,
+    verifyResetOtp,
+    resetPassword
 } = require('../controllers/authController');
 const { protect } = require('../middleware/auth');
 
@@ -52,6 +55,11 @@ const loginValidation = [
 // Public routes
 router.post('/register', registerValidation, register);
 router.post('/login', loginValidation, login);
+
+// Forgot Password routes
+router.post('/forgot-password', [body('email').isEmail().withMessage('Valid email required')], forgotPassword);
+router.post('/verify-reset-otp', verifyResetOtp);
+router.post('/reset-password', resetPassword);
 
 // Protected routes
 router.post('/logout', protect, logout);
