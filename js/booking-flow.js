@@ -62,7 +62,7 @@ const services = {
         duration: 30
     },
     'numerology-astro': {
-        name: 'Relationship Harmony Consultation',
+        name: 'Love & Compatibility Guidance',
         description: 'Comprehensive relationship and compatibility guidance',
         icon: 'fa-heart',
         price: 1000,

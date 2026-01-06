@@ -177,7 +177,7 @@ ul {
 }
 
 .gradient-text {
-    background: var(--gradient-gold);
+    background: linear-gradient(135deg, #9333ea 0%, #6b21a8 50%, #581c87 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -763,20 +763,20 @@ ul {
     color: rgba(255, 255, 255, 0.8);
     left: 50%;
     top: 50%;
-    transform: rotate(calc(30deg * var(--i))) translateY(-55px) rotate(calc(-30deg * var(--i)));
+    --angle: calc(30deg * var(--i));
+    transform: rotate(var(--angle)) translateY(-55px);
     margin-left: -20px;
     margin-top: -20px;
-    transition: all 0.3s ease;
-    animation: counter-rotate 30s linear infinite;
-    animation-delay: calc(var(--i) * -2.5s);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    animation: rashi-counter-rotate 30s linear infinite;
 }
 
-@keyframes counter-rotate {
+@keyframes rashi-counter-rotate {
     from { 
-        transform: rotate(calc(30deg * var(--i))) translateY(-55px) rotate(calc(-30deg * var(--i) - 0deg)); 
+        transform: rotate(calc(var(--angle) + 0deg)) translateY(-55px) rotate(calc(-1 * (var(--angle) + 0deg))); 
     }
     to { 
-        transform: rotate(calc(30deg * var(--i))) translateY(-55px) rotate(calc(-30deg * var(--i) - 360deg)); 
+        transform: rotate(calc(var(--angle) + 360deg)) translateY(-55px) rotate(calc(-1 * (var(--angle) + 360deg))); 
     }
 }
 
@@ -784,7 +784,6 @@ ul {
     background: linear-gradient(135deg, #8b5cf6, #d4af37);
     border-color: #d4af37;
     color: white;
-    transform: rotate(calc(30deg * var(--i))) translateY(-55px) rotate(calc(-30deg * var(--i))) scale(1.2);
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
     z-index: 10;
 }
@@ -1022,9 +1021,18 @@ ul {
         width: 32px;
         height: 32px;
         font-size: 0.55rem;
-        transform: rotate(calc(30deg * var(--i))) translateY(-45px) rotate(calc(-30deg * var(--i)));
+        --angle: calc(30deg * var(--i));
         margin-left: -16px;
         margin-top: -16px;
+    }
+    
+    @keyframes rashi-counter-rotate {
+        from { 
+            transform: rotate(calc(var(--angle) + 0deg)) translateY(-45px) rotate(calc(-1 * (var(--angle) + 0deg))); 
+        }
+        to { 
+            transform: rotate(calc(var(--angle) + 360deg)) translateY(-45px) rotate(calc(-1 * (var(--angle) + 360deg))); 
+        }
     }
     
     .rashi-center {

@@ -367,14 +367,14 @@
         </div>
     </section>
 
-            <!-- Relationship Harmony Consultation -->
+            <!-- Love & Compatibility Guidance -->
             <div class="service-detail" id="numerology-astro">
                 <div class="service-detail-content">
                     <div class="service-badge">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <h2>Relationship Harmony Consultation</h2>
-                    <p class="service-tagline">Love & Compatibility Guidance</p>
+                    <h2>Love & Compatibility Guidance</h2>
+                    <p class="service-tagline">Relationship Harmony Consultation</p>
                     <p>Discover the secrets to harmonious relationships through our comprehensive consultation. Get deep insights into love compatibility, marriage prospects, and ways to strengthen your bond with your partner for a fulfilling relationship.</p>
                     
                     <div class="service-includes">
@@ -415,7 +415,7 @@
                     </a>
                 </div>
                 <div class="service-detail-image">
-                    <img src="assets/service-numerology-astro.jpg" alt="Relationship Harmony Consultation">
+                    <img src="assets/service-numerology-astro.jpg" alt="Love & Compatibility Guidance">
                 </div>
             </div>
         </div>
@@ -508,7 +508,7 @@
                             <td><a href="dashboard.html?service=numerology" class="btn btn-sm btn-primary">Book</a></td>
                         </tr>
                         <tr class="featured">
-                            <td><i class="fas fa-heart"></i> Relationship Harmony <span class="popular-badge">Popular</span></td>
+                            <td><i class="fas fa-heart"></i> Love & Compatibility <span class="popular-badge">Popular</span></td>
                             <td>30 min</td>
                             <td class="price">₹1,000</td>
                             <td>
@@ -529,7 +529,7 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-badge">Questions?</span>
-                <h2>Frequently Asked <span class="gradient-text">Questions</span></h2>
+                <h2> <span class="gradient-text">Frequently Asked Questions</span></h2>
             </div>
             
             <div class="faq-list">
@@ -612,8 +612,8 @@
                     </a>
                     <p>Guiding lives through authentic Vedic astrology since 2015.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/share/17bUfkce35/" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/hrimkarastro?igsh=MWd4M3MwMTduaDU4Mw==" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 
@@ -705,6 +705,7 @@
 
         .services-section {
             padding: var(--space-4xl) 0;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-section) 100%);
         }
         
         .service-detail {
@@ -712,12 +713,23 @@
             grid-template-columns: 1.2fr 0.8fr;
             gap: var(--space-4xl);
             align-items: center;
-            padding: var(--space-4xl) 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: var(--space-3xl);
+            margin-bottom: var(--space-2xl);
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--divider);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all var(--transition-normal);
+        }
+        
+        .service-detail:hover {
+            box-shadow: 0 8px 40px rgba(107, 33, 168, 0.12);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-4px);
         }
         
         .service-detail:last-child {
-            border-bottom: none;
+            margin-bottom: 0;
         }
         
         .service-detail.reverse {
@@ -737,15 +749,24 @@
         }
         
         .service-badge i {
-            width: 50px;
-            height: 50px;
-            background: rgba(212, 175, 55, 0.15);
-            border-radius: var(--radius-md);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(107, 33, 168, 0.15) 0%, rgba(212, 175, 55, 0.15) 100%);
+            border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            color: var(--gold);
+            font-size: 1.75rem;
+            color: var(--royal-purple);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 4px 12px rgba(107, 33, 168, 0.1);
+        }
+        
+        .service-detail-content h2 {
+            font-size: 1.75rem;
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+            font-family: var(--font-heading);
         }
         
         .service-badge .popular-tag {
@@ -758,21 +779,31 @@
         }
         
         .service-tagline {
-            color: var(--gold);
+            color: var(--royal-purple);
             font-size: 1rem;
             margin-bottom: var(--space-lg);
+            font-weight: 500;
+        }
+        
+        .service-detail-content p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--space-md);
         }
         
         .service-includes {
             margin: var(--space-xl) 0;
             padding: var(--space-lg);
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, rgba(107, 33, 168, 0.04) 0%, rgba(212, 175, 55, 0.04) 100%);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(107, 33, 168, 0.1);
         }
         
         .service-includes h4 {
             margin-bottom: var(--space-md);
             font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 600;
         }
         
         .service-includes ul {
@@ -787,17 +818,29 @@
             gap: var(--space-sm);
             font-size: 0.875rem;
             color: var(--text-secondary);
+            padding: var(--space-xs) 0;
         }
         
         .service-includes li i {
             color: var(--success);
-            font-size: 0.75rem;
+            font-size: 0.875rem;
+            width: 18px;
+            height: 18px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .service-meta {
             display: flex;
             gap: var(--space-2xl);
             margin-bottom: var(--space-lg);
+            padding: var(--space-md) var(--space-lg);
+            background: var(--bg-section);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--divider);
         }
         
         .meta-item {
@@ -807,13 +850,13 @@
         }
         
         .meta-item i {
-            color: var(--gold);
+            color: var(--royal-purple);
         }
         
         .meta-item .price {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--gold);
+            color: var(--royal-purple);
         }
         
         .consultation-modes {
@@ -822,23 +865,36 @@
             gap: var(--space-md);
             margin-bottom: var(--space-xl);
             font-size: 0.875rem;
+            color: var(--text-secondary);
         }
         
         .modes {
             display: flex;
-            gap: var(--space-md);
+            gap: var(--space-sm);
         }
         
         .mode {
-            padding: var(--space-xs) var(--space-sm);
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
+            padding: var(--space-xs) var(--space-md);
+            background: var(--bg-section);
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            border: 1px solid var(--divider);
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+        }
+        
+        .mode:hover {
+            border-color: var(--royal-purple);
+            color: var(--royal-purple);
         }
         
         .mode i {
             margin-right: 4px;
-            color: var(--gold);
+            color: var(--royal-purple);
+        }
+        
+        .service-detail-content .btn {
+            margin-top: var(--space-md);
         }
         
         .service-detail-image {
@@ -849,70 +905,109 @@
 
         .service-detail-image img {
             width: 100%;
-            max-width: 350px;
+            max-width: 320px;
             height: auto;
             border-radius: var(--radius-xl);
-            border: 2px solid rgba(212, 175, 55, 0.3);
-            box-shadow: var(--shadow-lg);
+            border: 3px solid var(--divider);
+            box-shadow: 0 12px 40px rgba(107, 33, 168, 0.15);
+            transition: all var(--transition-normal);
+        }
+        
+        .service-detail:hover .service-detail-image img {
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 16px 50px rgba(107, 33, 168, 0.2);
+            transform: scale(1.02);
         }
 
         /* Pricing Table */
         .pricing-section {
             padding: var(--space-4xl) 0;
-            background: rgba(74, 26, 107, 0.1);
+            background: var(--bg-section);
+        }
+        
+        .pricing-section .section-header {
+            text-align: center;
+            margin-bottom: var(--space-3xl);
+        }
+        
+        .pricing-section h2 {
+            color: var(--text-primary);
+            margin-bottom: var(--space-md);
         }
         
         .pricing-table {
             overflow-x: auto;
+            border-radius: var(--radius-xl);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
         }
         
         .pricing-table table {
             width: 100%;
             border-collapse: collapse;
-            background: var(--gradient-card);
-            border-radius: var(--radius-lg);
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
             overflow: hidden;
         }
         
         .pricing-table th,
         .pricing-table td {
-            padding: var(--space-lg);
+            padding: var(--space-lg) var(--space-xl);
             text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--divider);
         }
         
         .pricing-table th {
-            background: rgba(0, 0, 0, 0.2);
-            font-size: 0.875rem;
-            color: var(--text-muted);
+            background: linear-gradient(135deg, var(--royal-purple) 0%, var(--deep-blue) 100%);
+            font-size: 0.8rem;
+            color: #fff;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 600;
         }
         
         .pricing-table td {
-            font-size: 0.875rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .pricing-table tbody tr {
+            transition: all var(--transition-fast);
+        }
+        
+        .pricing-table tbody tr:hover {
+            background: rgba(107, 33, 168, 0.03);
         }
         
         .pricing-table td i {
-            color: var(--gold);
+            color: var(--royal-purple);
             margin-right: var(--space-sm);
         }
         
         .pricing-table td.price {
-            color: var(--gold);
+            color: var(--royal-purple);
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
         
         .pricing-table tr.featured {
-            background: rgba(212, 175, 55, 0.1);
+            background: linear-gradient(90deg, rgba(107, 33, 168, 0.08) 0%, rgba(212, 175, 55, 0.08) 100%);
+        }
+        
+        .pricing-table tr.featured:hover {
+            background: linear-gradient(90deg, rgba(107, 33, 168, 0.12) 0%, rgba(212, 175, 55, 0.12) 100%);
         }
         
         .popular-badge {
-            background: var(--gradient-gold);
-            color: var(--deep-blue);
-            padding: 2px 8px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: #fff;
+            padding: 3px 10px;
             border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
             font-size: 0.625rem;
             font-weight: 700;
             margin-left: var(--space-sm);
@@ -921,6 +1016,12 @@
         /* FAQ */
         .faq-section {
             padding: var(--space-4xl) 0;
+            background: var(--bg-primary);
+        }
+        
+        .faq-section .section-header {
+            text-align: center;
+            margin-bottom: var(--space-3xl);
         }
         
         .faq-list {
@@ -929,11 +1030,18 @@
         }
         
         .faq-item {
-            background: var(--gradient-card);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            border: 1px solid var(--divider);
+            border-radius: var(--radius-lg);
             margin-bottom: var(--space-md);
             overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all var(--transition-fast);
+        }
+        
+        .faq-item:hover {
+            border-color: rgba(107, 33, 168, 0.2);
+            box-shadow: 0 4px 16px rgba(107, 33, 168, 0.08);
         }
         
         .faq-question {
@@ -941,7 +1049,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: var(--space-lg);
+            padding: var(--space-lg) var(--space-xl);
             background: none;
             border: none;
             color: var(--text-primary);
@@ -954,11 +1062,12 @@
         }
         
         .faq-question:hover {
-            color: var(--gold);
+            color: var(--royal-purple);
         }
         
         .faq-question i {
             transition: var(--transition-normal);
+            color: var(--royal-purple);
         }
         
         .faq-item.active .faq-question i {
@@ -969,6 +1078,7 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease;
+            background: linear-gradient(135deg, rgba(107, 33, 168, 0.03), rgba(183, 148, 244, 0.03));
         }
         
         .faq-item.active .faq-answer {
@@ -976,8 +1086,29 @@
         }
         
         .faq-answer p {
-            padding: 0 var(--space-lg) var(--space-lg);
-            font-size: 0.875rem;
+            padding: var(--space-md) var(--space-xl) var(--space-lg);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            border-top: 1px dashed rgba(107, 33, 168, 0.15);
+        }
+
+        /* CTA Section Enhancement */
+        .cta-section {
+            background: linear-gradient(135deg, var(--royal-purple), var(--medium-purple));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
         }
 
         @media (max-width: 992px) {
@@ -994,6 +1125,10 @@
             .service-detail-image img {
                 max-width: 280px;
             }
+
+            .pricing-table {
+                margin: 0 var(--space-sm);
+            }
         }
         
         @media (max-width: 768px) {
@@ -1004,6 +1139,17 @@
             .service-meta {
                 flex-direction: column;
                 gap: var(--space-md);
+            }
+
+            .faq-question {
+                padding: var(--space-md) var(--space-lg);
+                font-size: 0.95rem;
+            }
+
+            .pricing-table th,
+            .pricing-table td {
+                padding: var(--space-md);
+                font-size: 0.875rem;
             }
         }
     </style>
