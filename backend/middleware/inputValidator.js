@@ -191,11 +191,11 @@ const dateValidation = (field) => body(field)
         return true;
     });
 
-// Time validation (HH:MM format)
+// Time validation (supports both 24-hour HH:MM and 12-hour H:MM AM/PM formats)
 const timeValidation = body('scheduledTime')
     .trim()
     .notEmpty().withMessage('Time is required')
-    .matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage('Invalid time format. Use HH:MM format');
+    .matches(/^((0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM|am|pm)|([01]?[0-9]|2[0-3]):[0-5][0-9])$/).withMessage('Invalid time format. Use H:MM AM/PM or HH:MM format');
 
 // ============================================
 // ENDPOINT-SPECIFIC VALIDATION SCHEMAS
@@ -324,7 +324,7 @@ const createBookingValidation = [
     body('scheduledTime')
         .trim()
         .notEmpty().withMessage('Time is required')
-        .matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage('Invalid time format'),
+        .matches(/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM|am|pm)$/).withMessage('Invalid time format. Use H:MM AM/PM format'),
     body('timezone')
         .optional()
         .trim()
@@ -394,7 +394,7 @@ const rescheduleValidation = [
     body('scheduledTime')
         .trim()
         .notEmpty().withMessage('Time is required')
-        .matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage('Invalid time format'),
+        .matches(/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM|am|pm)$/).withMessage('Invalid time format. Use H:MM AM/PM format'),
     handleValidationErrors
 ];
 
