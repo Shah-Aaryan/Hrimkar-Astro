@@ -310,11 +310,14 @@ const VALID_PAYMENT_METHODS = ['upi', 'gpay'];
 const createBookingValidation = [
     // First validate top-level fields
     (req, res, next) => {
+        console.log('Validating booking request body:', JSON.stringify(req.body, null, 2));
+        
         const topLevelFields = ['serviceId', 'consultationMode', 'scheduledDate', 'scheduledTime', 'timezone', 'personalDetails', 'couponCode', 'paymentMethod'];
         const receivedFields = Object.keys(req.body || {});
         const unexpectedFields = receivedFields.filter(field => !topLevelFields.includes(field));
         
         if (unexpectedFields.length > 0) {
+            console.log('Unexpected top-level fields:', unexpectedFields);
             return res.status(400).json({
                 success: false,
                 message: 'Request contains unexpected fields',
@@ -332,6 +335,7 @@ const createBookingValidation = [
             const unexpectedPersonalFields = receivedPersonalFields.filter(field => !allowedPersonalFields.includes(field));
             
             if (unexpectedPersonalFields.length > 0) {
+                console.log('Unexpected personalDetails fields:', unexpectedPersonalFields);
                 return res.status(400).json({
                     success: false,
                     message: 'personalDetails contains unexpected fields',
@@ -381,38 +385,50 @@ const createBookingValidation = [
         .isLength({ min: 10, max: 15 }).withMessage('Invalid phone number')
         .customSanitizer(sanitizePhone),
     body('personalDetails.dateOfBirth')
-        .optional({ nullable: true })
-        .trim()
+        .optional({ nullable: true, checkFalsy: true })
         .custom((value) => {
-            if (!value || value === 'null' || value === '') return true;
-            return /^\d{4}-\d{2}-\d{2}/.test(value);
+            if (!value || value === 'null' || value === '' || value === null) return true;
+            if (typeof value !== 'string') return false;
+            return /^\d{4}-\d{2}-\d{2}/.test(value.trim());
         }).withMessage('Invalid date of birth format'),
     body('personalDetails.timeOfBirth')
-        .optional({ nullable: true })
-        .trim()
+        .optional({ nullable: true, checkFalsy: true })
         .custom((value) => {
-            if (!value || value === 'null' || value === '') return true;
-            return /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(value);
+            if (!value || value === 'null' || value === '' || value === null) return true;
+            if (typeof value !== 'string') return false;
+            return /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(value.trim());
         }).withMessage('Invalid time format'),
     body('personalDetails.placeOfBirth')
-        .optional({ nullable: true })
-        .trim()
-        .isLength({ max: 100 }).withMessage('Place of birth is too long')
+        .optional({ nullable: true, checkFalsy: true })
+        .customSanitizer(value => value && typeof value === 'string' ? value.trim() : value)
+        .custom((value) => {
+            if (!value || value === null) return true;
+            return value.length <= 100;
+        }).withMessage('Place of birth is too long')
         .customSanitizer(sanitizeString),
     body('personalDetails.specificQuestions')
-        .optional({ nullable: true })
-        .trim()
-        .isLength({ max: 2000 }).withMessage('Questions cannot exceed 2000 characters')
+        .optional({ nullable: true, checkFalsy: true })
+        .customSanitizer(value => value && typeof value === 'string' ? value.trim() : value)
+        .custom((value) => {
+            if (!value || value === null) return true;
+            return value.length <= 2000;
+        }).withMessage('Questions cannot exceed 2000 characters')
         .customSanitizer(sanitizeString),
     body('personalDetails.consultationPurpose')
-        .optional({ nullable: true })
-        .trim()
-        .isLength({ max: 500 }).withMessage('Purpose cannot exceed 500 characters')
+        .optional({ nullable: true, checkFalsy: true })
+        .customSanitizer(value => value && typeof value === 'string' ? value.trim() : value)
+        .custom((value) => {
+            if (!value || value === null) return true;
+            return value.length <= 500;
+        }).withMessage('Purpose cannot exceed 500 characters')
         .customSanitizer(sanitizeString),
     body('couponCode')
-        .optional({ nullable: true })
-        .trim()
-        .isLength({ max: 20 }).withMessage('Invalid coupon code'),
+        .optional({ nullable: true, checkFalsy: true })
+        .customSanitizer(value => value && typeof value === 'string' ? value.trim() : value)
+        .custom((value) => {
+            if (!value || value === null) return true;
+            return value.length <= 20;
+        }).withMessage('Invalid coupon code'),
     body('paymentMethod')
         .trim()
         .notEmpty().withMessage('Payment method is required')
