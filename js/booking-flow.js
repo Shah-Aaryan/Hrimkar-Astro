@@ -1034,24 +1034,27 @@ async function completeBooking() {
     console.log('bookingState:', bookingState);
     
     // First create the booking
+    // Construct personalDetails with only provided optional fields to satisfy strict validators
+    const pd = {
+        fullName: bookingState.personalDetails.fullName,
+        email: bookingState.personalDetails.email,
+        phone: bookingState.personalDetails.phone
+    };
+    if (bookingState.personalDetails.dob) pd.dateOfBirth = bookingState.personalDetails.dob;
+    if (bookingState.personalDetails.tob) pd.timeOfBirth = bookingState.personalDetails.tob;
+    if (bookingState.personalDetails.pob) pd.placeOfBirth = bookingState.personalDetails.pob;
+    if (bookingState.personalDetails.purpose) pd.consultationPurpose = bookingState.personalDetails.purpose;
+
     const bookingData = {
         serviceId: bookingState.service.id,
         consultationMode: bookingState.mode.id,
         scheduledDate: bookingState.date.toISOString(),
         scheduledTime: bookingState.time,
         timezone: bookingState.timezone || 'Asia/Kolkata',
-        personalDetails: {
-            fullName: bookingState.personalDetails.fullName,
-            email: bookingState.personalDetails.email,
-            phone: bookingState.personalDetails.phone,
-            dateOfBirth: bookingState.personalDetails.dob || null,
-            timeOfBirth: bookingState.personalDetails.tob || null,
-            placeOfBirth: bookingState.personalDetails.pob || null,
-            consultationPurpose: bookingState.personalDetails.purpose || ''
-        },
-        couponCode: bookingState.coupon || null,
+        personalDetails: pd,
         paymentMethod: 'gpay'
     };
+    if (bookingState.coupon) bookingData.couponCode = bookingState.coupon;
     
     console.log('bookingData:', bookingData);
     
