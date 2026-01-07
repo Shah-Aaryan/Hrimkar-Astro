@@ -625,6 +625,19 @@ function parseTimeToHour(timeStr) {
     return hour;
 }
 
+// Convert 'H:MM AM/PM' to 'HH:MM' 24-hour format to satisfy stricter server validators
+function convertTo24Hour(timeStr) {
+    const match = timeStr && timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (!match) return timeStr; // if already HH:MM or invalid, pass through
+    let hour = parseInt(match[1], 10);
+    const minutes = match[2];
+    const meridiem = match[3].toUpperCase();
+    if (meridiem === 'PM' && hour !== 12) hour += 12;
+    if (meridiem === 'AM' && hour === 12) hour = 0;
+    const hh = hour.toString().padStart(2, '0');
+    return `${hh}:${minutes}`;
+}
+
 /* ==================== Step 4: Personal Details ==================== */
 function initPersonalDetails() {
     const toStep5Btn = document.getElementById('toStep5');
@@ -1049,7 +1062,8 @@ async function completeBooking() {
         serviceId: bookingState.service.id,
         consultationMode: bookingState.mode.id,
         scheduledDate: bookingState.date.toISOString(),
-        scheduledTime: bookingState.time,
+        // Use 24-hour HH:MM format for broad server compatibility
+        scheduledTime: convertTo24Hour(bookingState.time),
         timezone: bookingState.timezone || 'Asia/Kolkata',
         personalDetails: pd,
         paymentMethod: 'gpay'
