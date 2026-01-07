@@ -1,9 +1,6 @@
 // Define API_BASE_URL and TokenService at the top so they are available everywhere
-// Use localhost API when running the site locally
-const API_BASE_URL = (typeof window !== 'undefined' && (
-    window.location.hostname === 'localhost' ||
-    window.location.hostname === '127.0.0.1'
-)) ? 'http://localhost:5000/api' : 'https://hrimkar-astro-1.onrender.com/api';
+// API base URL (defaults to production unless overridden by window.API.BASE_URL)
+const API_BASE_URL = (typeof window !== 'undefined' && window.API && window.API.BASE_URL) ? window.API.BASE_URL : 'https://hrimkar-astro-1.onrender.com/api';
 const TokenService = {
     getToken: () => localStorage.getItem('cosmic_token'),
     setToken: (token) => localStorage.setItem('cosmic_token', token),
@@ -47,7 +44,11 @@ async function apiRequest(endpoint, options = {}) {
             if (data && data.errors) {
                 console.error('Validation errors:', data.errors);
             }
-            throw new Error((data && data.message) || `Request failed with status ${response.status}`);
+            // Create error with validation details
+            const error = new Error((data && data.message) || `Request failed with status ${response.status}`);
+            error.response = data; // Attach full response including errors array
+            error.status = response.status;
+            throw error;
         }
         return data;
     } catch (error) {

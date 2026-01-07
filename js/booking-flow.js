@@ -328,9 +328,16 @@ function initServiceSelection() {
             
             // Update state
             const serviceId = this.dataset.service;
+            // Ensure serviceId is valid and normalize it
+            if (!serviceId || !services[serviceId]) {
+                console.error('Invalid service selected:', serviceId);
+                showToast('Invalid service selected. Please try again.', 'error');
+                return;
+            }
+            // Set service with id first, then spread other properties (id will be preserved)
             bookingState.service = {
-                id: serviceId,
-                ...services[serviceId]
+                ...services[serviceId],
+                id: serviceId  // Ensure id is always set correctly, even if services object changes
             };
             
             // Calculate total
@@ -1041,6 +1048,86 @@ function copyUPIId() {
     });
 }
 
+// Helper function to normalize serviceId - ensures we always send the correct ID format
+function normalizeServiceId(service) {
+    if (!service) {
+        throw new Error('Service is required');
+    }
+    
+    // Valid service IDs that backend expects
+    const validServiceIds = ['birth-chart', 'marriage-matching', 'career-guidance', 'health-astrology', 'tarot-reading', 'numerology', 'love-compatibility'];
+    
+    // If service has an id property, use it (but validate it)
+    if (service.id) {
+        const normalizedId = String(service.id).trim().toLowerCase();
+        if (validServiceIds.includes(normalizedId)) {
+            return normalizedId;
+        }
+    }
+    
+    // If service is a string (service name), try to map it to an ID
+    if (typeof service === 'string') {
+        const normalized = service.trim().toLowerCase();
+        // Direct match
+        if (validServiceIds.includes(normalized)) {
+            return normalized;
+        }
+        // Map service names to IDs
+        const nameToIdMap = {
+            'vedic astrology': 'birth-chart',
+            'birth chart': 'birth-chart',
+            'marriage matching': 'marriage-matching',
+            'marriage astrology': 'marriage-matching',
+            'career guidance': 'career-guidance',
+            'career astrology': 'career-guidance',
+            'health astrology': 'health-astrology',
+            'medical/health astrology': 'health-astrology',
+            'tarot card reading': 'tarot-reading',
+            'tarot reading': 'tarot-reading',
+            'numerology': 'numerology',
+            'love & compatibility guidance': 'love-compatibility',
+            'love compatibility': 'love-compatibility',
+            'love & compatibility': 'love-compatibility'
+        };
+        if (nameToIdMap[normalized]) {
+            return nameToIdMap[normalized];
+        }
+    }
+    
+    // If service is an object with a name, try to map the name
+    if (service.name) {
+        const normalizedName = String(service.name).trim().toLowerCase();
+        const nameToIdMap = {
+            'vedic astrology': 'birth-chart',
+            'birth chart': 'birth-chart',
+            'marriage matching': 'marriage-matching',
+            'marriage astrology': 'marriage-matching',
+            'career guidance': 'career-guidance',
+            'career astrology': 'career-guidance',
+            'health astrology': 'health-astrology',
+            'medical/health astrology': 'health-astrology',
+            'tarot card reading': 'tarot-reading',
+            'tarot reading': 'tarot-reading',
+            'numerology': 'numerology',
+            'love & compatibility guidance': 'love-compatibility',
+            'love compatibility': 'love-compatibility',
+            'love & compatibility': 'love-compatibility'
+        };
+        if (nameToIdMap[normalizedName]) {
+            return nameToIdMap[normalizedName];
+        }
+    }
+    
+    // Try to find by matching against services object keys
+    for (const [id, serviceData] of Object.entries(services)) {
+        if (serviceData.name === service || serviceData.name === service?.name) {
+            return id;
+        }
+    }
+    
+    throw new Error(`Invalid service: ${JSON.stringify(service)}. Could not determine serviceId.`);
+}
+
 async function completeBooking() {
     console.log('completeBooking called');
     console.log('selectedScreenshot:', selectedScreenshot);
@@ -1058,8 +1145,11 @@ async function completeBooking() {
     if (bookingState.personalDetails.pob) pd.placeOfBirth = bookingState.personalDetails.pob;
     if (bookingState.personalDetails.purpose) pd.consultationPurpose = bookingState.personalDetails.purpose;
 
+    // Normalize serviceId to ensure it's always in the correct format
+    const normalizedServiceId = normalizeServiceId(bookingState.service);
+    
     const bookingData = {
-        serviceId: bookingState.service.id,
+        serviceId: normalizedServiceId,
         consultationMode: bookingState.mode.id,
         scheduledDate: bookingState.date.toISOString(),
         // Use 24-hour HH:MM format for broad server compatibility
@@ -1089,13 +1179,45 @@ async function completeBooking() {
             }
         } catch (error) {
             console.error('API booking error:', error);
-            // Fall back to demo mode
+            console.error('Error details:', {
+                message: error.message,
+                response: error.response,
+                status: error.status
+            });
+            
+            // Show validation errors to user if available
+            let errorMessage = 'Failed to create booking. Please check all fields and try again.';
+            if (error.response && error.response.errors && Array.isArray(error.response.errors)) {
+                const errorMessages = error.response.errors.map(e => {
+                    const field = e.param || e.field || 'unknown';
+                    const msg = e.msg || e.message || 'Invalid value';
+                    return `${field}: ${msg}`;
+                }).join(', ');
+                errorMessage = `Validation failed: ${errorMessages}`;
+            } else if (error.response && error.response.message) {
+                errorMessage = error.response.message;
+            } else if (error.message) {
+                errorMessage = error.message;
+            }
+            
+            showToast(errorMessage, 'error');
+            
+            // Don't fall back to demo mode if API is available - show error instead
+            if (window.API && window.API.Booking) {
+                return; // Exit early, don't proceed with booking
+            }
+            // Fall back to demo mode only if API is not available
             booking = createDemoBooking(bookingData);
         }
     } else {
         console.log('API not available, using demo mode');
         // Demo mode
         booking = createDemoBooking(bookingData);
+    }
+    
+    // If booking creation failed, don't proceed
+    if (!booking) {
+        return;
     }
     
     // Upload screenshot if we have a real booking ID

@@ -3,7 +3,7 @@
  * Handles review submission from user dashboard
  */
 
-const REVIEW_API_BASE = 'https://hrimkar-astro-1.onrender.com/api';
+const REVIEW_API_BASE = (typeof window !== 'undefined' && window.API && window.API.BASE_URL) ? window.API.BASE_URL : 'https://hrimkar-astro-1.onrender.com/api';
 
 // Dashboard Review Module
 const DashboardReview = {

@@ -3,7 +3,7 @@
  * Handles all dashboard data fetching and updates from MongoDB backend
  */
 
-const DASHBOARD_API_BASE = 'https://hrimkar-astro-1.onrender.com/api';
+const DASHBOARD_API_BASE = (typeof window !== 'undefined' && window.API && window.API.BASE_URL) ? window.API.BASE_URL : 'https://hrimkar-astro-1.onrender.com/api';
 
 // Dashboard API Class
 class DashboardAPI {

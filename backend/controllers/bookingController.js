@@ -4,6 +4,22 @@ const BlockedSlot = require('../models/BlockedSlot');
 const { validationResult } = require('express-validator');
 const sendBookingNotification = require('../utils/sendBookingNotification');
 
+// Helper function to parse date string and avoid timezone issues
+// Parses YYYY-MM-DD format as UTC midnight to store date-only values reliably
+function parseLocalDate(dateString) {
+    if (!dateString) return null;
+    
+    if (typeof dateString === 'string' && /^\d{4}-\d{2}-\d{2}/.test(dateString)) {
+        // Parse as YYYY-MM-DD (treat as date-only) and return UTC midnight for that date
+        const [year, month, day] = dateString.substring(0, 10).split('-').map(Number);
+        return new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
+    }
+    
+    // Fallback to standard Date parsing - normalize to UTC midnight of the local date
+    const date = new Date(dateString);
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0));
+}
+
 // Service pricing data
 const services = {
     'birth-chart': { name: 'Vedic Astrology', price: 2500, duration: 30 },
@@ -45,7 +61,7 @@ exports.createBooking = async (req, res) => {
             });
         }
 
-        const {
+        let {
             serviceId,
             consultationMode,
             scheduledDate,
@@ -55,6 +71,31 @@ exports.createBooking = async (req, res) => {
             couponCode,
             paymentMethod
         } = req.body;
+
+        // If frontend sent a human-friendly `service` field (name or object), try mapping it to a valid serviceId
+        if (!serviceId && req.body.service) {
+            const svc = req.body.service;
+            if (typeof svc === 'object' && svc.id) {
+                serviceId = String(svc.id).trim();
+            } else if (typeof svc === 'string') {
+                const normalized = svc.trim().toLowerCase();
+                // Direct id match
+                if (services[normalized]) {
+                    serviceId = normalized;
+                } else {
+                    // Exact name match
+                    const foundByName = Object.keys(services).find(k => services[k].name.toLowerCase() === normalized);
+                    if (foundByName) serviceId = foundByName;
+                    else {
+                        // Loose match (remove non-alphanumeric)
+                        const normalizeKey = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+                        const target = normalizeKey(normalized);
+                        const foundLoose = Object.keys(services).find(k => normalizeKey(k) === target || normalizeKey(services[k].name) === target || normalizeKey(services[k].name).includes(target));
+                        if (foundLoose) serviceId = foundLoose;
+                    }
+                }
+            }
+        }
 
         // Validate service
         if (!services[serviceId]) {
@@ -534,7 +575,7 @@ exports.validateCoupon = async (req, res) => {
 exports.getAvailableSlots = async (req, res) => {
     try {
         const { date } = req.params;
-        const selectedDate = new Date(date);
+        const selectedDate = parseLocalDate(date);
 
         // Get all bookings for the date
         const startOfDay = new Date(selectedDate);
@@ -1235,8 +1276,14 @@ exports.blockSlot = async (req, res) => {
             });
         }
 
-        const slotDate = new Date(date);
-        slotDate.setHours(0, 0, 0, 0);
+        // Parse date string properly to avoid timezone issues
+        const slotDate = parseLocalDate(date);
+        if (!slotDate || isNaN(slotDate.getTime())) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid date format'
+            });
+        }
 
         // If blocking full day, remove any existing slots for that day and create one full-day block
         if (isFullDay) {
@@ -1338,8 +1385,14 @@ exports.unblockSlot = async (req, res) => {
             });
         }
 
-        const slotDate = new Date(date);
-        slotDate.setHours(0, 0, 0, 0);
+        // Parse date string properly to avoid timezone issues
+        const slotDate = parseLocalDate(date);
+        if (!slotDate || isNaN(slotDate.getTime())) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid date format'
+            });
+        }
 
         const result = await BlockedSlot.findOneAndDelete({
             date: {

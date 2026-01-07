@@ -3,7 +3,7 @@
  * Handles all admin data fetching and management from MongoDB backend
  */
 
-const ADMIN_API_BASE = 'https://hrimkar-astro-1.onrender.com/api';
+const ADMIN_API_BASE = (typeof window !== 'undefined' && window.API && window.API.BASE_URL) ? window.API.BASE_URL : 'https://hrimkar-astro-1.onrender.com/api';
 
 // Admin API Class
 class AdminAPI {
@@ -671,18 +671,45 @@ class AdminAPI {
             const token = window.API.Token.getToken();
             console.log('Sending block slot request to:', `${ADMIN_API_BASE}/bookings/admin/block-slot`);
             
+            const requestBody = {
+                date: date,
+                reason: reason || undefined,
+                isFullDay: Boolean(isFullDay) // Ensure it's a boolean
+            };
+            
+            // Only include timeSlot if not blocking full day
+            if (!isFullDay && timeSlot) {
+                requestBody.timeSlot = timeSlot.trim();
+            }
+            
+            console.log('Block slot request body:', requestBody);
+            
             const response = await fetch(`${ADMIN_API_BASE}/bookings/admin/block-slot`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ date, timeSlot: isFullDay ? null : timeSlot, reason, isFullDay })
+                body: JSON.stringify(requestBody)
             });
             
             console.log('Block slot response status:', response.status);
             const data = await response.json();
             console.log('Block slot response data:', data);
+            
+            if (!response.ok) {
+                // Handle validation errors
+                let errorMessage = data.message || 'Failed to block slot';
+                if (data.errors && Array.isArray(data.errors)) {
+                    const errorMessages = data.errors.map(e => {
+                        const field = e.param || e.field || 'unknown';
+                        const msg = e.msg || e.message || 'Invalid value';
+                        return `${field}: ${msg}`;
+                    }).join(', ');
+                    errorMessage = `Validation failed: ${errorMessages}`;
+                }
+                throw new Error(errorMessage);
+            }
             
             if (data.success) {
                 this.showToast(isFullDay ? 'Full day blocked successfully' : 'Slot blocked successfully', 'success');

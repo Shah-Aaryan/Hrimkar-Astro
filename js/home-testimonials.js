@@ -4,7 +4,7 @@
  */
 
 const HomeTestimonials = {
-    apiBaseUrl: 'https://hrimkar-astro-1.onrender.com/api',
+    apiBaseUrl: (typeof window !== 'undefined' && window.API && window.API.BASE_URL) ? window.API.BASE_URL : 'https://hrimkar-astro-1.onrender.com/api',
     testimonials: [],
     currentIndex: 0,
     itemsPerPage: 3,

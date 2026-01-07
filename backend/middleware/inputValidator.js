@@ -307,12 +307,27 @@ const VALID_SERVICES = ['birth-chart', 'marriage-matching', 'career-guidance', '
 const VALID_MODES = ['phone', 'video', 'chat'];
 const VALID_PAYMENT_METHODS = ['upi', 'gpay'];
 
+// Map human-friendly display names to valid service ids
+const SERVICE_NAME_MAP = {
+    'vedic astrology': 'birth-chart',
+    'birth chart': 'birth-chart',
+    'marriage matching': 'marriage-matching',
+    'career guidance': 'career-guidance',
+    'health astrology': 'health-astrology',
+    'tarot card reading': 'tarot-reading',
+    'tarot reading': 'tarot-reading',
+    'numerology': 'numerology',
+    'love & compatibility guidance': 'love-compatibility',
+    'love compatibility': 'love-compatibility',
+    'love & compatibility': 'love-compatibility'
+};
+
 const createBookingValidation = [
     // First validate top-level fields
     (req, res, next) => {
         console.log('Validating booking request body:', JSON.stringify(req.body, null, 2));
         
-        const topLevelFields = ['serviceId', 'consultationMode', 'scheduledDate', 'scheduledTime', 'timezone', 'personalDetails', 'couponCode', 'paymentMethod'];
+        const topLevelFields = ['serviceId', 'service', 'consultationMode', 'scheduledDate', 'scheduledTime', 'timezone', 'personalDetails', 'couponCode', 'paymentMethod'];
         const receivedFields = Object.keys(req.body || {});
         const unexpectedFields = receivedFields.filter(field => !topLevelFields.includes(field));
         
@@ -349,6 +364,94 @@ const createBookingValidation = [
         
         next();
     },
+    // Support legacy/front-end sending human-friendly "service" instead of "serviceId". Map names -> ids here before further validation.
+    (req, res, next) => {
+        // Helper function to normalize and map service to valid serviceId
+        const normalizeServiceId = (svc) => {
+            if (!svc) return null;
+
+            // Accept object form { id: 'birth-chart', name: 'Vedic Astrology' }
+            if (typeof svc === 'object' && svc.id) {
+                const normalized = String(svc.id).trim().toLowerCase();
+                if (VALID_SERVICES.includes(normalized)) {
+                    return normalized;
+                }
+            }
+
+            if (typeof svc === 'string') {
+                const normalized = svc.trim().toLowerCase();
+
+                // Direct id match
+                if (VALID_SERVICES.includes(normalized)) {
+                    return normalized;
+                }
+
+                // Map common human-friendly names to ids
+                const SERVICE_NAME_MAP = {
+                    'vedic astrology': 'birth-chart',
+                    'birth chart': 'birth-chart',
+                    'marriage matching': 'marriage-matching',
+                    'marriage astrology': 'marriage-matching',
+                    'career guidance': 'career-guidance',
+                    'career astrology': 'career-guidance',
+                    'health astrology': 'health-astrology',
+                    'medical/health astrology': 'health-astrology',
+                    'tarot card reading': 'tarot-reading',
+                    'tarot reading': 'tarot-reading',
+                    'numerology': 'numerology',
+                    'love & compatibility guidance': 'love-compatibility',
+                    'love compatibility': 'love-compatibility',
+                    'love & compatibility': 'love-compatibility'
+                };
+
+                if (SERVICE_NAME_MAP[normalized]) {
+                    return SERVICE_NAME_MAP[normalized];
+                }
+
+                // Loose match: remove non-alphanum and compare
+                const normalizeKey = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+                const target = normalizeKey(normalized);
+                for (const id of VALID_SERVICES) {
+                    if (normalizeKey(id) === target) {
+                        return id;
+                    }
+                }
+            }
+
+            return null;
+        };
+
+        // If serviceId is already present, check if it's valid
+        if (req.body.serviceId) {
+            const normalized = String(req.body.serviceId).trim().toLowerCase();
+            // If it's already a valid serviceId, nothing to do
+            if (VALID_SERVICES.includes(normalized)) {
+                req.body.serviceId = normalized; // Ensure it's normalized
+                return next();
+            }
+            // If serviceId is present but invalid, try to normalize it (might be a service name)
+            const mapped = normalizeServiceId(req.body.serviceId);
+            if (mapped) {
+                req.body.serviceId = mapped;
+                return next();
+            }
+            // If we can't map it, continue to validation which will return an error
+            return next();
+        }
+
+        // If serviceId is not present, try to get it from service or serviceName
+        const svc = req.body.service || req.body.serviceName || null;
+        if (!svc) return next();
+
+        const mapped = normalizeServiceId(svc);
+        if (mapped) {
+            req.body.serviceId = mapped;
+            return next();
+        }
+
+        // If we couldn't map it, continue — validation will return a helpful error
+        next();
+    },
     body('serviceId')
         .trim()
         .notEmpty().withMessage('Service is required')
@@ -364,7 +467,15 @@ const createBookingValidation = [
     body('scheduledTime')
         .trim()
         .notEmpty().withMessage('Time is required')
-        .matches(/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM|am|pm)$/).withMessage('Invalid time format. Use H:MM AM/PM format'),
+        .custom((value) => {
+            // Accept both 12-hour (AM/PM) and 24-hour formats
+            const time12Hour = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM|am|pm)$/;
+            const time24Hour = /^([01][0-9]|2[0-3]):[0-5][0-9]$/;
+            if (time12Hour.test(value) || time24Hour.test(value)) {
+                return true;
+            }
+            throw new Error('Invalid time format. Use H:MM AM/PM (e.g., "2:00 PM") or HH:MM 24-hour format (e.g., "14:00")');
+        }),
     body('timezone')
         .optional()
         .trim()
@@ -466,7 +577,38 @@ const feedbackValidation = [
 
 // Booking: Coupon validation
 const couponValidation = [
-    allowOnlyFields(['couponCode', 'serviceId']),
+    allowOnlyFields(['couponCode', 'serviceId', 'service']),
+    // Support optional 'service' alias — map to serviceId before validation
+    (req, res, next) => {
+        if (req.body.serviceId) return next();
+        const svc = req.body.service;
+        if (!svc) return next();
+
+        if (typeof svc === 'string') {
+            const normalized = svc.trim().toLowerCase();
+            if (VALID_SERVICES.includes(normalized)) {
+                req.body.serviceId = normalized;
+                return next();
+            }
+            if (SERVICE_NAME_MAP[normalized]) {
+                req.body.serviceId = SERVICE_NAME_MAP[normalized];
+                return next();
+            }
+            const normalizeKey = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+            const target = normalizeKey(normalized);
+            for (const id of VALID_SERVICES) {
+                if (normalizeKey(id) === target) {
+                    req.body.serviceId = id;
+                    return next();
+                }
+            }
+        } else if (typeof svc === 'object' && svc.id) {
+            req.body.serviceId = String(svc.id).trim();
+            return next();
+        }
+
+        next();
+    },
     body('couponCode')
         .trim()
         .notEmpty().withMessage('Coupon code is required')
@@ -502,15 +644,39 @@ const reviewValidation = [
 // Admin: Block slot validation
 const blockSlotValidation = [
     allowOnlyFields(['date', 'timeSlot', 'reason', 'isFullDay']),
+    // Convert isFullDay to boolean if it's a string
+    (req, res, next) => {
+        if (req.body.isFullDay !== undefined) {
+            // Handle string "true"/"false" or boolean
+            if (typeof req.body.isFullDay === 'string') {
+                req.body.isFullDay = req.body.isFullDay.toLowerCase() === 'true';
+            } else {
+                req.body.isFullDay = Boolean(req.body.isFullDay);
+            }
+        }
+        next();
+    },
     body('date')
         .trim()
         .notEmpty().withMessage('Date is required')
         .isISO8601().withMessage('Invalid date format'),
     body('timeSlot')
-        .if(body('isFullDay').not().equals(true))
-        .trim()
-        .notEmpty().withMessage('Time slot is required when not blocking full day')
-        .matches(/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM|am|pm)$/).withMessage('Invalid time format. Use H:MM AM/PM format'),
+        .custom((value, { req }) => {
+            // Only validate timeSlot if isFullDay is not true
+            if (req.body.isFullDay === true) {
+                return true; // Skip validation if full day is blocked
+            }
+            // Time slot is required when not blocking full day
+            if (!value || typeof value !== 'string' || value.trim() === '') {
+                throw new Error('Time slot is required when not blocking full day');
+            }
+            // Validate time format (12-hour with AM/PM)
+            const timeFormat = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM|am|pm)$/;
+            if (!timeFormat.test(value.trim())) {
+                throw new Error('Invalid time format. Use H:MM AM/PM format (e.g., "2:00 PM")');
+            }
+            return true;
+        }),
     body('isFullDay')
         .optional()
         .isBoolean().withMessage('isFullDay must be a boolean'),
