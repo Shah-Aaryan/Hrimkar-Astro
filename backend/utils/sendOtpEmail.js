@@ -1,12 +1,12 @@
 /**
- * Send OTP Email using Resend API
- * Works on Render free tier (no SMTP blocking issues)
+ * Send OTP Email using Brevo API (formerly Sendinblue)
+ * Free 300 emails/day, no domain verification required
  */
 
 async function sendOtpEmail(to, otp) {
-  // Check if Resend API key is configured
-  if (!process.env.RESEND_API_KEY) {
-    console.error('RESEND_API_KEY not configured');
+  // Check if Brevo API key is configured
+  if (!process.env.BREVO_API_KEY) {
+    console.error('BREVO_API_KEY not configured');
     throw new Error('Email service not configured');
   }
 
@@ -26,28 +26,29 @@ async function sendOtpEmail(to, otp) {
   `;
 
   try {
-    const response = await fetch('https://api.resend.com/emails', {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json'
+        'api-key': process.env.BREVO_API_KEY,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify({
-        from: 'Hrimkar Astro <onboarding@resend.dev>',
-        to: [to],
+        sender: { name: 'Hrimkar Astro', email: 'hrimkarastro@gmail.com' },
+        to: [{ email: to }],
         subject: 'Your OTP for Hrimkar Astro Signup',
-        html: emailHtml
+        htmlContent: emailHtml
       })
     });
 
     const data = await response.json();
     
     if (!response.ok) {
-      console.error('Resend API error:', data);
+      console.error('Brevo API error:', data);
       throw new Error(data.message || 'Failed to send email');
     }
 
-    console.log('OTP email sent successfully:', data.id);
+    console.log('OTP email sent successfully:', data.messageId);
     return data;
   } catch (error) {
     console.error('Error sending OTP email:', error.message);
