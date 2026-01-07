@@ -61,7 +61,7 @@ const services = {
         price: 1000,
         duration: 30
     },
-    'numerology-astro': {
+    'love-compatibility': {
         name: 'Love & Compatibility Guidance',
         description: 'Comprehensive relationship and compatibility guidance',
         icon: 'fa-heart',

@@ -549,13 +549,7 @@
                             </div>
                             
                             <!-- Refund Policy -->
-                            <div class="policy-notice">
-                                <i class="fas fa-info-circle"></i>
-                                <div>
-                                    <h4>Refund & Rescheduling Policy</h4>
-                                    <p>Free rescheduling up to 24 hours before the session. Full refund available if cancelled 48+ hours prior. <a href="refund.html" target="_blank">View full policy</a></p>
-                                </div>
-                            </div>
+                            
                             
                             <!-- Legal Consent Checkbox -->
                             <div class="consent-box" style="background: rgba(139, 92, 246, 0.1); border: 2px solid var(--royal-purple, #6b21a8); border-radius: 10px; padding: 20px; margin-top: 20px;">
@@ -604,20 +598,40 @@
                                     </div>
                                     <div class="upi-id-display">
                                         <span class="upi-label">UPI ID:</span>
-                                        <span class="upi-value" id="upiIdDisplay">rahulshah1976@okaxisi</span>
+                                        <span class="upi-value" id="upiIdDisplay">rahulshah1976@okaxis</span>
                                         <button type="button" class="copy-upi-btn" onclick="copyUPIId()">
                                             <i class="fas fa-copy"></i> Copy
                                         </button>
                                     </div>
-                                    <div class="payment-instructions">
-                                        <h5>Payment Steps:</h5>
-                                        <ol>
-                                            <li>Open GPay, PhonePe, or any UPI app</li>
-                                            <li>Scan the QR code or enter UPI ID</li>
-                                            <li>Enter amount: <strong>₹<span id="instructionAmount">1,500</span></strong></li>
-                                            <li>Complete the payment</li>
-                                            <li>Take a screenshot of successful payment</li>
-                                            <li>Upload the screenshot below</li>
+                                    <div class="payment-instructions" style="background: linear-gradient(135deg, #f8f5ff 0%, #ede9fe 100%); border: 2px solid #8b5cf6; border-radius: 12px; padding: 20px; margin-top: 20px;">
+                                        <h5 style="color: #6b21a8; font-size: 1.1rem; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                                            <i class="fas fa-list-ol" style="color: #8b5cf6;"></i> Payment Steps:
+                                        </h5>
+                                        <ol style="list-style: none; padding: 0; margin: 0; counter-reset: step-counter;">
+                                            <li style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; margin-bottom: 10px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(139,92,246,0.15); font-size: 1rem; color: #1f2937;">
+                                                <span style="background: linear-gradient(135deg, #8b5cf6, #6b21a8); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">1</span>
+                                                <span><i class="fas fa-mobile-alt" style="color: #8b5cf6; margin-right: 8px;"></i> Open GPay, PhonePe, or any UPI app</span>
+                                            </li>
+                                            <li style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; margin-bottom: 10px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(139,92,246,0.15); font-size: 1rem; color: #1f2937;">
+                                                <span style="background: linear-gradient(135deg, #8b5cf6, #6b21a8); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">2</span>
+                                                <span><i class="fas fa-qrcode" style="color: #8b5cf6; margin-right: 8px;"></i> Scan the QR code or enter UPI ID</span>
+                                            </li>
+                                            <li style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; margin-bottom: 10px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(139,92,246,0.15); font-size: 1rem; color: #1f2937;">
+                                                <span style="background: linear-gradient(135deg, #8b5cf6, #6b21a8); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">3</span>
+                                                <span><i class="fas fa-rupee-sign" style="color: #8b5cf6; margin-right: 8px;"></i> Enter amount: <strong style="color: #6b21a8; font-size: 1.1rem;">₹<span id="instructionAmount">1,500</span></strong></span>
+                                            </li>
+                                            <li style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; margin-bottom: 10px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(139,92,246,0.15); font-size: 1rem; color: #1f2937;">
+                                                <span style="background: linear-gradient(135deg, #8b5cf6, #6b21a8); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">4</span>
+                                                <span><i class="fas fa-check-circle" style="color: #8b5cf6; margin-right: 8px;"></i> Complete the payment</span>
+                                            </li>
+                                            <li style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; margin-bottom: 10px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(139,92,246,0.15); font-size: 1rem; color: #1f2937;">
+                                                <span style="background: linear-gradient(135deg, #8b5cf6, #6b21a8); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">5</span>
+                                                <span><i class="fas fa-camera" style="color: #8b5cf6; margin-right: 8px;"></i> Take a screenshot of successful payment</span>
+                                            </li>
+                                            <li style="display: flex; align-items: center; gap: 12px; padding: 12px 15px; background: linear-gradient(135deg, #dcfce7, #bbf7d0); border-radius: 8px; box-shadow: 0 2px 8px rgba(34,197,94,0.2); font-size: 1rem; color: #166534; border: 1px solid #22c55e;">
+                                                <span style="background: linear-gradient(135deg, #22c55e, #16a34a); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">6</span>
+                                                <span><i class="fas fa-upload" style="color: #16a34a; margin-right: 8px;"></i> <strong>Upload the screenshot below</strong></span>
+                                            </li>
                                         </ol>
                                     </div>
                                 </div>
@@ -793,7 +807,6 @@
                         </div>
                         <div class="sidebar-trust">
                             <div class="trust-item"><i class="fas fa-shield-alt"></i><span>Secure Payment</span></div>
-                            <div class="trust-item"><i class="fas fa-undo"></i><span>Easy Refunds</span></div>
                         </div>
                     </div>
                     

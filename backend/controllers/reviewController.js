@@ -144,7 +144,7 @@ exports.createReview = async (req, res) => {
             content,
             category: category || 'general',
             serviceType,
-            avatar: req.user.avatar || 'assets/user-avatar.jpg'
+            avatar: req.user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(req.user.firstName + '+' + req.user.lastName)}&background=6b21a8&color=ffffff`
         });
         
         res.status(201).json({

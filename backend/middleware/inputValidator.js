@@ -345,28 +345,38 @@ const createBookingValidation = [
         .isLength({ min: 10, max: 15 }).withMessage('Invalid phone number')
         .customSanitizer(sanitizePhone),
     body('personalDetails.dateOfBirth')
-        .optional()
+        .optional({ nullable: true })
         .trim()
-        .isISO8601().withMessage('Invalid date of birth format'),
+        .custom((value) => {
+            if (!value || value === 'null' || value === '') return true;
+            return /^\d{4}-\d{2}-\d{2}/.test(value);
+        }).withMessage('Invalid date of birth format'),
     body('personalDetails.timeOfBirth')
-        .optional()
+        .optional({ nullable: true })
         .trim()
-        .matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage('Invalid time format'),
+        .custom((value) => {
+            if (!value || value === 'null' || value === '') return true;
+            return /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(value);
+        }).withMessage('Invalid time format'),
     body('personalDetails.placeOfBirth')
-        .optional()
+        .optional({ nullable: true })
         .trim()
         .isLength({ max: 100 }).withMessage('Place of birth is too long')
         .customSanitizer(sanitizeString),
     body('personalDetails.specificQuestions')
-        .optional()
+        .optional({ nullable: true })
         .trim()
         .isLength({ max: 2000 }).withMessage('Questions cannot exceed 2000 characters')
         .customSanitizer(sanitizeString),
-    body('couponCode')
-        .optional()
+    body('personalDetails.consultationPurpose')
+        .optional({ nullable: true })
         .trim()
-        .isLength({ max: 20 }).withMessage('Invalid coupon code')
-        .isAlphanumeric().withMessage('Coupon code must be alphanumeric'),
+        .isLength({ max: 500 }).withMessage('Purpose cannot exceed 500 characters')
+        .customSanitizer(sanitizeString),
+    body('couponCode')
+        .optional({ nullable: true })
+        .trim()
+        .isLength({ max: 20 }).withMessage('Invalid coupon code'),
     body('paymentMethod')
         .trim()
         .notEmpty().withMessage('Payment method is required')
