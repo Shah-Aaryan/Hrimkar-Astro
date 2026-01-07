@@ -863,6 +863,25 @@ function initPayment() {
     // Update payment amount display when entering step 6
     const toStep6Btn = document.getElementById('toStep6');
     toStep6Btn.addEventListener('click', function() {
+        // Check if terms consent checkbox is checked
+        const termsConsent = document.getElementById('termsConsent');
+        const consentError = document.getElementById('consentError');
+        
+        if (termsConsent && !termsConsent.checked) {
+            if (consentError) {
+                consentError.style.display = 'block';
+            }
+            termsConsent.focus();
+            // Scroll to consent box
+            termsConsent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+        
+        // Hide error if checkbox is checked
+        if (consentError) {
+            consentError.style.display = 'none';
+        }
+        
         console.log('Going to step 6, bookingState.total:', bookingState.total);
         console.log('bookingState.service:', bookingState.service);
         

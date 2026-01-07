@@ -556,6 +556,23 @@
                                     <p>Free rescheduling up to 24 hours before the session. Full refund available if cancelled 48+ hours prior. <a href="refund.html" target="_blank">View full policy</a></p>
                                 </div>
                             </div>
+                            
+                            <!-- Legal Consent Checkbox -->
+                            <div class="consent-box" style="background: rgba(139, 92, 246, 0.1); border: 2px solid var(--royal-purple, #6b21a8); border-radius: 10px; padding: 20px; margin-top: 20px;">
+                                <label class="consent-label" style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer;">
+                                    <input type="checkbox" id="termsConsent" required style="width: 20px; height: 20px; margin-top: 3px; accent-color: #6b21a8;">
+                                    <span style="font-size: 0.95rem; line-height: 1.5;">
+                                        I have read and agree to the <a href="terms.html" target="_blank" style="color: #9333ea;">Terms & Conditions</a>, 
+                                        <a href="disclaimer.html" target="_blank" style="color: #9333ea;">Disclaimer</a>, and 
+                                        <a href="refund.html" target="_blank" style="color: #9333ea;">Refund Policy</a>. 
+                                        I understand that <strong>astrology is a belief-based guidance system</strong>, predictions are not guaranteed, 
+                                        and I will not hold Hrimkar Astro legally responsible for outcomes based on consultations.
+                                    </span>
+                                </label>
+                                <p id="consentError" style="color: #dc3545; font-size: 0.85rem; margin-top: 10px; display: none;">
+                                    <i class="fas fa-exclamation-circle"></i> Please accept the terms to proceed with payment.
+                                </p>
+                            </div>
                         </div>
                         
                         <div class="step-navigation">
