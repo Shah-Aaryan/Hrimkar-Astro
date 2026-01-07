@@ -3,7 +3,7 @@
  * Handles all testimonial/review related operations
  */
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://hrimkar-astro-1.onrender.com/api';
 
 // Token Service (reuse from api.js if available)
 const TestimonialTokenService = {

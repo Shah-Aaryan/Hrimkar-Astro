@@ -1,6 +1,6 @@
 
 // Define API_BASE_URL and TokenService at the top so they are available everywhere
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://hrimkar-astro-1.onrender.com/api';
 const TokenService = {
     getToken: () => localStorage.getItem('cosmic_token'),
     setToken: (token) => localStorage.setItem('cosmic_token', token),

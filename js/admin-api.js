@@ -3,7 +3,7 @@
  * Handles all admin data fetching and management from MongoDB backend
  */
 
-const ADMIN_API_BASE = 'http://localhost:5000/api';
+const ADMIN_API_BASE = 'https://hrimkar-astro-1.onrender.com/api';
 
 // Admin API Class
 class AdminAPI {
