@@ -308,7 +308,43 @@ const VALID_MODES = ['phone', 'video', 'chat'];
 const VALID_PAYMENT_METHODS = ['upi', 'gpay'];
 
 const createBookingValidation = [
-    allowOnlyFields(['serviceId', 'consultationMode', 'scheduledDate', 'scheduledTime', 'timezone', 'personalDetails', 'couponCode', 'paymentMethod']),
+    // First validate top-level fields
+    (req, res, next) => {
+        const topLevelFields = ['serviceId', 'consultationMode', 'scheduledDate', 'scheduledTime', 'timezone', 'personalDetails', 'couponCode', 'paymentMethod'];
+        const receivedFields = Object.keys(req.body || {});
+        const unexpectedFields = receivedFields.filter(field => !topLevelFields.includes(field));
+        
+        if (unexpectedFields.length > 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'Request contains unexpected fields',
+                error: {
+                    code: 'UNEXPECTED_FIELDS',
+                    fields: unexpectedFields
+                }
+            });
+        }
+        
+        // Validate personalDetails nested fields
+        if (req.body.personalDetails && typeof req.body.personalDetails === 'object') {
+            const allowedPersonalFields = ['fullName', 'email', 'phone', 'dateOfBirth', 'timeOfBirth', 'placeOfBirth', 'specificQuestions', 'consultationPurpose'];
+            const receivedPersonalFields = Object.keys(req.body.personalDetails);
+            const unexpectedPersonalFields = receivedPersonalFields.filter(field => !allowedPersonalFields.includes(field));
+            
+            if (unexpectedPersonalFields.length > 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'personalDetails contains unexpected fields',
+                    error: {
+                        code: 'UNEXPECTED_FIELDS',
+                        fields: unexpectedPersonalFields
+                    }
+                });
+            }
+        }
+        
+        next();
+    },
     body('serviceId')
         .trim()
         .notEmpty().withMessage('Service is required')
@@ -449,15 +485,19 @@ const reviewValidation = [
 
 // Admin: Block slot validation
 const blockSlotValidation = [
-    allowOnlyFields(['date', 'time', 'reason']),
+    allowOnlyFields(['date', 'timeSlot', 'reason', 'isFullDay']),
     body('date')
         .trim()
         .notEmpty().withMessage('Date is required')
         .isISO8601().withMessage('Invalid date format'),
-    body('time')
+    body('timeSlot')
+        .if(body('isFullDay').not().equals(true))
         .trim()
-        .notEmpty().withMessage('Time is required')
-        .matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/).withMessage('Invalid time format'),
+        .notEmpty().withMessage('Time slot is required when not blocking full day')
+        .matches(/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM|am|pm)$/).withMessage('Invalid time format. Use H:MM AM/PM format'),
+    body('isFullDay')
+        .optional()
+        .isBoolean().withMessage('isFullDay must be a boolean'),
     body('reason')
         .optional()
         .trim()
