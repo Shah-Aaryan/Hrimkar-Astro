@@ -1053,21 +1053,36 @@ async function completeBooking() {
         email: bookingState.personalDetails.email,
         phone: bookingState.personalDetails.phone
     };
-    if (bookingState.personalDetails.dob) pd.dateOfBirth = bookingState.personalDetails.dob;
-    if (bookingState.personalDetails.tob) pd.timeOfBirth = bookingState.personalDetails.tob;
-    if (bookingState.personalDetails.pob) pd.placeOfBirth = bookingState.personalDetails.pob;
-    if (bookingState.personalDetails.purpose) pd.consultationPurpose = bookingState.personalDetails.purpose;
+    // Match backend validator field names
+if (bookingState.personalDetails.dob) pd.dob = bookingState.personalDetails.dob;
+if (bookingState.personalDetails.tob) pd.birthTime = bookingState.personalDetails.tob;
+if (bookingState.personalDetails.pob) pd.birthPlace = bookingState.personalDetails.pob;
+if (bookingState.personalDetails.purpose) pd.purpose = bookingState.personalDetails.purpose;
 
-    const bookingData = {
-        serviceId: bookingState.service.id,
-        consultationMode: bookingState.mode.id,
-        scheduledDate: bookingState.date.toISOString(),
-        // Use 24-hour HH:MM format for broad server compatibility
-        scheduledTime: convertTo24Hour(bookingState.time),
-        timezone: bookingState.timezone || 'Asia/Kolkata',
-        personalDetails: pd,
-        paymentMethod: 'gpay'
-    };
+
+   const bookingData = {
+  serviceId: bookingState.service.id,
+  consultationMode: bookingState.mode.id,
+
+  scheduledDate: bookingState.date.toISOString(),
+  scheduledTime: convertTo24Hour(bookingState.time) || bookingState.time,
+
+  timezone: bookingState.timezone || "Asia/Kolkata",
+
+  personalDetails: {
+    fullName: bookingState.personalDetails.fullName,
+    email: bookingState.personalDetails.email,
+    phone: bookingState.personalDetails.phone,
+    dob: bookingState.personalDetails.dob,
+    birthTime: bookingState.personalDetails.tob,
+    birthPlace: bookingState.personalDetails.pob,
+    purpose: bookingState.personalDetails.purpose
+  },
+
+  paymentMethod: "gpay",
+  couponCode: bookingState.coupon || null
+};
+
     if (bookingState.coupon) bookingData.couponCode = bookingState.coupon;
     
     console.log('bookingData:', bookingData);
