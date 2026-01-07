@@ -121,7 +121,7 @@ const translations = {
         
         // CTA Section
         cta_title: "Ready to Discover Your Cosmic Path?",
-        cta_subtitle: "Book your personalized consultation today and unlock the wisdom of the stars.",
+        cta_subtitle: "Book your personalized consultation today and unlock the energy of the stars.",
         cta_book: "Book Consultation",
         cta_view_services: "View Services",
         cta_secure: "Secure & Confidential",
@@ -396,7 +396,7 @@ const translations = {
         
         // CTA Section
         cta_title: "अपना ब्रह्मांडीय मार्ग खोजने के लिए तैयार हैं?",
-        cta_subtitle: "आज ही अपना व्यक्तिगत परामर्श बुक करें और सितारों की बुद्धि को अनलॉक करें।",
+        cta_subtitle: "आज ही अपना व्यक्तिगत परामर्श बुक करें और सितारों की ऊर्जा को अनलॉक करें।",
         cta_book: "परामर्श बुक करें",
         cta_view_services: "सेवाएं देखें",
         cta_secure: "सुरक्षित और गोपनीय",
