@@ -52,14 +52,20 @@
             </button>
             
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="planets.html">Navagraha</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="dashboard.html">Book Now</a></li>
+                <li><a href="index.html" class="active" data-translate="nav_home">Home</a></li>
+                <li><a href="about.html" data-translate="nav_about">About</a></li>
+                <li><a href="services.html" data-translate="nav_services">Services</a></li>
+                <li><a href="planets.html" data-translate="nav_navagraha">Navagraha</a></li>
+                <li><a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+                <li><a href="dashboard.html" data-translate="nav_book_now">Book Now</a></li>
+                <li class="nav-lang">
+                    <button class="lang-toggle" id="langToggleBtn" onclick="toggleLanguage()" title="Switch Language">
+                        <i class="fas fa-globe"></i>
+                        <span class="lang-toggle-text" id="langToggleText">हिंदी</span>
+                    </button>
+                </li>
                 <li class="nav-user">
-                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> Login</a>
+                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> <span data-translate="nav_login">Login</span></a>
                 </li>
             </ul>
         </div>
@@ -76,29 +82,29 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <span class="hero-badge">
-                        <i class="fas fa-star"></i> Trusted by 5000+ Clients
+                        <i class="fas fa-star"></i> <span data-translate="hero_badge">Trusted by 5000+ Clients</span>
                     </span>
-                    <h1>Guiding Lives Through Hrimkar Astro</h1>
-                    <p class="hero-subtitle">Unlock the secrets of your destiny with authentic Vedic astrology. Expert guidance for marriage, career, health, and spiritual growth.</p>
+                    <h1 data-translate="hero_title">Guiding Lives Through Hrimkar Astro</h1>
+                    <p class="hero-subtitle" data-translate="hero_subtitle">Unlock the secrets of your destiny with authentic Vedic astrology. Expert guidance for marriage, career, health, and spiritual growth.</p>
                     
                     <div class="hero-stats">
                         <div class="stat">
                             <span class="stat-number">10+</span>
-                            <span class="stat-label">Years Experience</span>
+                            <span class="stat-label" data-translate="hero_stat_experience">Years Experience</span>
                         </div>
                         <div class="stat">
                             <span class="stat-number">5K+</span>
-                            <span class="stat-label">Consultations</span>
+                            <span class="stat-label" data-translate="hero_stat_consultations">Consultations</span>
                         </div>
                         <div class="stat">
                             <span class="stat-number">4.9</span>
-                            <span class="stat-label">Rating <i class="fas fa-star"></i></span>
+                            <span class="stat-label" data-translate="hero_stat_rating">Rating <i class="fas fa-star"></i></span>
                         </div>
                     </div>
                     
                     <div class="hero-cta">
                         <a href="dashboard.html" class="btn btn-primary btn-glow">
-                            <i class="fas fa-calendar-check"></i> Book Consultation
+                            <i class="fas fa-calendar-check"></i> <span data-translate="hero_btn_consultation">Book Consultation</span>
                         </a>
                     </div>
                 </div>
@@ -208,9 +214,9 @@
     <section class="nakshatra-section" id="nakshatra-chakra">
         <div class="container">
             <div class="section-header light">
-                <span class="section-badge">27 Lunar Mansions</span>
-                <h2>The Nakshatra Chakra</h2>
-                <p>Discover the celestial constellations that guide your destiny</p>
+                <span class="section-badge" data-translate="nakshatra_badge">27 Lunar Mansions</span>
+                <h2 data-translate="nakshatra_chakra_title">The Nakshatra Chakra</h2>
+                <p data-translate="nakshatra_chakra_subtitle">Discover the celestial constellations that guide your destiny</p>
             </div>
             
             <div class="nakshatra-wrapper">
@@ -254,25 +260,25 @@
                 <div class="nakshatra-info">
                     <div class="info-card">
                         <div class="info-icon"><i class="fas fa-moon"></i></div>
-                        <h4>Moon's Journey</h4>
-                        <p>The Moon traverses all 27 Nakshatras in approximately 27.3 days</p>
+                        <h4 data-translate="nakshatra_moon">Moon's Journey</h4>
+                        <p data-translate="nakshatra_moon_desc">The Moon traverses all 27 Nakshatras in approximately 27.3 days</p>
                     </div>
                     <div class="info-card">
                         <div class="info-icon"><i class="fas fa-baby"></i></div>
-                        <h4>Birth Star</h4>
-                        <p>Your Janma Nakshatra reveals your core personality and life path</p>
+                        <h4 data-translate="nakshatra_birth">Birth Star</h4>
+                        <p data-translate="nakshatra_birth_desc">Your Janma Nakshatra reveals your core personality and life path</p>
                     </div>
                     <div class="info-card">
                         <div class="info-icon"><i class="fas fa-calendar-check"></i></div>
-                        <h4>Muhurta</h4>
-                        <p>Nakshatras determine auspicious timings for important events</p>
+                        <h4 data-translate="nakshatra_muhurta">Muhurta</h4>
+                        <p data-translate="nakshatra_muhurta_desc">Nakshatras determine auspicious timings for important events</p>
                     </div>
                 </div>
             </div>
             
             <div class="nakshatra-cta">
                 <a href="dashboard.html" class="btn btn-primary btn-glow">
-                    <i class="fas fa-star"></i> Discover Your Nakshatra
+                    <i class="fas fa-star"></i> <span data-translate="nakshatra_discover">Discover Your Nakshatra</span>
                 </a>
             </div>
         </div>
@@ -282,19 +288,19 @@
     <section class="services-preview" id="services-preview">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">Our Expertise</span>
-                <h2> <span class="gradient-text">Sacred Astrology Services</span></h2>
-                <p>Comprehensive cosmic guidance tailored to your unique journey</p>
+                <span class="section-badge" data-translate="services_badge">Our Expertise</span>
+                <h2> <span class="gradient-text" data-translate="services_title">Sacred Astrology Services</span></h2>
+                <p data-translate="services_subtitle">Comprehensive cosmic guidance tailored to your unique journey</p>
             </div>
             
             <div class="services-grid">
                 <div class="service-card" data-aos="fade-up">
-                    <div class="featured-badge">Most Popular</div>
+                    <div class="featured-badge" data-translate="most_popular">Most Popular</div>
                     <div class="service-icon">
                         <i class="fas fa-scroll"></i>
                     </div>
-                    <h3>Vedic Astrology</h3>
-                    <p>Authentic birth chart analysis following ancient Jyotish traditions for life guidance.</p>
+                    <h3 data-translate="service_vedic">Vedic Astrology</h3>
+                    <p data-translate="service_vedic_short">Authentic birth chart analysis following ancient Jyotish traditions for life guidance.</p>
                     <ul class="service-features">
                         <li><i class="fas fa-check"></i> Birth Chart Reading</li>
                         <li><i class="fas fa-check"></i> Dasha Predictions</li>
@@ -307,8 +313,8 @@
                     <div class="service-icon">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <h3>Marriage Matching</h3>
-                    <p>Comprehensive Kundli matching for harmonious and blessed unions.</p>
+                    <h3 data-translate="service_marriage">Marriage Matching</h3>
+                    <p data-translate="service_marriage_short">Comprehensive Kundli matching for harmonious and blessed unions.</p>
                     <ul class="service-features">
                         <li><i class="fas fa-check"></i> Gun Milan (36 Points)</li>
                         <li><i class="fas fa-check"></i> Manglik Analysis</li>
@@ -321,8 +327,8 @@
                     <div class="service-icon">
                         <i class="fas fa-briefcase"></i>
                     </div>
-                    <h3>Career Guidance</h3>
-                    <p>Discover your true calling and optimal career path through planetary insights.</p>
+                    <h3 data-translate="service_career">Career Guidance</h3>
+                    <p data-translate="service_career_short">Discover your true calling and optimal career path through planetary insights.</p>
                     <ul class="service-features">
                         <li><i class="fas fa-check"></i> Career Analysis</li>
                         <li><i class="fas fa-check"></i> Business Timing</li>
@@ -335,8 +341,8 @@
                     <div class="service-icon">
                         <i class="fas fa-spa"></i>
                     </div>
-                    <h3>Tarot Reading</h3>
-                    <p>Intuitive card readings for clarity on life's pressing questions.</p>
+                    <h3 data-translate="service_tarot">Tarot Reading</h3>
+                    <p data-translate="service_tarot_short">Intuitive card readings for clarity on life's pressing questions.</p>
                     <ul class="service-features">
                         <li><i class="fas fa-check"></i> Love & Relationships</li>
                         <li><i class="fas fa-check"></i> Career Decisions</li>
@@ -349,8 +355,8 @@
                     <div class="service-icon">
                         <i class="fas fa-calculator"></i>
                     </div>
-                    <h3>Numerology</h3>
-                    <p>Unlock the power of numbers to understand your life path and destiny.</p>
+                    <h3 data-translate="service_numerology">Numerology</h3>
+                    <p data-translate="service_numerology_short">Unlock the power of numbers to understand your life path and destiny.</p>
                     <ul class="service-features">
                         <li><i class="fas fa-check"></i> Life Path Number</li>
                         <li><i class="fas fa-check"></i> Name Correction</li>
@@ -363,8 +369,8 @@
                     <div class="service-icon">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <h3>Love & Compatibility</h3>
-                    <p>Comprehensive guidance for love, compatibility, and harmonious partnerships.</p>
+                    <h3 data-translate="service_love">Love & Compatibility</h3>
+                    <p data-translate="service_love_short">Comprehensive guidance for love, compatibility, and harmonious partnerships.</p>
                     <ul class="service-features">
                         <li><i class="fas fa-check"></i> Compatibility Analysis</li>
                         <li><i class="fas fa-check"></i> Relationship Insights</li>
@@ -375,7 +381,7 @@
             </div>
             
             <div class="services-cta">
-                <a href="services.html" class="btn btn-primary">View All Services <i class="fas fa-arrow-right"></i></a>
+                <a href="services.html" class="btn btn-primary"><span data-translate="view_all_services">View All Services</span> <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </section>
@@ -494,18 +500,18 @@
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
-                <h2>Ready to Discover Your Cosmic Path?</h2>
-                <p>Book your personalized consultation today and unlock the wisdom of the stars.</p>
+                <h2 data-translate="cta_title">Ready to Discover Your Cosmic Path?</h2>
+                <p data-translate="cta_subtitle">Book your personalized consultation today and unlock the wisdom of the stars.</p>
                 <div class="cta-buttons">
                     <a href="dashboard.html" class="btn btn-primary btn-lg btn-glow">
-                        <i class="fas fa-calendar-check"></i> Book Consultation
+                        <i class="fas fa-calendar-check"></i> <span data-translate="cta_book">Book Consultation</span>
                     </a>
                     <a href="services.html" class="btn btn-primary btn-lg btn-glow">
-                        <i class="fas fa-list"></i> View Services
+                        <i class="fas fa-list"></i> <span data-translate="cta_view_services">View Services</span>
                     </a>
                 </div>
                 <div class="cta-trust">
-                    <span><i class="fas fa-lock"></i> Secure & Confidential</span>
+                    <span><i class="fas fa-lock"></i> <span data-translate="cta_secure">Secure & Confidential</span></span>
                 </div>
             </div>
         </div>
@@ -520,7 +526,7 @@
                         <img src="assets/logo.png" alt="Hrimkar Astro">
                         <span>Hrimkar Astro</span>
                     </a>
-                    <p>Guiding lives through authentic Vedic astrology and Hrimkar Astro since 2015.</p>
+                    <p data-translate="footer_brand_text">Guiding lives through authentic Vedic astrology and Hrimkar Astro since 2015.</p>
                     <div class="social-links">
                         <a href="https://www.facebook.com/share/17bUfkce35/" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://www.instagram.com/hrimkarastro?igsh=MWd4M3MwMTduaDU4Mw==" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -528,29 +534,29 @@
                 </div>
                 
                 <div class="footer-links">
-                    <h4>Quick Links</h4>
+                    <h4 data-translate="footer_quick_links">Quick Links</h4>
                     <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="planets.html">Navagraha</a></li>
-                        <li><a href="testimonials.html">Testimonials</a></li>
-                        <li><a href="dashboard.html">Book Consultation</a></li>
+                        <li><a href="about.html" data-translate="nav_about">About Us</a></li>
+                        <li><a href="services.html" data-translate="nav_services">Services</a></li>
+                        <li><a href="planets.html" data-translate="nav_navagraha">Navagraha</a></li>
+                        <li><a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+                        <li><a href="dashboard.html" data-translate="cta_book">Book Consultation</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
-                    <h4>Services</h4>
+                    <h4 data-translate="footer_services">Services</h4>
                     <ul>
-                        <li><a href="services.html#vedic">Vedic Astrology</a></li>
-                        <li><a href="services.html#marriage">Marriage Matching</a></li>
-                        <li><a href="services.html#career">Career Guidance</a></li>
-                        <li><a href="services.html#tarot">Tarot Reading</a></li>
-                        <li><a href="services.html#numerology">Numerology</a></li>
+                        <li><a href="services.html#vedic" data-translate="service_vedic">Vedic Astrology</a></li>
+                        <li><a href="services.html#marriage" data-translate="service_marriage">Marriage Matching</a></li>
+                        <li><a href="services.html#career" data-translate="service_career">Career Guidance</a></li>
+                        <li><a href="services.html#tarot" data-translate="service_tarot">Tarot Reading</a></li>
+                        <li><a href="services.html#numerology" data-translate="service_numerology">Numerology</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
-                    <h4>Legal</h4>
+                    <h4 data-translate="footer_legal">Legal</h4>
                     <ul>
                         <li><a href="privacy.html">Privacy Policy</a></li>
                         <li><a href="terms.html">Terms & Conditions</a></li>
@@ -560,7 +566,7 @@
                 </div>
                 
                 <div class="footer-contact">
-                    <h4>Contact Us</h4>
+                    <h4 data-translate="footer_contact">Contact Us</h4>
                     <ul>
                         <li>
                             <i class="fas fa-phone"></i>
@@ -583,13 +589,14 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 Hrimkar Astro. All rights reserved.</p>
-                <p class="disclaimer-short">Astrology services are advisory in nature. Results may vary based on individual circumstances.</p>
+                <p>&copy; 2024 Hrimkar Astro. <span data-translate="footer_rights">All rights reserved.</span></p>
+                <p class="disclaimer-short" data-translate="footer_disclaimer">Astrology services are advisory in nature. Results may vary based on individual circumstances.</p>
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
+    <script src="js/translations.js"></script>
     <script src="js/main.js"></script>
     <script src="js/planets.js"></script>
     <script src="js/home-testimonials.js"></script>

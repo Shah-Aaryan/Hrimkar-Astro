@@ -1,6 +1,31 @@
+/**
+ * Booking Routes
+ * OWASP Best Practice: Rate limiting, input validation, authorization
+ */
 const express = require('express');
 const router = express.Router();
-const { body } = require('express-validator');
+
+// Import rate limiters
+const { 
+    bookingLimiter, 
+    uploadLimiter,
+    adminLimiter 
+} = require('../middleware/rateLimiter');
+
+// Import validators
+const {
+    createBookingValidation,
+    rescheduleValidation,
+    feedbackValidation,
+    couponValidation,
+    blockSlotValidation,
+    paginationValidation,
+    idParamValidation,
+    userIdParamValidation,
+    dateParamValidation
+} = require('../middleware/inputValidator');
+
+// Import controllers
 const {
     createBooking,
     getMyBookings,
@@ -24,77 +49,198 @@ const {
     getMonthlyAppointments,
     blockSlot,
     unblockSlot,
-    getBlockedSlots
+    getBlockedSlots,
+    getEarnings,
+    getBannedUsers,
+    unbanUser
 } = require('../controllers/bookingController');
 const { protect, authorize } = require('../middleware/auth');
 const { uploadPaymentScreenshot: uploadMiddleware } = require('../middleware/upload');
 
-// Validation rules
-const bookingValidation = [
-    body('serviceId')
-        .notEmpty().withMessage('Service is required')
-        .isIn(['birth-chart', 'marriage-matching', 'career-guidance', 'health-astrology', 'tarot-reading', 'numerology'])
-        .withMessage('Invalid service'),
-    body('consultationMode')
-        .notEmpty().withMessage('Consultation mode is required')
-        .isIn(['phone', 'video', 'chat'])
-        .withMessage('Invalid consultation mode'),
-    body('scheduledDate')
-        .notEmpty().withMessage('Date is required')
-        .isISO8601().withMessage('Invalid date format'),
-    body('scheduledTime')
-        .notEmpty().withMessage('Time is required'),
-    body('personalDetails.fullName')
-        .notEmpty().withMessage('Full name is required'),
-    body('personalDetails.email')
-        .isEmail().withMessage('Valid email is required'),
-    body('personalDetails.phone')
-        .notEmpty().withMessage('Phone is required'),
-    body('paymentMethod')
-        .notEmpty().withMessage('Payment method is required')
-        .isIn(['upi', 'gpay'])
-        .withMessage('Invalid payment method')
-];
+// ============================================
+// PUBLIC ROUTES
+// ============================================
 
-// Public routes
-router.get('/slots/:date', getAvailableSlots);
+// Get available slots - public but rate limited
+router.get('/slots/:date', 
+    dateParamValidation,
+    getAvailableSlots
+);
 
-// Protected routes (require login)
+// ============================================
+// PROTECTED ROUTES (require login)
+// ============================================
 router.use(protect);
 
 // User dashboard stats
 router.get('/dashboard-stats', getDashboardStats);
 
-router.route('/')
-    .post(bookingValidation, createBooking)
-    .get(getMyBookings);
+// Create booking - rate limited to prevent abuse
+router.post('/', 
+    bookingLimiter,            // 10 bookings per hour
+    createBookingValidation,   // Full input validation
+    createBooking
+);
 
-router.post('/validate-coupon', validateCoupon);
+// Get user's bookings
+router.get('/', 
+    paginationValidation,
+    getMyBookings
+);
 
+// Validate coupon
+router.post('/validate-coupon', 
+    couponValidation,
+    validateCoupon
+);
+
+// Get booking by reference ID
 router.get('/ref/:bookingId', getBookingByRef);
 
-router.route('/:id')
-    .get(getBooking);
+// Get single booking
+router.get('/:id', 
+    idParamValidation,
+    getBooking
+);
 
-// Upload payment screenshot
-router.post('/:id/upload-screenshot', uploadMiddleware.single('screenshot'), uploadPaymentScreenshot);
+// Upload payment screenshot - rate limited
+router.post('/:id/upload-screenshot', 
+    uploadLimiter,             // 10 uploads per hour
+    idParamValidation,
+    uploadMiddleware.single('screenshot'), 
+    uploadPaymentScreenshot
+);
 
-router.put('/:id/cancel', cancelBooking);
-router.put('/:id/reschedule', rescheduleBooking);
-router.put('/:id/feedback', addFeedback);
+// Cancel booking
+router.put('/:id/cancel', 
+    idParamValidation,
+    cancelBooking
+);
 
-// Admin routes
-router.get('/admin/stats', authorize('admin', 'astrologer'), getAdminStats);
-router.get('/admin/clients', authorize('admin', 'astrologer'), getClients);
-router.get('/admin/all', authorize('admin', 'astrologer'), getAllBookings);
-router.get('/admin/pending-payments', authorize('admin', 'astrologer'), getPendingPayments);
-router.get('/admin/pending-appointments', authorize('admin', 'astrologer'), getPendingAppointments);
-router.get('/admin/monthly-appointments', authorize('admin', 'astrologer'), getMonthlyAppointments);
-router.get('/admin/blocked-slots', authorize('admin', 'astrologer'), getBlockedSlots);
-router.post('/admin/block-slot', authorize('admin', 'astrologer'), blockSlot);
-router.delete('/admin/unblock-slot', authorize('admin', 'astrologer'), unblockSlot);
-router.put('/admin/:id/status', authorize('admin', 'astrologer'), updateBookingStatus);
-router.put('/admin/:id/approve-payment', authorize('admin', 'astrologer'), approvePayment);
-router.put('/admin/:id/reject-payment', authorize('admin', 'astrologer'), rejectPayment);
+// Reschedule booking
+router.put('/:id/reschedule', 
+    idParamValidation,
+    rescheduleValidation,
+    rescheduleBooking
+);
+
+// Add feedback
+router.put('/:id/feedback', 
+    idParamValidation,
+    feedbackValidation,
+    addFeedback
+);
+
+// ============================================
+// ADMIN ROUTES
+// ============================================
+
+// Admin stats
+router.get('/admin/stats', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    getAdminStats
+);
+
+// Get all clients
+router.get('/admin/clients', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    paginationValidation,
+    getClients
+);
+
+// Get all bookings
+router.get('/admin/all', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    paginationValidation,
+    getAllBookings
+);
+
+// Get earnings
+router.get('/admin/earnings', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    getEarnings
+);
+
+// Get pending payments
+router.get('/admin/pending-payments', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    getPendingPayments
+);
+
+// Get pending appointments
+router.get('/admin/pending-appointments', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    getPendingAppointments
+);
+
+// Get monthly appointments
+router.get('/admin/monthly-appointments', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    getMonthlyAppointments
+);
+
+// Blocked slots management
+router.get('/admin/blocked-slots', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    getBlockedSlots
+);
+
+router.post('/admin/block-slot', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    blockSlotValidation,
+    blockSlot
+);
+
+router.delete('/admin/unblock-slot', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    unblockSlot
+);
+
+// Update booking status
+router.put('/admin/:id/status', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    idParamValidation,
+    updateBookingStatus
+);
+
+// Approve/reject payment
+router.put('/admin/:id/approve-payment', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    idParamValidation,
+    approvePayment
+);
+
+router.put('/admin/:id/reject-payment', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    idParamValidation,
+    rejectPayment
+);
+
+// Banned users management
+router.get('/admin/banned-users', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    getBannedUsers
+);
+
+router.put('/admin/unban-user/:userId', 
+    authorize('admin', 'astrologer'), 
+    adminLimiter,
+    userIdParamValidation,
+    unbanUser
+);
 
 module.exports = router;

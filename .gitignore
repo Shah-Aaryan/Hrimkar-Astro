@@ -32,3 +32,4 @@ coverage/
 
 # Backend uploads (if any)
 backend/uploads/
+SECURITY.md

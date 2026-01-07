@@ -2,15 +2,17 @@ const Booking = require('../models/Booking');
 const User = require('../models/User');
 const BlockedSlot = require('../models/BlockedSlot');
 const { validationResult } = require('express-validator');
+const sendBookingNotification = require('../utils/sendBookingNotification');
 
 // Service pricing data
 const services = {
-    'birth-chart': { name: 'Birth Chart Analysis', price: 1500, duration: 45 },
-    'marriage-matching': { name: 'Marriage Matching', price: 2500, duration: 60 },
-    'career-guidance': { name: 'Career Guidance', price: 1500, duration: 45 },
-    'health-astrology': { name: 'Health Astrology', price: 1500, duration: 45 },
-    'tarot-reading': { name: 'Tarot Reading', price: 1000, duration: 30 },
-    'numerology': { name: 'Numerology Report', price: 1200, duration: 40 }
+    'birth-chart': { name: 'Vedic Astrology', price: 2500, duration: 30 },
+    'marriage-matching': { name: 'Marriage Matching', price: 1000, duration: 30 },
+    'career-guidance': { name: 'Career Guidance', price: 1500, duration: 30 },
+    'health-astrology': { name: 'Health Astrology', price: 1500, duration: 30 },
+    'tarot-reading': { name: 'Tarot Card Reading', price: 1000, duration: 30 },
+    'numerology': { name: 'Numerology', price: 1000, duration: 30 },
+    'love-compatibility': { name: 'Love & Compatibility Guidance', price: 1000, duration: 30 }
 };
 
 // Valid coupon codes
@@ -31,6 +33,15 @@ exports.createBooking = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 errors: errors.array()
+            });
+        }
+
+        // Check if user is banned
+        const currentUser = await User.findById(req.user.id);
+        if (currentUser && currentUser.isBanned) {
+            return res.status(403).json({
+                success: false,
+                message: 'Your account has been banned due to multiple booking rejections. You cannot make new bookings. Please contact support for assistance.'
             });
         }
 
@@ -101,6 +112,14 @@ exports.createBooking = async (req, res) => {
 
         // Populate user details
         await booking.populate('user', 'firstName lastName email');
+
+        // Send booking notification email to admin
+        try {
+            await sendBookingNotification(booking);
+        } catch (emailError) {
+            console.error('Failed to send booking notification email:', emailError);
+            // Don't fail the booking if email fails
+        }
 
         res.status(201).json({
             success: true,
@@ -1064,7 +1083,7 @@ exports.rejectPayment = async (req, res) => {
     try {
         const { reason } = req.body;
 
-        const booking = await Booking.findById(req.params.id);
+        const booking = await Booking.findById(req.params.id).populate('user', 'firstName lastName email');
 
         if (!booking) {
             return res.status(404).json({
@@ -1083,13 +1102,35 @@ exports.rejectPayment = async (req, res) => {
 
         await booking.save();
 
-        // Populate user for response
+        // Increment user's rejection count and check for ban
+        const user = await User.findById(booking.user._id || booking.user);
+        let userBanned = false;
+        
+        if (user) {
+            user.rejectionCount = (user.rejectionCount || 0) + 1;
+            
+            // Ban user if rejection count exceeds 3
+            if (user.rejectionCount >= 3 && !user.isBanned) {
+                user.isBanned = true;
+                user.bannedAt = new Date();
+                user.banReason = 'Account banned due to more than 3 booking rejections';
+                userBanned = true;
+            }
+            
+            await user.save();
+        }
+
+        // Re-populate user for response
         await booking.populate('user', 'firstName lastName email');
 
         res.status(200).json({
             success: true,
-            message: 'Payment rejected.',
-            data: booking
+            message: userBanned 
+                ? `Payment rejected. User has been banned due to ${user.rejectionCount} rejections.`
+                : `Payment rejected. User rejection count: ${user ? user.rejectionCount : 'N/A'}/3`,
+            data: booking,
+            userBanned: userBanned,
+            rejectionCount: user ? user.rejectionCount : null
         });
     } catch (error) {
         console.error('Reject payment error:', error);
@@ -1364,6 +1405,192 @@ exports.getBlockedSlots = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Error fetching blocked slots'
+        });
+    }
+};
+
+// @desc    Get earnings data (Admin)
+// @route   GET /api/bookings/admin/earnings
+// @access  Private/Admin
+exports.getEarnings = async (req, res) => {
+    try {
+        const { period = 'month' } = req.query;
+        const today = new Date();
+        let startDate, endDate, previousStartDate, previousEndDate;
+        
+        // Calculate date ranges based on period
+        if (period === 'month') {
+            startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+            endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59);
+            previousStartDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+            previousEndDate = new Date(today.getFullYear(), today.getMonth(), 0, 23, 59, 59);
+        } else if (period === 'quarter') {
+            startDate = new Date(today.getFullYear(), today.getMonth() - 2, 1);
+            endDate = today;
+            previousStartDate = new Date(today.getFullYear(), today.getMonth() - 5, 1);
+            previousEndDate = new Date(today.getFullYear(), today.getMonth() - 2, 0, 23, 59, 59);
+        } else { // year
+            startDate = new Date(today.getFullYear(), 0, 1);
+            endDate = today;
+            previousStartDate = new Date(today.getFullYear() - 1, 0, 1);
+            previousEndDate = new Date(today.getFullYear() - 1, 11, 31, 23, 59, 59);
+        }
+        
+        // Get current period stats
+        const currentStats = await Booking.aggregate([
+            {
+                $match: {
+                    'payment.status': { $in: ['completed', 'awaiting_approval'] },
+                    'payment.approval.status': 'approved',
+                    createdAt: { $gte: startDate, $lte: endDate }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalEarnings: { $sum: '$payment.total' },
+                    completedSessions: { $sum: 1 },
+                    avgPerSession: { $avg: '$payment.total' }
+                }
+            }
+        ]);
+        
+        // Get previous period stats for comparison
+        const previousStats = await Booking.aggregate([
+            {
+                $match: {
+                    'payment.status': { $in: ['completed', 'awaiting_approval'] },
+                    'payment.approval.status': 'approved',
+                    createdAt: { $gte: previousStartDate, $lte: previousEndDate }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalEarnings: { $sum: '$payment.total' },
+                    completedSessions: { $sum: 1 }
+                }
+            }
+        ]);
+        
+        // Get transaction history
+        const transactions = await Booking.find({
+            'payment.approval.status': 'approved',
+            createdAt: { $gte: startDate, $lte: endDate }
+        })
+        .populate('user', 'firstName lastName email')
+        .sort({ createdAt: -1 })
+        .limit(50);
+        
+        const current = currentStats[0] || { totalEarnings: 0, completedSessions: 0, avgPerSession: 0 };
+        const previous = previousStats[0] || { totalEarnings: 0, completedSessions: 0 };
+        
+        // Calculate growth percentages
+        const earningsGrowth = previous.totalEarnings > 0 
+            ? Math.round(((current.totalEarnings - previous.totalEarnings) / previous.totalEarnings) * 100)
+            : (current.totalEarnings > 0 ? 100 : 0);
+            
+        const sessionsGrowth = previous.completedSessions > 0 
+            ? (current.completedSessions - previous.completedSessions)
+            : current.completedSessions;
+        
+        res.status(200).json({
+            success: true,
+            data: {
+                summary: {
+                    totalEarnings: current.totalEarnings,
+                    completedSessions: current.completedSessions,
+                    avgPerSession: Math.round(current.avgPerSession || 0),
+                    earningsGrowth,
+                    sessionsGrowth
+                },
+                transactions: transactions.map(t => ({
+                    _id: t._id,
+                    transactionId: t.bookingId,
+                    client: t.user ? `${t.user.firstName} ${t.user.lastName}` : 'Unknown',
+                    service: t.service.name,
+                    date: t.createdAt,
+                    amount: t.payment.total,
+                    status: t.payment.approval.status
+                }))
+            }
+        });
+    } catch (error) {
+        console.error('Get earnings error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching earnings data'
+        });
+    }
+};
+
+// @desc    Get all banned users (Admin)
+// @route   GET /api/bookings/admin/banned-users
+// @access  Private/Admin
+exports.getBannedUsers = async (req, res) => {
+    try {
+        const bannedUsers = await User.find({ isBanned: true })
+            .select('firstName lastName email phone rejectionCount bannedAt banReason createdAt')
+            .sort({ bannedAt: -1 });
+
+        res.status(200).json({
+            success: true,
+            count: bannedUsers.length,
+            data: bannedUsers
+        });
+    } catch (error) {
+        console.error('Get banned users error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching banned users'
+        });
+    }
+};
+
+// @desc    Unban a user (Admin)
+// @route   PUT /api/bookings/admin/unban-user/:userId
+// @access  Private/Admin
+exports.unbanUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        if (!user.isBanned) {
+            return res.status(400).json({
+                success: false,
+                message: 'User is not banned'
+            });
+        }
+
+        // Unban user and reset rejection count
+        user.isBanned = false;
+        user.rejectionCount = 0;
+        user.bannedAt = undefined;
+        user.banReason = undefined;
+
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: `User ${user.email} has been unbanned successfully`,
+            data: {
+                userId: user._id,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName
+            }
+        });
+    } catch (error) {
+        console.error('Unban user error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error unbanning user'
         });
     }
 };

@@ -344,7 +344,7 @@ class DashboardAPI {
                     <td>
                         <div class="service-info">
                             <strong>${booking.service?.name || 'Consultation'}</strong>
-                            <span>${booking.service?.duration || 45} minutes</span>
+                            <span>${booking.service?.duration || 30} minutes</span>
                         </div>
                     </td>
                     <td>${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} • ${booking.scheduledTime}</td>
@@ -379,13 +379,11 @@ class DashboardAPI {
         if (booking.status === 'pending' && booking.payment?.status !== 'completed') {
             return `
                 <button class="btn-primary btn-sm" onclick="dashboardAPI.makePayment('${booking._id}')">Pay Now</button>
-                <button class="btn-outline btn-sm" onclick="dashboardAPI.rescheduleBooking('${booking._id}')">Reschedule</button>
                 <button class="btn-danger btn-sm" onclick="dashboardAPI.cancelBooking('${booking._id}')">Cancel</button>
             `;
         }
 
         return `
-            <button class="btn-outline btn-sm" onclick="dashboardAPI.rescheduleBooking('${booking._id}')">Reschedule</button>
             <button class="btn-danger btn-sm" onclick="dashboardAPI.cancelBooking('${booking._id}')">Cancel</button>
         `;
     }
@@ -553,7 +551,6 @@ class DashboardAPI {
                     <button class="btn btn-sm btn-primary" onclick="dashboardAPI.joinConsultation('${booking._id}')">
                         ${booking.consultationMode === 'phone' ? 'Call Now' : 'Start Chat'}
                     </button>
-                    <button class="btn btn-sm btn-ghost" onclick="dashboardAPI.openRescheduleModal('${booking._id}')">Reschedule</button>
                 </div>
             </div>
         `;
@@ -613,7 +610,6 @@ class DashboardAPI {
                 <div class="appointment-actions">
                     ${!isPast && booking.status !== 'cancelled' ? `
                         <button class="btn btn-primary btn-sm" onclick="dashboardAPI.joinConsultation('${booking._id}')">Join</button>
-                        <button class="btn btn-ghost btn-sm" onclick="dashboardAPI.openRescheduleModal('${booking._id}')">Reschedule</button>
                         <button class="btn btn-ghost btn-sm danger" onclick="dashboardAPI.cancelBooking('${booking._id}')">Cancel</button>
                     ` : `
                         ${booking.status === 'completed' ? `
@@ -670,7 +666,7 @@ Service: ${booking.service?.name || 'Consultation'}
 Date: ${date.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
 Time: ${booking.scheduledTime}
 Mode: ${modeName}
-Duration: ${booking.service?.duration || 45} minutes
+Duration: ${booking.service?.duration || 30} minutes
 Amount: ₹${booking.payment?.total?.toLocaleString('en-IN') || 'N/A'}
 Status: ${this.capitalizeFirst(booking.status)}
         `.trim());

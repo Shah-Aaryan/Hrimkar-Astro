@@ -1,6 +1,20 @@
+/**
+ * Review Routes
+ * OWASP Best Practice: Rate limiting, input validation
+ */
 const express = require('express');
 const router = express.Router();
-const { body } = require('express-validator');
+
+// Import rate limiters
+const { reviewLimiter, adminLimiter } = require('../middleware/rateLimiter');
+
+// Import validators
+const { 
+    reviewValidation,
+    idParamValidation,
+    paginationValidation
+} = require('../middleware/inputValidator');
+
 const { protect, authorize } = require('../middleware/auth');
 const {
     getReviews,
@@ -16,36 +30,71 @@ const {
     deleteReviewAdmin
 } = require('../controllers/reviewController');
 
-// Validation rules
-const reviewValidation = [
-    body('rating')
-        .isInt({ min: 1, max: 5 })
-        .withMessage('Rating must be between 1 and 5'),
-    body('content')
-        .trim()
-        .isLength({ min: 10, max: 1000 })
-        .withMessage('Review content must be between 10 and 1000 characters'),
-    body('category')
-        .optional()
-        .isIn(['vedic', 'marriage', 'career', 'tarot', 'general'])
-        .withMessage('Invalid category')
-];
-
-// Public routes
-router.get('/', getReviews);
+// ============================================
+// PUBLIC ROUTES
+// ============================================
+router.get('/', paginationValidation, getReviews);
 router.get('/featured', getFeaturedReviews);
 router.get('/stats', getReviewStats);
 
-// Protected routes (logged in users)
-router.post('/', protect, reviewValidation, createReview);
-router.get('/my-review', protect, getMyReview);
-router.put('/my-review', protect, updateMyReview);
-router.delete('/my-review', protect, deleteMyReview);
+// ============================================
+// PROTECTED ROUTES (logged in users)
+// ============================================
+router.post('/', 
+    protect, 
+    reviewLimiter,       // 5 review actions per hour
+    reviewValidation, 
+    createReview
+);
 
-// Admin routes
-router.get('/admin/all', protect, authorize('admin'), getAllReviewsAdmin);
-router.put('/admin/:id/approve', protect, authorize('admin'), approveReview);
-router.put('/admin/:id/featured', protect, authorize('admin'), toggleFeatured);
-router.delete('/admin/:id', protect, authorize('admin'), deleteReviewAdmin);
+router.get('/my-review', protect, getMyReview);
+
+router.put('/my-review', 
+    protect, 
+    reviewLimiter,
+    reviewValidation,
+    updateMyReview
+);
+
+router.delete('/my-review', 
+    protect, 
+    reviewLimiter,
+    deleteMyReview
+);
+
+// ============================================
+// ADMIN ROUTES
+// ============================================
+router.get('/admin/all', 
+    protect, 
+    authorize('admin'), 
+    adminLimiter,
+    paginationValidation,
+    getAllReviewsAdmin
+);
+
+router.put('/admin/:id/approve', 
+    protect, 
+    authorize('admin'), 
+    adminLimiter,
+    idParamValidation,
+    approveReview
+);
+
+router.put('/admin/:id/featured', 
+    protect, 
+    authorize('admin'), 
+    adminLimiter,
+    idParamValidation,
+    toggleFeatured
+);
+
+router.delete('/admin/:id', 
+    protect, 
+    authorize('admin'), 
+    adminLimiter,
+    idParamValidation,
+    deleteReviewAdmin
+);
 
 module.exports = router;

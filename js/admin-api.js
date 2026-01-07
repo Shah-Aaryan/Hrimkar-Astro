@@ -46,7 +46,7 @@ class AdminAPI {
                             <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(review.name)}&background=1a1f2e&color=d4af37" alt="User">
                             <div>
                                 <strong>${review.name}</strong>
-                                <span>${new Date(review.createdAt).toLocaleDateString('en-IN')} • ${review.serviceType || review.category || ''}</span>
+                                <span>${new Date(review.createdAt).toLocaleDateString('en-IN')} • ${review.serviceType || review.category || 'General'}</span>
                             </div>
                         </div>
                         <div class="review-rating">
@@ -59,9 +59,15 @@ class AdminAPI {
                         <p>"${review.content}"</p>
                     </div>
                     <div class="review-actions">
-                        <button class="btn-outline btn-sm" onclick="adminAPI.flagReview('${review._id}')"><i class="fas fa-flag"></i> Flag</button>
-                        <button class="btn-outline btn-sm" onclick="adminAPI.approveReview('${review._id}', ${!review.isApproved})"><i class="fas fa-${review.isApproved ? 'times' : 'check'}"></i> ${review.isApproved ? 'Reject' : 'Approve'}</button>
-                        <button class="btn-danger btn-sm" onclick="adminAPI.deleteReview('${review._id}')"><i class="fas fa-trash"></i> Delete</button>
+                        <button class="btn-outline btn-sm" onclick="adminAPI.toggleFeatured('${review._id}', ${!review.isFeatured})">
+                            <i class="fas fa-${review.isFeatured ? 'star' : 'star'}"></i> ${review.isFeatured ? 'Unfeature' : 'Feature'}
+                        </button>
+                        <button class="btn-outline btn-sm" onclick="adminAPI.approveReview('${review._id}', ${!review.isApproved})">
+                            <i class="fas fa-${review.isApproved ? 'times' : 'check'}"></i> ${review.isApproved ? 'Reject' : 'Approve'}
+                        </button>
+                        <button class="btn-danger btn-sm" onclick="adminAPI.deleteReview('${review._id}')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
                     </div>
                     <div class="review-status">
                         <span class="status-badge ${review.isApproved ? 'approved' : 'pending'}">${review.isApproved ? 'Approved' : 'Pending'}</span>
@@ -122,6 +128,30 @@ class AdminAPI {
             this.showToast('Review flagged for moderation (UI only)', 'info');
             // Optionally, implement backend flagging here
         }
+
+        async toggleFeatured(id, isFeatured) {
+            try {
+                const token = window.API.Token.getToken();
+                const response = await fetch(`${ADMIN_API_BASE}/reviews/admin/${id}/featured`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ isFeatured })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    this.showToast(isFeatured ? 'Review featured' : 'Review unfeatured', 'success');
+                    await this.loadAllReviews();
+                } else {
+                    throw new Error(data.message);
+                }
+            } catch (error) {
+                this.showToast('Error updating review', 'error');
+            }
+        }
+
     constructor() {
         this.user = null;
         this.bookings = [];
@@ -251,6 +281,9 @@ class AdminAPI {
             
             // Fetch pending payments
             await this.loadPendingPayments();
+            
+            // Fetch earnings data
+            await this.loadEarningsData('month');
             
             // Fetch monthly appointments and blocked slots
             await this.loadMonthlyAppointments();
@@ -1185,7 +1218,8 @@ class AdminAPI {
         try {
             const token = window.API.Token.getToken();
             
-            const response = await fetch(`${ADMIN_API_BASE}/bookings/admin/clients?limit=100`, {
+            // Load all registered users from auth API
+            const response = await fetch(`${ADMIN_API_BASE}/auth/admin/users?limit=100`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -1197,9 +1231,104 @@ class AdminAPI {
             if (data.success) {
                 this.clients = data.data;
                 this.renderUsersTable();
+            } else {
+                // Fallback to booking clients API
+                const fallbackResponse = await fetch(`${ADMIN_API_BASE}/bookings/admin/clients?limit=100`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const fallbackData = await fallbackResponse.json();
+                if (fallbackData.success) {
+                    this.clients = fallbackData.data;
+                    this.renderUsersTable();
+                }
             }
         } catch (error) {
             console.error('Load clients error:', error);
+        }
+    }
+
+    // Load earnings data
+    async loadEarningsData(period = 'month') {
+        try {
+            const token = window.API.Token.getToken();
+            
+            const response = await fetch(`${ADMIN_API_BASE}/bookings/admin/earnings?period=${period}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                this.earningsData = data.data;
+                this.renderEarningsSection(data.data);
+            }
+        } catch (error) {
+            console.error('Load earnings error:', error);
+        }
+    }
+
+    // Render earnings section
+    renderEarningsSection(data) {
+        const { summary, transactions } = data;
+        
+        // Update summary cards
+        const totalEarningsEl = document.querySelector('#earningsSection .summary-cards .summary-card:nth-child(1) .card-value');
+        const sessionsEl = document.querySelector('#earningsSection .summary-cards .summary-card:nth-child(2) .card-value');
+        const avgPerSessionEl = document.querySelector('#earningsSection .summary-cards .summary-card:nth-child(3) .card-value');
+        
+        if (totalEarningsEl) totalEarningsEl.textContent = `₹${(summary.totalEarnings || 0).toLocaleString('en-IN')}`;
+        if (sessionsEl) sessionsEl.textContent = summary.completedSessions || 0;
+        if (avgPerSessionEl) avgPerSessionEl.textContent = `₹${(summary.avgPerSession || 0).toLocaleString('en-IN')}`;
+        
+        // Update growth indicators
+        const earningsChange = document.querySelector('#earningsSection .summary-card:nth-child(1) .card-change');
+        const sessionsChange = document.querySelector('#earningsSection .summary-card:nth-child(2) .card-change');
+        
+        if (earningsChange) {
+            const growth = summary.earningsGrowth || 0;
+            earningsChange.textContent = `${growth >= 0 ? '+' : ''}${growth}% from last period`;
+            earningsChange.className = `card-change ${growth >= 0 ? 'positive' : 'negative'}`;
+        }
+        if (sessionsChange) {
+            const growth = summary.sessionsGrowth || 0;
+            sessionsChange.textContent = `${growth >= 0 ? '+' : ''}${growth} from last period`;
+            sessionsChange.className = `card-change ${growth >= 0 ? 'positive' : 'negative'}`;
+        }
+        
+        // Update transaction table
+        const tbody = document.querySelector('#earningsSection .data-table tbody');
+        if (tbody && transactions) {
+            if (transactions.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="empty-cell">
+                            <div class="empty-state">
+                                <i class="fas fa-wallet"></i>
+                                <h4>No Transactions Found</h4>
+                                <p>Transactions will appear here once payments are approved</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            } else {
+                tbody.innerHTML = transactions.map(t => `
+                    <tr>
+                        <td>#${t.transactionId}</td>
+                        <td>${t.client}</td>
+                        <td>${t.service}</td>
+                        <td>${new Date(t.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                        <td class="amount-credit">+₹${t.amount.toLocaleString('en-IN')}</td>
+                        <td><span class="status-badge ${t.status === 'approved' ? 'completed' : 'pending'}">${t.status === 'approved' ? 'Paid' : 'Pending'}</span></td>
+                        <td><button class="btn-outline btn-sm"><i class="fas fa-download"></i></button></td>
+                    </tr>
+                `).join('');
+            }
         }
     }
 
@@ -1270,6 +1399,11 @@ class AdminAPI {
             buttons += `<button class="btn-danger btn-sm" onclick="adminAPI.cancelBooking('${booking._id}')">Cancel</button>`;
         }
 
+        // Show Mark Completed button for confirmed bookings
+        if (booking.status === 'confirmed') {
+            buttons += `<button class="btn-success btn-sm" onclick="adminAPI.markAsCompleted('${booking._id}')"><i class="fas fa-check"></i> Completed</button>`;
+        }
+
         if (booking.status === 'completed' && !booking.reportUrl) {
             buttons += `<button class="btn-primary btn-sm" onclick="adminAPI.openUploadModal('${booking._id}')">Upload Report</button>`;
         }
@@ -1282,14 +1416,14 @@ class AdminAPI {
         const tbody = document.getElementById('usersTableBody');
         if (!tbody) return;
 
-        if (this.clients.length === 0) {
+        if (!this.clients || this.clients.length === 0) {
             tbody.innerHTML = `
                 <tr>
                     <td colspan="6" class="empty-cell">
                         <div class="empty-state">
                             <i class="fas fa-users"></i>
-                            <h4>No Clients Found</h4>
-                            <p>Clients will appear here once they make bookings</p>
+                            <h4>No Users Found</h4>
+                            <p>Users will appear here once they register</p>
                         </div>
                     </td>
                 </tr>
@@ -1334,19 +1468,19 @@ class AdminAPI {
                 _id: 'demo-1',
                 bookingId: 'BK-2024-001',
                 user: { firstName: 'Priya', lastName: 'Sharma', email: 'priya@email.com', phone: '+91 99306 76179' },
-                service: { name: 'Marriage Matching', price: 2500, duration: 60 },
+                service: { name: 'Marriage Matching', price: 1000, duration: 30 },
                 consultationMode: 'phone',
                 scheduledDate: new Date(now.getTime() + 86400000),
                 scheduledTime: '10:00 AM',
                 status: 'confirmed',
-                payment: { total: 2500, status: 'completed' },
+                payment: { total: 1000, status: 'completed' },
                 createdAt: new Date()
             },
             {
                 _id: 'demo-2',
                 bookingId: 'BK-2024-002',
                 user: { firstName: 'Rahul', lastName: 'Verma', email: 'rahul@email.com', phone: '+91 87654 32109' },
-                service: { name: 'Career Guidance', price: 1500, duration: 45 },
+                service: { name: 'Career Guidance', price: 1500, duration: 30 },
                 consultationMode: 'video',
                 scheduledDate: new Date(now.getTime() + 172800000),
                 scheduledTime: '12:00 PM',
@@ -1358,24 +1492,24 @@ class AdminAPI {
                 _id: 'demo-3',
                 bookingId: 'BK-2024-003',
                 user: { firstName: 'Sneha', lastName: 'Patel', email: 'sneha@email.com', phone: '+91 76543 21098' },
-                service: { name: 'Birth Chart Analysis', price: 1500, duration: 45 },
+                service: { name: 'Vedic Astrology', price: 2500, duration: 30 },
                 consultationMode: 'phone',
                 scheduledDate: now,
                 scheduledTime: '3:00 PM',
                 status: 'confirmed',
-                payment: { total: 1500, status: 'completed' },
+                payment: { total: 2500, status: 'completed' },
                 createdAt: new Date(now.getTime() - 86400000)
             },
             {
                 _id: 'demo-4',
                 bookingId: 'BK-2024-004',
                 user: { firstName: 'Amit', lastName: 'Kumar', email: 'amit@email.com', phone: '+91 65432 10987' },
-                service: { name: 'Vastu Consultation', price: 2000, duration: 60 },
+                service: { name: 'Tarot Card Reading', price: 1000, duration: 30 },
                 consultationMode: 'video',
                 scheduledDate: now,
                 scheduledTime: '5:30 PM',
                 status: 'pending',
-                payment: { total: 2000, status: 'pending' },
+                payment: { total: 1000, status: 'pending' },
                 createdAt: new Date(now.getTime() - 7200000)
             }
         ];
@@ -1426,6 +1560,12 @@ class AdminAPI {
         const statusFilter = document.getElementById('statusFilter');
         if (statusFilter) {
             statusFilter.addEventListener('change', (e) => this.filterByStatus(e.target.value));
+        }
+
+        // Earnings filter
+        const earningsFilter = document.getElementById('earningsFilter');
+        if (earningsFilter) {
+            earningsFilter.addEventListener('change', (e) => this.loadEarningsData(e.target.value));
         }
 
         // Upload modal
@@ -1567,6 +1707,42 @@ class AdminAPI {
         }
     }
 
+    // Mark booking as completed
+    async markAsCompleted(bookingId) {
+        if (!confirm('Mark this booking as completed? This indicates the consultation has been finished.')) return;
+        
+        try {
+            const token = window.API.Token.getToken();
+            
+            const response = await fetch(`${ADMIN_API_BASE}/bookings/admin/${bookingId}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status: 'completed' })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                this.showToast('Booking marked as completed!', 'success');
+                await this.loadAdminData();
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (error) {
+            // Demo mode fallback
+            const booking = this.bookings.find(b => b._id === bookingId);
+            if (booking) {
+                booking.status = 'completed';
+                this.renderBookingsTable();
+                this.updatePendingActions();
+                this.showToast('Booking marked as completed!', 'success');
+            }
+        }
+    }
+
     // Reschedule booking
     async rescheduleBooking(bookingId) {
         const newDate = prompt('Enter new date (YYYY-MM-DD):');
@@ -1684,7 +1860,7 @@ Service: ${booking.service?.name || 'Consultation'}
 Date: ${date.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
 Time: ${booking.scheduledTime}
 Mode: ${modeName}
-Duration: ${booking.service?.duration || 45} minutes
+Duration: ${booking.service?.duration || 30} minutes
 
 PAYMENT
 ───────────────────────────────

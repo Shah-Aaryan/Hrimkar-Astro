@@ -31,6 +31,11 @@
                 <span class="status-dot online"></span>
                 <span>Online</span>
             </div>
+            <!-- Language Toggle -->
+            <button class="lang-toggle" id="langToggleBtn" onclick="toggleLanguage()" title="Switch Language" style="margin-right: 10px;">
+                <i class="fas fa-globe"></i>
+                <span class="lang-toggle-text" id="langToggleText">हिंदी</span>
+            </button>
             <button class="topbar-btn notification-btn" id="notificationBtn">
                 <i class="fas fa-bell"></i>
                 <span class="notification-badge">5</span>
@@ -74,10 +79,6 @@
                 <a href="javascript:void(0)" class="nav-item" data-section="users" onclick="navigateSection('users')">
                     <i class="fas fa-users"></i>
                     <span>Users</span>
-                </a>
-                <a href="javascript:void(0)" class="nav-item" data-section="reports" onclick="navigateSection('reports')">
-                    <i class="fas fa-file-upload"></i>
-                    <span>Reports</span>
                 </a>
                 <a href="javascript:void(0)" class="nav-item" data-section="availability" onclick="navigateSection('availability')">
                     <i class="fas fa-clock"></i>
@@ -488,216 +489,25 @@
                             <thead>
                                 <tr>
                                     <th>User</th>
-                                    <th>Contact</th>
+                                    <th>Phone</th>
                                     <th>Total Bookings</th>
                                     <th>Total Spent</th>
-                                    <th>Last Booking</th>
-                                    <th>Status</th>
+                                    <th>Member Since</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="usersTableBody">
-                                <tr data-id="user-1">
-                                    <td>
-                                        <div class="user-cell">
-                                            <img src="https://ui-avatars.com/api/?name=Priya+S&background=1a1f2e&color=d4af37" alt="User">
-                                            <div>
-                                                <strong>Priya Sharma</strong>
-                                                <span>Member since Jan 2024</span>
-                                            </div>
+                                <!-- Users will be loaded dynamically from database -->
+                                <tr>
+                                    <td colspan="6" class="empty-cell">
+                                        <div class="empty-state">
+                                            <i class="fas fa-spinner fa-spin"></i>
+                                            <p>Loading users...</p>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <div class="contact-info">
-                                            <span>priya@email.com</span>
-                                            <span>+91 98765 43210</span>
-                                        </div>
-                                    </td>
-                                    <td>12</td>
-                                    <td>₹18,500</td>
-                                    <td>Dec 25, 2024</td>
-                                    <td><span class="status-badge completed">Active</span></td>
-                                    <td class="action-buttons">
-                                        <button class="btn-outline btn-sm">View History</button>
-                                        <button class="btn-danger btn-sm">Block</button>
-                                    </td>
-                                </tr>
-                                <tr data-id="user-2">
-                                    <td>
-                                        <div class="user-cell">
-                                            <img src="https://ui-avatars.com/api/?name=Rahul+V&background=1a1f2e&color=d4af37" alt="User">
-                                            <div>
-                                                <strong>Rahul Verma</strong>
-                                                <span>Member since Mar 2024</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="contact-info">
-                                            <span>rahul@email.com</span>
-                                            <span>+91 98765 12345</span>
-                                        </div>
-                                    </td>
-                                    <td>8</td>
-                                    <td>₹12,000</td>
-                                    <td>Dec 20, 2024</td>
-                                    <td><span class="status-badge completed">Active</span></td>
-                                    <td class="action-buttons">
-                                        <button class="btn-outline btn-sm">View History</button>
-                                        <button class="btn-danger btn-sm">Block</button>
-                                    </td>
-                                </tr>
-                                <tr data-id="user-3">
-                                    <td>
-                                        <div class="user-cell">
-                                            <img src="https://ui-avatars.com/api/?name=Sneha+P&background=1a1f2e&color=d4af37" alt="User">
-                                            <div>
-                                                <strong>Sneha Patel</strong>
-                                                <span>Member since Jun 2024</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="contact-info">
-                                            <span>sneha@email.com</span>
-                                            <span>+91 99887 76655</span>
-                                        </div>
-                                    </td>
-                                    <td>5</td>
-                                    <td>₹7,500</td>
-                                    <td>Dec 18, 2024</td>
-                                    <td><span class="status-badge completed">Active</span></td>
-                                    <td class="action-buttons">
-                                        <button class="btn-outline btn-sm">View History</button>
-                                        <button class="btn-danger btn-sm">Block</button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Reports Management Section -->
-            <section class="content-section" id="reportsSection">
-                <div class="section-header">
-                    <div>
-                        <h1>Reports Management</h1>
-                        <p class="section-subtitle">Upload and manage client reports</p>
-                    </div>
-                    <button class="btn-primary" id="uploadReportBtn">
-                        <i class="fas fa-upload"></i> Upload New Report
-                    </button>
-                </div>
-
-                <div class="content-card">
-                    <div class="card-body">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Report</th>
-                                    <th>Client</th>
-                                    <th>Type</th>
-                                    <th>Upload Date</th>
-                                    <th>Downloaded</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="reportsTableBody">
-                                <tr>
-                                    <td>
-                                        <div class="report-info">
-                                            <i class="fas fa-file-pdf"></i>
-                                            <strong>Birth Chart Analysis</strong>
-                                        </div>
-                                    </td>
-                                    <td>Priya Sharma</td>
-                                    <td>Natal Chart</td>
-                                    <td>Dec 15, 2024</td>
-                                    <td><span class="status-badge completed">Yes</span></td>
-                                    <td class="action-buttons">
-                                        <button class="btn-outline btn-sm"><i class="fas fa-eye"></i> View</button>
-                                        <button class="btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="report-info">
-                                            <i class="fas fa-file-pdf"></i>
-                                            <strong>Marriage Compatibility</strong>
-                                        </div>
-                                    </td>
-                                    <td>Rahul Verma</td>
-                                    <td>Kundli Milan</td>
-                                    <td>Dec 12, 2024</td>
-                                    <td><span class="status-badge pending">No</span></td>
-                                    <td class="action-buttons">
-                                        <button class="btn-outline btn-sm"><i class="fas fa-eye"></i> View</button>
-                                        <button class="btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="report-info">
-                                            <i class="fas fa-file-pdf"></i>
-                                            <strong>Career Guidance Report</strong>
-                                        </div>
-                                    </td>
-                                    <td>Sneha Patel</td>
-                                    <td>Career</td>
-                                    <td>Dec 10, 2024</td>
-                                    <td><span class="status-badge completed">Yes</span></td>
-                                    <td class="action-buttons">
-                                        <button class="btn-outline btn-sm"><i class="fas fa-eye"></i> View</button>
-                                        <button class="btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Upload Report Modal -->
-                <div class="modal" id="uploadReportModal">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3>Upload Report</h3>
-                            <button class="modal-close" id="closeUploadModal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="uploadReportForm">
-                                <div class="form-group">
-                                    <label>Select Client</label>
-                                    <select required>
-                                        <option value="">Choose client...</option>
-                                        <option>Priya Sharma</option>
-                                        <option>Rahul Verma</option>
-                                        <option>Sneha Patel</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Report Type</label>
-                                    <select required>
-                                        <option value="">Select type...</option>
-                                        <option>Birth Chart</option>
-                                        <option>Marriage Compatibility</option>
-                                        <option>Career Guidance</option>
-                                        <option>Yearly Predictions</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Upload PDF</label>
-                                    <div class="file-upload">
-                                        <input type="file" accept=".pdf" required>
-                                        <span><i class="fas fa-cloud-upload-alt"></i> Choose file or drag here</span>
-                                    </div>
-                                </div>
-                                <div class="form-actions">
-                                    <button type="button" class="btn-outline" id="cancelUpload">Cancel</button>
-                                    <button type="submit" class="btn-primary">Upload Report</button>
-                                </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -840,8 +650,8 @@
                         </div>
                         <div class="card-info">
                             <span class="card-label">Total Earnings</span>
-                            <span class="card-value">₹1,25,000</span>
-                            <span class="card-change positive">+18% from last month</span>
+                            <span class="card-value">₹0</span>
+                            <span class="card-change positive">Loading...</span>
                         </div>
                     </div>
                     <div class="summary-card">
@@ -850,8 +660,8 @@
                         </div>
                         <div class="card-info">
                             <span class="card-label">Completed Sessions</span>
-                            <span class="card-value">47</span>
-                            <span class="card-change positive">+5 from last month</span>
+                            <span class="card-value">0</span>
+                            <span class="card-change positive">Loading...</span>
                         </div>
                     </div>
                     <div class="summary-card">
@@ -860,8 +670,8 @@
                         </div>
                         <div class="card-info">
                             <span class="card-label">Average per Session</span>
-                            <span class="card-value">₹2,660</span>
-                            <span class="card-change positive">+₹160</span>
+                            <span class="card-value">₹0</span>
+                            <span class="card-change positive">--</span>
                         </div>
                     </div>
                 </div>
@@ -884,41 +694,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <!-- Transactions will be loaded dynamically from database -->
                                 <tr>
-                                    <td>#TXN-2024-047</td>
-                                    <td>Priya Sharma</td>
-                                    <td>Marriage Matching</td>
-                                    <td>Dec 24, 2024</td>
-                                    <td class="amount-credit">+₹2,500</td>
-                                    <td><span class="status-badge completed">Paid</span></td>
-                                    <td><button class="btn-outline btn-sm"><i class="fas fa-download"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td>#TXN-2024-046</td>
-                                    <td>Rahul Verma</td>
-                                    <td>Career Guidance</td>
-                                    <td>Dec 23, 2024</td>
-                                    <td class="amount-credit">+₹1,500</td>
-                                    <td><span class="status-badge completed">Paid</span></td>
-                                    <td><button class="btn-outline btn-sm"><i class="fas fa-download"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td>#TXN-2024-045</td>
-                                    <td>Sneha Patel</td>
-                                    <td>Birth Chart Analysis</td>
-                                    <td>Dec 20, 2024</td>
-                                    <td class="amount-credit">+₹1,500</td>
-                                    <td><span class="status-badge completed">Paid</span></td>
-                                    <td><button class="btn-outline btn-sm"><i class="fas fa-download"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td>#TXN-2024-044</td>
-                                    <td>Platform Fee</td>
-                                    <td>December Processing</td>
-                                    <td>Dec 21, 2024</td>
-                                    <td class="amount-debit">-₹500</td>
-                                    <td><span class="status-badge pending">Deducted</span></td>
-                                    <td><button class="btn-outline btn-sm"><i class="fas fa-download"></i></button></td>
+                                    <td colspan="7" class="empty-cell">
+                                        <div class="empty-state">
+                                            <i class="fas fa-spinner fa-spin"></i>
+                                            <p>Loading transactions...</p>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1053,8 +836,12 @@
                         loadAppointments();
                     }
                 } else if (sectionName === 'users') {
-                    if (typeof loadUsers === 'function') {
-                        loadUsers();
+                    if (typeof adminAPI !== 'undefined' && adminAPI.loadAllClients) {
+                        adminAPI.loadAllClients();
+                    }
+                } else if (sectionName === 'earnings') {
+                    if (typeof adminAPI !== 'undefined' && adminAPI.loadEarningsData) {
+                        adminAPI.loadEarningsData('month');
                     }
                 } else if (sectionName === 'dashboard') {
                     if (typeof loadDashboardStats === 'function') {
@@ -1068,6 +855,7 @@
     </script>
 
     <script src="js/main.js"></script>
+    <script src="js/translations.js"></script>
     <script src="js/api.js"></script>
     <script src="js/admin.js"></script>
     <script src="js/admin-api.js"></script>

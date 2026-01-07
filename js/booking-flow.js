@@ -37,7 +37,7 @@ const services = {
         name: 'Career Astrology',
         description: 'Professional & business advice',
         icon: 'fa-briefcase',
-        price: 2000,
+        price: 1500,
         duration: 30
     },
     'health-astrology': {
@@ -1323,7 +1323,7 @@ document.getElementById('addGoogleCal')?.addEventListener('click', function() {
     startDate.setHours(hours, parseInt(minutes || 0));
     
     const endDate = new Date(startDate);
-    endDate.setMinutes(endDate.getMinutes() + (bookingState.service?.duration || 45));
+    endDate.setMinutes(endDate.getMinutes() + (bookingState.service?.duration || 30));
     
     const formatDate = (d) => d.toISOString().replace(/-|:|\.\d{3}/g, '');
     

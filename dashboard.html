@@ -28,6 +28,11 @@
         </div>
         <div class="topbar-right">
             <!-- Notification button removed -->
+            <!-- Language Toggle -->
+            <button class="lang-toggle" id="langToggleBtn" onclick="toggleLanguage()" title="Switch Language" style="margin-right: 15px;">
+                <i class="fas fa-globe"></i>
+                <span class="lang-toggle-text" id="langToggleText">हिंदी</span>
+            </button>
             <div class="user-dropdown" id="userDropdown">
                 <button class="user-btn">
                     <div class="user-avatar">
@@ -206,15 +211,14 @@
                                     <td>
                                         <div class="service-info">
                                             <strong>Marriage Matching Consultation</strong>
-                                            <span>60 minutes</span>
+                                            <span>30 minutes</span>
                                         </div>
                                     </td>
                                     <td>Dec 25, 2024 • 10:00 AM</td>
                                     <td><span class="mode-badge call"><i class="fas fa-phone"></i> Call</span></td>
-                                    <td>₹2,500</td>
+                                    <td>₹1,000</td>
                                     <td><span class="status-badge upcoming">Upcoming</span></td>
                                     <td class="action-buttons">
-                                        <button class="btn-outline btn-sm">Reschedule</button>
                                         <button class="btn-danger btn-sm">Cancel</button>
                                     </td>
                                 </tr>
@@ -222,7 +226,7 @@
                                     <td>
                                         <div class="service-info">
                                             <strong>Career Guidance Session</strong>
-                                            <span>45 minutes</span>
+                                            <span>30 minutes</span>
                                         </div>
                                     </td>
                                     <td>Dec 30, 2024 • 3:00 PM</td>
@@ -231,20 +235,19 @@
                                     <td><span class="status-badge pending">Pending Payment</span></td>
                                     <td class="action-buttons">
                                         <button class="btn-primary btn-sm">Pay Now</button>
-                                        <button class="btn-outline btn-sm">Reschedule</button>
                                         <button class="btn-danger btn-sm">Cancel</button>
                                     </td>
                                 </tr>
                                 <tr data-status="completed">
                                     <td>
                                         <div class="service-info">
-                                            <strong>Birth Chart Analysis</strong>
-                                            <span>45 minutes</span>
+                                            <strong>Vedic Astrology</strong>
+                                            <span>30 minutes</span>
                                         </div>
                                     </td>
                                     <td>Dec 15, 2024 • 11:00 AM</td>
                                     <td><span class="mode-badge call"><i class="fas fa-phone"></i> Call</span></td>
-                                    <td>₹1,500</td>
+                                    <td>₹2,500</td>
                                     <td><span class="status-badge completed">Completed</span></td>
                                     <td class="action-buttons">
                                         <button class="btn-outline btn-sm">View Report</button>
@@ -632,6 +635,7 @@
     </div>
 
     <script src="js/main.js"></script>
+    <script src="js/translations.js"></script>
     <script src="js/api.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/dashboard-api.js"></script>

@@ -31,14 +31,20 @@
             </button>
             
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="planets.html">Navagraha</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="booking.html" class="active">Book Now</a></li>
+                <li><a href="index.html" data-translate="nav_home">Home</a></li>
+                <li><a href="about.html" data-translate="nav_about">About</a></li>
+                <li><a href="services.html" data-translate="nav_services">Services</a></li>
+                <li><a href="planets.html" data-translate="nav_navagraha">Navagraha</a></li>
+                <li><a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+                <li><a href="booking.html" class="active" data-translate="nav_book_now">Book Now</a></li>
+                <li class="nav-lang">
+                    <button class="lang-toggle" id="langToggleBtn" onclick="toggleLanguage()" title="Switch Language">
+                        <i class="fas fa-globe"></i>
+                        <span class="lang-toggle-text" id="langToggleText">हिंदी</span>
+                    </button>
+                </li>
                 <li class="nav-user">
-                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> Login</a>
+                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> <span data-translate="nav_login">Login</span></a>
                 </li>
             </ul>
         </div>
@@ -47,9 +53,9 @@
     <!-- Page Header -->
     <header class="page-header booking-header">
         <div class="container">
-            <span class="section-badge"><i class="fas fa-calendar-check"></i> Easy Online Booking</span>
-            <h1>Book Your <span class="gradient-text">Consultation</span></h1>
-            <p>Complete your booking in just a few simple steps</p>
+            <span class="section-badge"><i class="fas fa-calendar-check"></i> <span data-translate="booking_badge">Easy Online Booking</span></span>
+            <h1><span data-translate="booking_header">Book Your</span> <span class="gradient-text" data-translate="booking_header_consultation">Consultation</span></h1>
+            <p data-translate="booking_header_subtitle">Complete your booking in just a few simple steps</p>
         </div>
     </header>
 
@@ -160,7 +166,7 @@
                             </div>
                             
                             <!-- Career Guidance -->
-                            <div class="service-select-card" data-service="career-guidance" data-price="2000" data-duration="30">
+                            <div class="service-select-card" data-service="career-guidance" data-price="1500" data-duration="30">
                                 <div class="service-card-header">
                                     <div class="service-icon-box"><i class="fas fa-briefcase"></i></div>
                                 </div>
@@ -173,7 +179,7 @@
                                 </div>
                                 <div class="service-meta-row">
                                     <div class="meta-item"><i class="fas fa-clock"></i><span>30 mins</span></div>
-                                    <div class="meta-item price"><i class="fas fa-rupee-sign"></i><span>2,000</span></div>
+                                    <div class="meta-item price"><i class="fas fa-rupee-sign"></i><span>1,500</span></div>
                                 </div>
                                 <div class="service-modes">
                                     <span title="Phone Call"><i class="fas fa-phone"></i></span>
@@ -257,7 +263,7 @@
                             </div>
                             
                             <!-- Love & Compatibility Guidance -->
-                            <div class="service-select-card" data-service="numerology-astro" data-price="1000" data-duration="30">
+                            <div class="service-select-card" data-service="love-compatibility" data-price="1000" data-duration="30">
                                 <div class="service-card-header">
                                     <div class="service-icon-box"><i class="fas fa-heart"></i></div>
                                     <div class="service-badge popular">Popular</div>
@@ -510,7 +516,7 @@
                                     <div class="review-row"><span class="review-label">Mode:</span><span class="review-value" id="reviewMode"><i class="fas fa-video"></i> Video Call</span></div>
                                     <div class="review-row"><span class="review-label">Date:</span><span class="review-value" id="reviewDate">December 25, 2025</span></div>
                                     <div class="review-row"><span class="review-label">Time:</span><span class="review-value" id="reviewTime">10:00 AM IST</span></div>
-                                    <div class="review-row"><span class="review-label">Duration:</span><span class="review-value" id="reviewDuration">45 minutes</span></div>
+                                    <div class="review-row"><span class="review-label">Duration:</span><span class="review-value" id="reviewDuration">30 minutes</span></div>
                                 </div>
                             </div>
                             
@@ -809,6 +815,7 @@
         </div>
     </footer>
 
+    <script src="js/translations.js"></script>
     <script src="js/main.js"></script>
     <script src="js/api.js"></script>
     <script src="js/booking-flow.js"></script>

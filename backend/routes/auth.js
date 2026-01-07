@@ -1,33 +1,33 @@
+/**
+ * Authentication Routes
+ * OWASP Best Practice: Rate limiting on auth endpoints, input validation
+ */
 const express = require('express');
 const router = express.Router();
-const { body } = require('express-validator');
+
+// Import rate limiters
+const { 
+    authLimiter, 
+    otpLimiter, 
+    passwordResetLimiter 
+} = require('../middleware/rateLimiter');
+
+// Import validators
+const {
+    registerValidation,
+    registerWithOtpValidation,
+    loginValidation,
+    requestOtpValidation,
+    forgotPasswordValidation,
+    verifyResetOtpValidation,
+    resetPasswordValidation,
+    updateDetailsValidation,
+    updatePasswordValidation,
+    paginationValidation
+} = require('../middleware/inputValidator');
+
+// Import controllers
 const { requestOtp, registerWithOtp } = require('../controllers/authController');
-
-// Validation rules
-const registerValidation = [
-    body('firstName')
-        .trim()
-        .notEmpty().withMessage('First name is required')
-        .isLength({ max: 50 }).withMessage('First name cannot exceed 50 characters'),
-    body('lastName')
-        .trim()
-        .notEmpty().withMessage('Last name is required')
-        .isLength({ max: 50 }).withMessage('Last name cannot exceed 50 characters'),
-    body('email')
-        .trim()
-        .notEmpty().withMessage('Email is required')
-        .isEmail().withMessage('Please provide a valid email'),
-    body('phone')
-        .trim()
-        .notEmpty().withMessage('Phone number is required')
-        .matches(/^\+?[\d\s-]{10,}$/).withMessage('Please provide a valid phone number'),
-    body('password')
-        .notEmpty().withMessage('Password is required')
-        .isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
-];
-
-router.post('/request-otp', [body('email').isEmail().withMessage('Valid email required')], requestOtp);
-router.post('/register-with-otp', [...registerValidation, body('otp').notEmpty().withMessage('OTP required')], registerWithOtp);
 const {
     register,
     login,
@@ -38,34 +38,85 @@ const {
     verifyToken,
     forgotPassword,
     verifyResetOtp,
-    resetPassword
+    resetPassword,
+    getAllUsers,
+    getUserStats
 } = require('../controllers/authController');
-const { protect } = require('../middleware/auth');
+const { protect, authorize } = require('../middleware/auth');
 
+// ============================================
+// PUBLIC ROUTES (with rate limiting)
+// ============================================
 
-const loginValidation = [
-    body('email')
-        .trim()
-        .notEmpty().withMessage('Email is required')
-        .isEmail().withMessage('Please provide a valid email'),
-    body('password')
-        .notEmpty().withMessage('Password is required')
-];
+// OTP routes - strict rate limiting to prevent abuse
+router.post('/request-otp', 
+    otpLimiter,           // 3 requests per 10 minutes
+    requestOtpValidation,  // Validate email format
+    requestOtp
+);
 
-// Public routes
-router.post('/register', registerValidation, register);
-router.post('/login', loginValidation, login);
+router.post('/register-with-otp', 
+    authLimiter,                  // 5 attempts per 15 minutes
+    registerWithOtpValidation,    // Full validation
+    registerWithOtp
+);
 
-// Forgot Password routes
-router.post('/forgot-password', [body('email').isEmail().withMessage('Valid email required')], forgotPassword);
-router.post('/verify-reset-otp', verifyResetOtp);
-router.post('/reset-password', resetPassword);
+// Registration - rate limited to prevent mass account creation
+router.post('/register', 
+    authLimiter,          // 5 attempts per 15 minutes
+    registerValidation,    // Input validation
+    register
+);
 
-// Protected routes
+// Login - strict rate limiting to prevent brute force
+router.post('/login', 
+    authLimiter,          // 5 attempts per 15 minutes
+    loginValidation,       // Validate email and password present
+    login
+);
+
+// Password reset routes - rate limited
+router.post('/forgot-password', 
+    passwordResetLimiter,      // 3 attempts per 30 minutes
+    forgotPasswordValidation,
+    forgotPassword
+);
+
+router.post('/verify-reset-otp', 
+    authLimiter,
+    verifyResetOtpValidation,
+    verifyResetOtp
+);
+
+router.post('/reset-password', 
+    authLimiter,
+    resetPasswordValidation,
+    resetPassword
+);
+
+// ============================================
+// PROTECTED ROUTES (require authentication)
+// ============================================
 router.post('/logout', protect, logout);
 router.get('/me', protect, getMe);
 router.get('/verify', protect, verifyToken);
-router.put('/updatedetails', protect, updateDetails);
-router.put('/updatepassword', protect, updatePassword);
+router.put('/updatedetails', protect, updateDetailsValidation, updateDetails);
+router.put('/updatepassword', protect, updatePasswordValidation, updatePassword);
+
+// ============================================
+// ADMIN ROUTES
+// ============================================
+router.get('/admin/users', 
+    protect, 
+    authorize('admin'), 
+    paginationValidation,
+    getAllUsers
+);
+
+router.get('/admin/users/stats', 
+    protect, 
+    authorize('admin'), 
+    getUserStats
+);
 
 module.exports = router;

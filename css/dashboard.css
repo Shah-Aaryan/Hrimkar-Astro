@@ -777,6 +777,27 @@ body.dashboard-body {
     background: rgba(239, 68, 68, 0.25);
 }
 
+.btn-success {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.btn-success:hover {
+    background: rgba(16, 185, 129, 0.25);
+}
+
 .btn-sm {
     padding: 6px 12px;
     font-size: 0.8rem;

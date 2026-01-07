@@ -29,12 +29,18 @@
             </button>
             
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="planets.html">Navagraha</a></li>
-                <li><a href="testimonials.html" class="active">Testimonials</a></li>
-                <li><a href="dashboard.html" class="btn btn-primary nav-cta">Book Now</a></li>
+                <li><a href="index.html" data-translate="nav_home">Home</a></li>
+                <li><a href="about.html" data-translate="nav_about">About</a></li>
+                <li><a href="services.html" data-translate="nav_services">Services</a></li>
+                <li><a href="planets.html" data-translate="nav_navagraha">Navagraha</a></li>
+                <li><a href="testimonials.html" class="active" data-translate="nav_testimonials">Testimonials</a></li>
+                <li class="nav-lang">
+                    <button class="lang-toggle" id="langToggleBtn" onclick="toggleLanguage()" title="Switch Language">
+                        <i class="fas fa-globe"></i>
+                        <span class="lang-toggle-text" id="langToggleText">हिंदी</span>
+                    </button>
+                </li>
+                <li><a href="dashboard.html" class="btn btn-primary nav-cta" data-translate="nav_book_now">Book Now</a></li>
             </ul>
         </div>
     </nav>
@@ -42,9 +48,9 @@
     <!-- Page Header -->
     <header class="page-header">
         <div class="container">
-            <span class="section-badge">What Clients Say</span>
-            <h1> <span class="gradient-text">Client Testimonials</span></h1>
-            <p>Real stories of transformation and guidance</p>
+            <span class="section-badge" data-translate="testimonials_badge">What Clients Say</span>
+            <h1> <span class="gradient-text" data-translate="testimonials_title">Client Testimonials</span></h1>
+            <p data-translate="testimonials_subtitle">Real stories of transformation and guidance</p>
         </div>
     </header>
 
@@ -360,6 +366,7 @@
         </div>
     </footer>
 
+    <script src="js/translations.js"></script>
     <script src="js/main.js"></script>
     <script src="js/testimonials.js"></script>
     <script>

@@ -241,14 +241,20 @@
             </button>
             
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="planets.html">Navagraha</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="dashboard.html">Book Now</a></li>
+                <li><a href="index.html" data-translate="nav_home">Home</a></li>
+                <li><a href="about.html" data-translate="nav_about">About</a></li>
+                <li><a href="services.html" data-translate="nav_services">Services</a></li>
+                <li><a href="planets.html" data-translate="nav_navagraha">Navagraha</a></li>
+                <li><a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+                <li><a href="dashboard.html" data-translate="nav_book_now">Book Now</a></li>
                 <li class="nav-user">
-                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> Login</a>
+                    <a href="login.html" class="btn-login" data-translate="nav_login"><i class="fas fa-user"></i> Login</a>
+                </li>
+                <li class="nav-lang">
+                    <button class="lang-toggle" id="langToggleBtn" onclick="toggleLanguage()" title="Switch Language">
+                        <i class="fas fa-globe"></i>
+                        <span class="lang-toggle-text" id="langToggleText">हिंदी</span>
+                    </button>
                 </li>
             </ul>
         </div>
@@ -425,6 +431,7 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <script src="js/translations.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

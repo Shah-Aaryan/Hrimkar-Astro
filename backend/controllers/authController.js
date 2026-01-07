@@ -224,6 +224,14 @@ exports.login = async (req, res) => {
             });
         }
 
+        // Check if user is banned
+        if (user.isBanned) {
+            return res.status(403).json({
+                success: false,
+                message: 'Your account has been banned due to multiple booking rejections. Please contact support for assistance.'
+            });
+        }
+
         // Check if password matches
         const isMatch = await user.matchPassword(password);
 
@@ -358,6 +366,111 @@ exports.verifyToken = async (req, res) => {
         data: req.user,
         message: 'Token is valid'
     });
+};
+
+// @desc    Get all users (Admin)
+// @route   GET /api/auth/admin/users
+// @access  Private/Admin
+exports.getAllUsers = async (req, res) => {
+    try {
+        const { page = 1, limit = 20, search } = req.query;
+        
+        let query = { role: 'user' }; // Only get regular users, not admins
+        
+        if (search) {
+            query.$or = [
+                { firstName: { $regex: search, $options: 'i' } },
+                { lastName: { $regex: search, $options: 'i' } },
+                { email: { $regex: search, $options: 'i' } },
+                { phone: { $regex: search, $options: 'i' } }
+            ];
+        }
+        
+        const users = await User.find(query)
+            .select('-password')
+            .sort({ createdAt: -1 })
+            .skip((page - 1) * limit)
+            .limit(parseInt(limit));
+        
+        const total = await User.countDocuments(query);
+        
+        // Get booking stats for each user
+        const Booking = require('../models/Booking');
+        const usersWithStats = await Promise.all(users.map(async (user) => {
+            const bookingStats = await Booking.aggregate([
+                { $match: { user: user._id } },
+                {
+                    $group: {
+                        _id: null,
+                        totalBookings: { $sum: 1 },
+                        totalSpent: { $sum: '$payment.total' },
+                        lastBooking: { $max: '$createdAt' }
+                    }
+                }
+            ]);
+            
+            return {
+                ...user.toObject(),
+                stats: bookingStats[0] || { totalBookings: 0, totalSpent: 0, lastBooking: null }
+            };
+        }));
+        
+        res.status(200).json({
+            success: true,
+            count: users.length,
+            total,
+            pages: Math.ceil(total / limit),
+            currentPage: parseInt(page),
+            data: usersWithStats
+        });
+    } catch (error) {
+        console.error('Get all users error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching users'
+        });
+    }
+};
+
+// @desc    Get user stats summary (Admin)
+// @route   GET /api/auth/admin/users/stats
+// @access  Private/Admin
+exports.getUserStats = async (req, res) => {
+    try {
+        const today = new Date();
+        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        const startOfLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const endOfLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        
+        const totalUsers = await User.countDocuments({ role: 'user' });
+        const newUsersThisMonth = await User.countDocuments({
+            role: 'user',
+            createdAt: { $gte: startOfMonth }
+        });
+        const newUsersLastMonth = await User.countDocuments({
+            role: 'user',
+            createdAt: { $gte: startOfLastMonth, $lte: endOfLastMonth }
+        });
+        
+        const userGrowth = newUsersLastMonth > 0 
+            ? Math.round(((newUsersThisMonth - newUsersLastMonth) / newUsersLastMonth) * 100)
+            : (newUsersThisMonth > 0 ? 100 : 0);
+        
+        res.status(200).json({
+            success: true,
+            data: {
+                totalUsers,
+                newUsersThisMonth,
+                userGrowth
+            }
+        });
+    } catch (error) {
+        console.error('Get user stats error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching user stats'
+        });
+    }
 };
 
 // Helper: Get token from model, create cookie and send response

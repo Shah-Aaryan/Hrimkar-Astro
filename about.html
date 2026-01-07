@@ -29,14 +29,20 @@
             </button>
             
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html" class="active">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="planets.html">Navagraha</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="dashboard.html">Book Now</a></li>
+                <li><a href="index.html" data-translate="nav_home">Home</a></li>
+                <li><a href="about.html" class="active" data-translate="nav_about">About</a></li>
+                <li><a href="services.html" data-translate="nav_services">Services</a></li>
+                <li><a href="planets.html" data-translate="nav_navagraha">Navagraha</a></li>
+                <li><a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+                <li><a href="dashboard.html" data-translate="nav_book_now">Book Now</a></li>
+                <li class="nav-lang">
+                    <button class="lang-toggle" id="langToggleBtn" onclick="toggleLanguage()" title="Switch Language">
+                        <i class="fas fa-globe"></i>
+                        <span class="lang-toggle-text" id="langToggleText">हिंदी</span>
+                    </button>
+                </li>
                 <li class="nav-user">
-                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> Login</a>
+                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> <span data-translate="nav_login">Login</span></a>
                 </li>
             </ul>
         </div>
@@ -45,9 +51,9 @@
     <!-- Page Header -->
     <header class="page-header">
         <div class="container">
-            <span class="section-badge">Your Cosmic Guide</span>
+            <span class="section-badge" data-translate="about_subtitle">Your Cosmic Guide</span>
             <h1>Kavita Shah</h1>
-            <p>Cosmic Energy That Heals, Guides, and Protects</p>
+            <p data-translate="about_tagline">Cosmic Energy That Heals, Guides, and Protects</p>
         </div>
     </header>
 
@@ -60,41 +66,41 @@
                         <img src="assets/astrologer.jpg" alt="Kavita Shah - Occult Guru">
                         <div class="image-badge">
                             <span>10+</span>
-                            <small>Years of Experience</small>
+                            <small data-translate="about_years_exp">Years of Experience</small>
                         </div>
                     </div>
                 </div>
                 
                 <div class="about-content">
-                    <h2>Guiding you through the stars to smarter life choices</h2>
-                    <p class="lead">I am Kavita Shah, an experienced Occult Guru dedicated to helping individuals overcome life's challenges through the power of karma and cosmic wisdom.</p>
+                    <h2 data-translate="about_heading">Guiding you through the stars to smarter life choices</h2>
+                    <p class="lead" data-translate="about_intro">I am Kavita Shah, an experienced Occult Guru dedicated to helping individuals overcome life's challenges through the power of karma and cosmic wisdom.</p>
                     
-                    <p>For more than a decade, I have been practicing Occult Sciences, with deep expertise in <strong>Vedic Astrology</strong> and <strong>Krishnamurthy Paddhati (KP System)</strong>, known for its accuracy and practical predictions.</p>
+                    <p data-translate="about_para1">For more than a decade, I have been practicing Occult Sciences, with deep expertise in <strong>Vedic Astrology</strong> and <strong>Krishnamurthy Paddhati (KP System)</strong>, known for its accuracy and practical predictions.</p>
                     
-                    <p>Alongside astrology, I offer <strong>Numerology guidance</strong>, including mobile number selection, to help align personal energies with success, peace, and clarity. My guidance is honest, ethical, and focused on real-life solutions.</p>
+                    <p data-translate="about_para2">Alongside astrology, I offer <strong>Numerology guidance</strong>, including mobile number selection, to help align personal energies with success, peace, and clarity. My guidance is honest, ethical, and focused on real-life solutions.</p>
                     
-                    <p>Through the wisdom of karma, I help transform difficult times into simple, practical solutions. From hard times to clear solutions – that's my promise to you.</p>
+                    <p data-translate="about_para3">Through the wisdom of karma, I help transform difficult times into simple, practical solutions. From hard times to clear solutions – that's my promise to you.</p>
 
                     <div class="about-stats">
                         <div class="stat-item">
                             <i class="fas fa-users"></i>
                             <div>
                                 <span class="stat-number">5,000+</span>
-                                <span class="stat-label">Consultations</span>
+                                <span class="stat-label" data-translate="about_consultations">Consultations</span>
                             </div>
                         </div>
                         <div class="stat-item">
                             <i class="fas fa-om"></i>
                             <div>
                                 <span class="stat-number">10+</span>
-                                <span class="stat-label">Years Experience</span>
+                                <span class="stat-label" data-translate="about_years_exp">Years Experience</span>
                             </div>
                         </div>
                         <div class="stat-item">
                             <i class="fas fa-star"></i>
                             <div>
                                 <span class="stat-number">4.5+/5</span>
-                                <span class="stat-label">Rating</span>
+                                <span class="stat-label" data-translate="about_rating">Rating</span>
                             </div>
                         </div>
                     </div>
@@ -107,9 +113,9 @@
     <section class="guru-lineage">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">Why Choose Me</span>
-                <h2> <span class="gradient-text">Trust & Expertise</span></h2>
-                <p>Guided by Karma, Empowered by Knowledge</p>
+                <span class="section-badge" data-translate="why_choose_badge">Why Choose Me</span>
+                <h2> <span class="gradient-text" data-translate="why_choose_title">Trust & Expertise</span></h2>
+                <p data-translate="why_choose_subtitle">Guided by Karma, Empowered by Knowledge</p>
             </div>
             
             <div class="trust-highlights">
@@ -118,8 +124,8 @@
                         <i class="fas fa-certificate"></i>
                     </div>
                     <div class="trust-content">
-                        <h3>Occult Guru with 10+ Years of Experience</h3>
-                        <p>Over a decade of dedicated practice in occult sciences, helping thousands transform their lives through cosmic wisdom.</p>
+                        <h3 data-translate="trust_item1_title">Occult Guru with 10+ Years of Experience</h3>
+                        <p data-translate="trust_item1_desc">Over a decade of dedicated practice in occult sciences, helping thousands transform their lives through cosmic wisdom.</p>
                     </div>
                 </div>
                 
@@ -128,8 +134,8 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <div class="trust-content">
-                        <h3>Expert in Vedic Astrology & Krishnamurthy Paddhati</h3>
-                        <p>Specialized in both traditional Vedic astrology and the highly accurate KP System for precise predictions.</p>
+                        <h3 data-translate="trust_item2_title">Expert in Vedic Astrology & Krishnamurthy Paddhati</h3>
+                        <p data-translate="trust_item2_desc">Specialized in both traditional Vedic astrology and the highly accurate KP System for precise predictions.</p>
                     </div>
                 </div>
                 
@@ -138,8 +144,8 @@
                         <i class="fas fa-om"></i>
                     </div>
                     <div class="trust-content">
-                        <h3>Karma-Based Life Guidance</h3>
-                        <p>My approach focuses on understanding your karmic patterns to provide meaningful, life-changing guidance.</p>
+                        <h3 data-translate="trust_item3_title">Karma-Based Life Guidance</h3>
+                        <p data-translate="trust_item3_desc">My approach focuses on understanding your karmic patterns to provide meaningful, life-changing guidance.</p>
                     </div>
                 </div>
                 
@@ -148,8 +154,8 @@
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <div class="trust-content">
-                        <h3>Numerology & Mobile Number Selection</h3>
-                        <p>Expert numerology consultations including personalized mobile number selection for positive life alignment.</p>
+                        <h3 data-translate="trust_item4_title">Numerology & Mobile Number Selection</h3>
+                        <p data-translate="trust_item4_desc">Expert numerology consultations including personalized mobile number selection for positive life alignment.</p>
                     </div>
                 </div>
                 
@@ -158,8 +164,8 @@
                         <i class="fas fa-hand-holding-heart"></i>
                     </div>
                     <div class="trust-content">
-                        <h3>Practical, Ethical & Solution-Oriented</h3>
-                        <p>Honest guidance focused on real-life solutions. No false promises – just practical wisdom to help you navigate life.</p>
+                        <h3 data-translate="trust_item5_title">Practical, Ethical & Solution-Oriented</h3>
+                        <p data-translate="trust_item5_desc">Honest guidance focused on real-life solutions. No false promises – just practical wisdom to help you navigate life.</p>
                     </div>
                 </div>
             </div>
@@ -170,9 +176,9 @@
     <section class="expertise-section">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">My Specializations</span>
-                <h2> <span class="gradient-text">Areas of Expertise</span></h2>
-                <p>Transforming difficult times into simple, practical solutions</p>
+                <span class="section-badge" data-translate="expertise_badge">My Specializations</span>
+                <h2> <span class="gradient-text" data-translate="expertise_title">Areas of Expertise</span></h2>
+                <p data-translate="expertise_subtitle">Transforming difficult times into simple, practical solutions</p>
             </div>
             
             <div class="expertise-grid">
@@ -180,13 +186,13 @@
                     <div class="expertise-icon">
                         <i class="fas fa-sun"></i>
                     </div>
-                    <h3>Vedic Astrology</h3>
-                    <p>Deep expertise in traditional Vedic astrology for comprehensive birth chart analysis, predictions, and life guidance based on planetary positions.</p>
+                    <h3 data-translate="expertise_vedic">Vedic Astrology</h3>
+                    <p data-translate="expertise_vedic_desc">Deep expertise in traditional Vedic astrology for comprehensive birth chart analysis, predictions, and life guidance based on planetary positions.</p>
                     <ul>
-                        <li>Birth Chart Analysis</li>
-                        <li>Dasha Predictions</li>
-                        <li>Marriage Compatibility</li>
-                        <li>Career Guidance</li>
+                        <li data-translate="birth_chart_analysis">Birth Chart Analysis</li>
+                        <li data-translate="dasha_predictions">Dasha Predictions</li>
+                        <li data-translate="marriage_compatibility">Marriage Compatibility</li>
+                        <li data-translate="career_guidance">Career Guidance</li>
                     </ul>
                 </div>
                 
@@ -194,13 +200,13 @@
                     <div class="expertise-icon">
                         <i class="fas fa-star-of-david"></i>
                     </div>
-                    <h3>Krishnamurthy Paddhati (KP)</h3>
-                    <p>Specialized in the highly accurate KP System known for its precise timing of events and practical predictions for specific life questions.</p>
+                    <h3 data-translate="expertise_kp">Krishnamurthy Paddhati (KP)</h3>
+                    <p data-translate="expertise_kp_desc">Specialized in the highly accurate KP System known for its precise timing of events and practical predictions for specific life questions.</p>
                     <ul>
-                        <li>Timing of Events</li>
-                        <li>Specific Question Analysis</li>
-                        <li>Accurate Predictions</li>
-                        <li>Ruling Planets Method</li>
+                        <li data-translate="timing_events">Timing of Events</li>
+                        <li data-translate="specific_question">Specific Question Analysis</li>
+                        <li data-translate="accurate_predictions">Accurate Predictions</li>
+                        <li data-translate="ruling_planets">Ruling Planets Method</li>
                     </ul>
                 </div>
                 
@@ -208,13 +214,13 @@
                     <div class="expertise-icon">
                         <i class="fas fa-sort-numeric-up"></i>
                     </div>
-                    <h3>Numerology</h3>
-                    <p>Expert numerology consultations to understand your life path, lucky numbers, and personal vibrations for success and harmony.</p>
+                    <h3 data-translate="expertise_numerology">Numerology</h3>
+                    <p data-translate="expertise_numerology_desc">Expert numerology consultations to understand your life path, lucky numbers, and personal vibrations for success and harmony.</p>
                     <ul>
-                        <li>Life Path Analysis</li>
-                        <li>Name Correction</li>
-                        <li>Lucky Numbers</li>
-                        <li>Personal Year Forecast</li>
+                        <li data-translate="life_path_analysis">Life Path Analysis</li>
+                        <li data-translate="name_correction">Name Correction</li>
+                        <li data-translate="lucky_numbers">Lucky Numbers</li>
+                        <li data-translate="personal_year">Personal Year Forecast</li>
                     </ul>
                 </div>
                 
@@ -222,13 +228,13 @@
                     <div class="expertise-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3>Mobile Number Selection</h3>
-                    <p>Personalized mobile number selection based on numerology to align your daily communications with positive energy and success.</p>
+                    <h3 data-translate="expertise_mobile">Mobile Number Selection</h3>
+                    <p data-translate="expertise_mobile_desc">Personalized mobile number selection based on numerology to align your daily communications with positive energy and success.</p>
                     <ul>
-                        <li>Auspicious Number Selection</li>
-                        <li>Energy Alignment</li>
-                        <li>Business Number Analysis</li>
-                        <li>Family Number Harmony</li>
+                        <li data-translate="auspicious_number">Auspicious Number Selection</li>
+                        <li data-translate="energy_alignment">Energy Alignment</li>
+                        <li data-translate="business_number">Business Number Analysis</li>
+                        <li data-translate="family_harmony">Family Number Harmony</li>
                     </ul>
                 </div>
             </div>
@@ -239,9 +245,9 @@
     <section class="certifications-section">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">My Philosophy</span>
-                <h2> <span class="gradient-text">My Approach</span></h2>
-                <p>Honest, ethical guidance focused on real-life solutions</p>
+                <span class="section-badge" data-translate="approach_badge">My Philosophy</span>
+                <h2> <span class="gradient-text" data-translate="approach_title">My Approach</span></h2>
+                <p data-translate="approach_subtitle">Honest, ethical guidance focused on real-life solutions</p>
             </div>
             
             <div class="approach-grid">
@@ -249,32 +255,32 @@
                     <div class="approach-icon">
                         <i class="fas fa-balance-scale"></i>
                     </div>
-                    <h4>Karma-Centric</h4>
-                    <p>Understanding your karmic patterns to provide meaningful guidance that resonates with your soul's journey.</p>
+                    <h4 data-translate="approach_karma">Karma-Centric</h4>
+                    <p data-translate="approach_karma_desc">Understanding your karmic patterns to provide meaningful guidance that resonates with your soul's journey.</p>
                 </div>
                 
                 <div class="approach-card">
                     <div class="approach-icon">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <h4>Compassionate</h4>
-                    <p>Every consultation is handled with empathy, understanding, and genuine care for your wellbeing.</p>
+                    <h4 data-translate="approach_compassion">Compassionate</h4>
+                    <p data-translate="approach_compassion_desc">Every consultation is handled with empathy, understanding, and genuine care for your wellbeing.</p>
                 </div>
                 
                 <div class="approach-card">
                     <div class="approach-icon">
                         <i class="fas fa-lightbulb"></i>
                     </div>
-                    <h4>Practical Solutions</h4>
-                    <p>No complex rituals or false promises – just actionable advice you can implement in your daily life.</p>
+                    <h4 data-translate="approach_practical">Practical Solutions</h4>
+                    <p data-translate="approach_practical_desc">No complex rituals or false promises – just actionable advice you can implement in your daily life.</p>
                 </div>
                 
                 <div class="approach-card">
                     <div class="approach-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h4>Ethical Practice</h4>
-                    <p>Complete transparency and honesty. I tell you what you need to hear, not just what you want to hear.</p>
+                    <h4 data-translate="approach_ethical">Ethical Practice</h4>
+                    <p data-translate="approach_ethical_desc">Complete transparency and honesty. I tell you what you need to hear, not just what you want to hear.</p>
                 </div>
             </div>
         </div>
@@ -284,14 +290,14 @@
     <section class="media-section">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">Client Stories</span>
-                <h2> <span class="gradient-text">Transformations & Testimonials</span></h2>
-                <p>Real experiences from those whose lives have changed</p>
+                <span class="section-badge" data-translate="client_stories_badge">Client Stories</span>
+                <h2> <span class="gradient-text" data-translate="client_stories_title">Transformations & Testimonials</span></h2>
+                <p data-translate="client_stories_subtitle">Real experiences from those whose lives have changed</p>
             </div>
             
             <div style="text-align: center; margin-top: var(--space-xl);">
                 <a href="testimonials.html" class="btn btn-secondary">
-                    <i class="fas fa-star"></i> Read Client Testimonials
+                    <i class="fas fa-star"></i> <span data-translate="read_testimonials">Read Client Testimonials</span>
                 </a>
             </div>
         </div>
@@ -301,14 +307,14 @@
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
-                <h2>Ready to Transform Your Life Path</span>?</h2>
-                <p>Book your personalized consultation with Kavita Shah today. From hard times to clear solutions.</p>
+                <h2 data-translate="about_cta_title">Ready to Transform Your Life Path</span>?</h2>
+                <p data-translate="about_cta_subtitle">Book your personalized consultation with Kavita Shah today. From hard times to clear solutions.</p>
                 <div class="cta-buttons">
                     <a href="dashboard.html" class="btn btn-primary btn-lg btn-glow">
-                        <i class="fas fa-calendar-check"></i> Book Consultation
+                        <i class="fas fa-calendar-check"></i> <span data-translate="cta_book">Book Consultation</span>
                     </a>
                     <a href="services.html" class="btn btn-primary btn-lg btn-glow">
-                        <i class="fas fa-list"></i> View Services
+                        <i class="fas fa-list"></i> <span data-translate="cta_view_services">View Services</span>
                     </a>
                 </div>
             </div>
@@ -324,7 +330,7 @@
                         <img src="assets/logo.png" alt="Hrimkar Astro">
                         <span>Hrimkar Astro</span>
                     </a>
-                    <p>Guiding lives through authentic Vedic astrology and Hrimkar Astro since 2015.</p>
+                    <p data-translate="footer_brand_text">Guiding lives through authentic Vedic astrology and Hrimkar Astro since 2015.</p>
                     <div class="social-links">
                         <a href="https://www.facebook.com/share/17bUfkce35/" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://www.instagram.com/hrimkarastro?igsh=MWd4M3MwMTduaDU4Mw==" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -332,13 +338,13 @@
                 </div>
                 
                 <div class="footer-links">
-                    <h4>Quick Links</h4>
+                    <h4 data-translate="footer_quick_links">Quick Links</h4>
                     <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="planets.html">Navagraha</a></li>
-                        <li><a href="testimonials.html">Testimonials</a></li>
-                        <li><a href="dashboard.html">Book Consultation</a></li>
+                        <li><a href="about.html" data-translate="nav_about">About Us</a></li>
+                        <li><a href="services.html" data-translate="nav_services">Services</a></li>
+                        <li><a href="planets.html" data-translate="nav_navagraha">Navagraha</a></li>
+                        <li><a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+                        <li><a href="dashboard.html" data-translate="cta_book">Book Consultation</a></li>
                     </ul>
                 </div>
                 
@@ -388,6 +394,7 @@
         </div>
     </footer>
 
+    <script src="js/translations.js"></script>
     <script src="js/main.js"></script>
     
     <style>

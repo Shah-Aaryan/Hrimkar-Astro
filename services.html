@@ -29,14 +29,20 @@
             </button>
             
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html" class="active">Services</a></li>
-                <li><a href="planets.html">Navagraha</a></li>
-                <li><a href="testimonials.html">Testimonials</a></li>
-                <li><a href="dashboard.html">Book Now</a></li>
+                <li><a href="index.html" data-translate="nav_home">Home</a></li>
+                <li><a href="about.html" data-translate="nav_about">About</a></li>
+                <li><a href="services.html" class="active" data-translate="nav_services">Services</a></li>
+                <li><a href="planets.html" data-translate="nav_navagraha">Navagraha</a></li>
+                <li><a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+                <li><a href="dashboard.html" data-translate="nav_book_now">Book Now</a></li>
+                <li class="nav-lang">
+                    <button class="lang-toggle" id="langToggleBtn" onclick="toggleLanguage()" title="Switch Language">
+                        <i class="fas fa-globe"></i>
+                        <span class="lang-toggle-text" id="langToggleText">हिंदी</span>
+                    </button>
+                </li>
                 <li class="nav-user">
-                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> Login</a>
+                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> <span data-translate="nav_login">Login</span></a>
                 </li>
             </ul>
         </div>
@@ -45,9 +51,9 @@
     <!-- Page Header -->
     <header class="page-header">
         <div class="container">
-            <span class="section-badge">What We Offer</span>
-            <h1>Our <span class="gradient-text">Services</span></h1>
-            <p>Comprehensive cosmic guidance tailored to your unique life journey</p>
+            <span class="section-badge" data-translate="services_badge">What We Offer</span>
+            <h1><span data-translate="nav_services">Our</span> <span class="gradient-text" data-translate="services_title">Services</span></h1>
+            <p data-translate="services_subtitle">Comprehensive cosmic guidance tailored to your unique life journey</p>
         </div>
     </header>
 
@@ -60,12 +66,12 @@
                     <div class="service-badge">
                         <i class="fas fa-scroll"></i>
                     </div>
-                    <h2>Vedic Astrology</h2>
-                    <p class="service-tagline">Birth Chart (Kundli) Analysis</p>
-                    <p>Our comprehensive Vedic astrology consultation provides deep insights into your life path based on the ancient science of Jyotish Shastra. Using your exact birth details, we create and analyze your birth chart to reveal your destiny, strengths, challenges, and life purpose.</p>
+                    <h2 data-translate="service_vedic">Vedic Astrology</h2>
+                    <p class="service-tagline" data-translate="service_tagline_vedic">Birth Chart (Kundli) Analysis</p>
+                    <p data-translate="service_desc_vedic">Our comprehensive Vedic astrology consultation provides deep insights into your life path based on the ancient science of Jyotish Shastra. Using your exact birth details, we create and analyze your birth chart to reveal your destiny, strengths, challenges, and life purpose.</p>
                     
                     <div class="service-includes">
-                        <h4>What's Included:</h4>
+                        <h4 data-translate="whats_included">What's Included:</h4>
                         <ul>
                             <li><i class="fas fa-check"></i> Complete birth chart (Kundli) preparation</li>
                             <li><i class="fas fa-check"></i> Analysis of all 12 houses</li>
@@ -89,16 +95,16 @@
                     </div>
                     
                     <div class="consultation-modes">
-                        <span>Available via:</span>
+                        <span data-translate="available_via">Available via:</span>
                         <div class="modes">
-                            <span class="mode"><i class="fas fa-phone"></i> Call</span>
+                            <span class="mode"><i class="fas fa-phone"></i> <span data-translate="call">Call</span></span>
                             
-                            <span class="mode"><i class="fas fa-comments"></i> Chat</span>
+                            <span class="mode"><i class="fas fa-comments"></i> <span data-translate="chat">Chat</span></span>
                         </div>
                     </div>
                     
                     <a href="dashboard.html?service=vedic" class="btn btn-primary">
-                        <i class="fas fa-calendar-check"></i> Book This Service
+                        <i class="fas fa-calendar-check"></i> <span data-translate="book_this_service">Book This Service</span>
                     </a>
                 </div>
                 <div class="service-detail-image">
@@ -112,12 +118,12 @@
                     <div class="service-badge popular">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <h2>Marriage Matching</h2>
-                    <p class="service-tagline">Kundli Milan & Compatibility Analysis</p>
-                    <p>Ensure a harmonious and blessed union with our comprehensive marriage matching service. We analyze both partners' birth charts using the traditional Gun Milan system and provide detailed compatibility insights along with remedies for any doshas.</p>
+                    <h2 data-translate="service_marriage">Marriage Matching</h2>
+                    <p class="service-tagline" data-translate="service_tagline_marriage">Kundli Milan & Compatibility Analysis</p>
+                    <p data-translate="service_desc_marriage">Ensure a harmonious and blessed union with our comprehensive marriage matching service. We analyze both partners' birth charts using the traditional Gun Milan system and provide detailed compatibility insights along with remedies for any doshas.</p>
                     
                     <div class="service-includes">
-                        <h4>What's Included:</h4>
+                        <h4 data-translate="whats_included">What's Included:</h4>
                         <ul>
                             <li><i class="fas fa-check"></i> 36-point Gun Milan analysis</li>
                             <li><i class="fas fa-check"></i> Manglik Dosha assessment</li>
@@ -142,16 +148,16 @@
                     </div>
                     
                     <div class="consultation-modes">
-                        <span>Available via:</span>
+                        <span data-translate="available_via">Available via:</span>
                         <div class="modes">
-                            <span class="mode"><i class="fas fa-phone"></i> Call</span>
+                            <span class="mode"><i class="fas fa-phone"></i> <span data-translate="call">Call</span></span>
                             
-                            <span class="mode"><i class="fas fa-comments"></i> Chat</span>
+                            <span class="mode"><i class="fas fa-comments"></i> <span data-translate="chat">Chat</span></span>
                         </div>
                     </div>
                     
                     <a href="dashboard.html?service=marriage" class="btn btn-primary">
-                        <i class="fas fa-calendar-check"></i> Book This Service
+                        <i class="fas fa-calendar-check"></i> <span data-translate="book_this_service">Book This Service</span>
                     </a>
                 </div>
                 <div class="service-detail-image">
@@ -165,12 +171,12 @@
                     <div class="service-badge">
                         <i class="fas fa-briefcase"></i>
                     </div>
-                    <h2>Career Guidance</h2>
-                    <p class="service-tagline">Professional & Business Astrology</p>
-                    <p>Discover your true calling and optimal career path through planetary insights. Whether you're choosing a career, considering a job change, or starting a business, our career astrology consultation provides strategic guidance for professional success.</p>
+                    <h2 data-translate="service_career">Career Guidance</h2>
+                    <p class="service-tagline" data-translate="service_tagline_career">Professional & Business Astrology</p>
+                    <p data-translate="service_desc_career">Discover your true calling and optimal career path through planetary insights. Whether you're choosing a career, considering a job change, or starting a business, our career astrology consultation provides strategic guidance for professional success.</p>
                     
                     <div class="service-includes">
-                        <h4>What's Included:</h4>
+                        <h4 data-translate="whats_included">What's Included:</h4>
                         <ul>
                             <li><i class="fas fa-check"></i> 10th house analysis</li>
                             <li><i class="fas fa-check"></i> Suitable career fields identification</li>
@@ -189,21 +195,21 @@
                         </div>
                         <div class="meta-item">
                             <i class="fas fa-rupee-sign"></i>
-                            <span class="price">₹2,000</span>
+                            <span class="price">₹1,500</span>
                         </div>
                     </div>
                     
                     <div class="consultation-modes">
-                        <span>Available via:</span>
+                        <span data-translate="available_via">Available via:</span>
                         <div class="modes">
-                            <span class="mode"><i class="fas fa-phone"></i> Call</span>
+                            <span class="mode"><i class="fas fa-phone"></i> <span data-translate="call">Call</span></span>
                             
-                            <span class="mode"><i class="fas fa-comments"></i> Chat</span>
+                            <span class="mode"><i class="fas fa-comments"></i> <span data-translate="chat">Chat</span></span>
                         </div>
                     </div>
                     
                     <a href="dashboard.html?service=career" class="btn btn-primary">
-                        <i class="fas fa-calendar-check"></i> Book This Service
+                        <i class="fas fa-calendar-check"></i> <span data-translate="book_this_service">Book This Service</span>
                     </a>
                 </div>
                 <div class="service-detail-image">
@@ -217,12 +223,12 @@
                     <div class="service-badge">
                         <i class="fas fa-heartbeat"></i>
                     </div>
-                    <h2>Health Astrology</h2>
-                    <p class="service-tagline">Medical Astrology & Wellness Guidance</p>
-                    <p>Identify potential health vulnerabilities and get preventive guidance through medical astrology. Our analysis helps you understand your body's strengths and weaknesses based on planetary positions, enabling proactive health management.</p>
+                    <h2 data-translate="service_health">Health Astrology</h2>
+                    <p class="service-tagline" data-translate="service_tagline_health">Medical Astrology & Wellness Guidance</p>
+                    <p data-translate="service_desc_health">Identify potential health vulnerabilities and get preventive guidance through medical astrology. Our analysis helps you understand your body's strengths and weaknesses based on planetary positions, enabling proactive health management.</p>
                     
                     <div class="service-includes">
-                        <h4>What's Included:</h4>
+                        <h4 data-translate="whats_included">What's Included:</h4>
                         <ul>
                             <li><i class="fas fa-check"></i> 6th house health analysis</li>
                             <li><i class="fas fa-check"></i> Vulnerable body parts identification</li>
@@ -246,15 +252,15 @@
                     </div>
                     
                     <div class="consultation-modes">
-                        <span>Available via:</span>
+                        <span data-translate="available_via">Available via:</span>
                         <div class="modes">
-                            <span class="mode"><i class="fas fa-phone"></i> Call</span>
-                            
+                            <span class="mode"><i class="fas fa-phone"></i> <span data-translate="call">Call</span></span>
+                            <span class="mode"><i class="fas fa-comments"></i> <span data-translate="chat">Chat</span></span>
                         </div>
                     </div>
                     
                     <a href="dashboard.html?service=health" class="btn btn-primary">
-                        <i class="fas fa-calendar-check"></i> Book This Service
+                        <i class="fas fa-calendar-check"></i> <span data-translate="book_this_service">Book This Service</span>
                     </a>
                 </div>
                 <div class="service-detail-image">
@@ -268,12 +274,12 @@
                     <div class="service-badge">
                         <i class="fas fa-th"></i>
                     </div>
-                    <h2>Tarot Card Reading</h2>
-                    <p class="service-tagline">Intuitive Card Guidance</p>
-                    <p>Get clarity on life's pressing questions through intuitive tarot card readings. Our tarot sessions help you gain insights into relationships, career decisions, and spiritual growth through the ancient art of cartomancy.</p>
+                    <h2 data-translate="service_tarot">Tarot Card Reading</h2>
+                    <p class="service-tagline" data-translate="service_tagline_tarot">Intuitive Card Guidance</p>
+                    <p data-translate="service_desc_tarot">Get clarity on life's pressing questions through intuitive tarot card readings. Our tarot sessions help you gain insights into relationships, career decisions, and spiritual growth through the ancient art of cartomancy.</p>
                     
                     <div class="service-includes">
-                        <h4>What's Included:</h4>
+                        <h4 data-translate="whats_included">What's Included:</h4>
                         <ul>
                             <li><i class="fas fa-check"></i> Celtic Cross spread reading</li>
                             <li><i class="fas fa-check"></i> Love & relationship insights</li>
@@ -296,16 +302,16 @@
                     </div>
                     
                     <div class="consultation-modes">
-                        <span>Available via:</span>
+                        <span data-translate="available_via">Available via:</span>
                         <div class="modes">
-                            <span class="mode"><i class="fas fa-phone"></i> Call</span>
+                            <span class="mode"><i class="fas fa-phone"></i> <span data-translate="call">Call</span></span>
                             
-                            <span class="mode"><i class="fas fa-comments"></i> Chat</span>
+                            <span class="mode"><i class="fas fa-comments"></i> <span data-translate="chat">Chat</span></span>
                         </div>
                     </div>
                     
                     <a href="dashboard.html?service=tarot" class="btn btn-primary">
-                        <i class="fas fa-calendar-check"></i> Book This Service
+                        <i class="fas fa-calendar-check"></i> <span data-translate="book_this_service">Book This Service</span>
                     </a>
                 </div>
                 <div class="service-detail-image">
@@ -319,12 +325,12 @@
                     <div class="service-badge">
                         <i class="fas fa-calculator"></i>
                     </div>
-                    <h2>Numerology</h2>
-                    <p class="service-tagline">Power of Numbers</p>
-                    <p>Unlock the mystical power of numbers to understand your life path, destiny, and personality. Our numerology consultation analyzes your birth date and name to reveal your strengths, challenges, and optimal paths to success.</p>
+                    <h2 data-translate="service_numerology">Numerology</h2>
+                    <p class="service-tagline" data-translate="service_tagline_numerology">Power of Numbers</p>
+                    <p data-translate="service_desc_numerology">Unlock the mystical power of numbers to understand your life path, destiny, and personality. Our numerology consultation analyzes your birth date and name to reveal your strengths, challenges, and optimal paths to success.</p>
                     
                     <div class="service-includes">
-                        <h4>What's Included:</h4>
+                        <h4 data-translate="whats_included">What's Included:</h4>
                         <ul>
                             <li><i class="fas fa-check"></i> Life path number analysis</li>
                             <li><i class="fas fa-check"></i> Destiny number reading</li>
@@ -348,37 +354,35 @@
                     </div>
                     
                     <div class="consultation-modes">
-                        <span>Available via:</span>
+                        <span data-translate="available_via">Available via:</span>
                         <div class="modes">
-                            <span class="mode"><i class="fas fa-phone"></i> Call</span>
+                            <span class="mode"><i class="fas fa-phone"></i> <span data-translate="call">Call</span></span>
                             
-                            <span class="mode"><i class="fas fa-comments"></i> Chat</span>
+                            <span class="mode"><i class="fas fa-comments"></i> <span data-translate="chat">Chat</span></span>
                         </div>
                     </div>
                     
                     <a href="dashboard.html?service=numerology" class="btn btn-primary">
-                        <i class="fas fa-calendar-check"></i> Book This Service
+                        <i class="fas fa-calendar-check"></i> <span data-translate="book_this_service">Book This Service</span>
                     </a>
                 </div>
                 <div class="service-detail-image">
                     <img src="assets/service-numerology.jpg" alt="Numerology Consultation">
                 </div>
             </div>
-        </div>
-    </section>
 
             <!-- Love & Compatibility Guidance -->
-            <div class="service-detail" id="numerology-astro">
+            <div class="service-detail" id="love-compatibility">
                 <div class="service-detail-content">
                     <div class="service-badge">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <h2>Love & Compatibility Guidance</h2>
+                    <h2 data-translate="service_love">Love & Compatibility</h2>
                     <p class="service-tagline">Relationship Harmony Consultation</p>
                     <p>Discover the secrets to harmonious relationships through our comprehensive consultation. Get deep insights into love compatibility, marriage prospects, and ways to strengthen your bond with your partner for a fulfilling relationship.</p>
                     
                     <div class="service-includes">
-                        <h4>What's Included:</h4>
+                        <h4 data-translate="whats_included">What's Included:</h4>
                         <ul>
                             <li><i class="fas fa-check"></i> Compatibility analysis</li>
                             <li><i class="fas fa-check"></i> Relationship strength assessment</li>
@@ -402,16 +406,16 @@
                     </div>
                     
                     <div class="consultation-modes">
-                        <span>Available via:</span>
+                        <span data-translate="available_via">Available via:</span>
                         <div class="modes">
-                            <span class="mode"><i class="fas fa-phone"></i> Call</span>
+                            <span class="mode"><i class="fas fa-phone"></i> <span data-translate="call">Call</span></span>
                             
-                            <span class="mode"><i class="fas fa-comments"></i> Chat</span>
+                            <span class="mode"><i class="fas fa-comments"></i> <span data-translate="chat">Chat</span></span>
                         </div>
                     </div>
                     
-                    <a href="dashboard.html?service=numerology-astro" class="btn btn-primary">
-                        <i class="fas fa-calendar-check"></i> Book This Service
+                    <a href="dashboard.html?service=love-compatibility" class="btn btn-primary">
+                        <i class="fas fa-calendar-check"></i> <span data-translate="book_this_service">Book This Service</span>
                     </a>
                 </div>
                 <div class="service-detail-image">
@@ -467,7 +471,7 @@
                         <tr>
                             <td><i class="fas fa-briefcase"></i> Career Astrology</td>
                             <td>30 min</td>
-                            <td class="price">₹2,000</td>
+                            <td class="price">₹1,500</td>
                             <td>
                                 <i class="fas fa-phone" title="Phone"></i>
                                 
@@ -481,7 +485,7 @@
                             <td class="price">₹1,500</td>
                             <td>
                                 <i class="fas fa-phone" title="Phone"></i>
-                                
+                                <i class="fas fa-comments" title="Chat"></i>
                             </td>
                             <td><a href="dashboard.html?service=health" class="btn btn-sm btn-primary">Book</a></td>
                         </tr>
@@ -516,7 +520,7 @@
                                 
                                 <i class="fas fa-comments" title="Chat"></i>
                             </td>
-                            <td><a href="dashboard.html?service=numerology-astro" class="btn btn-sm btn-primary">Book</a></td>
+                            <td><a href="dashboard.html?service=love-compatibility" class="btn btn-sm btn-primary">Book</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -590,7 +594,7 @@
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
-                <h2>Ready to Begin Your <span class="gradient-text">Cosmic Journey</span>?</h2>
+                <h2> <span class="gradient-text">Ready to Begin Your Cosmic Journey</span>?</h2>
                 <p>Book your personalized consultation today.</p>
                 <div class="cta-buttons">
                     <a href="dashboard.html" class="btn btn-primary btn-lg btn-glow">
@@ -610,7 +614,7 @@
                         <img src="assets/logo.png" alt="Hrimkar Astro">
                         <span>Hrimkar Astro</span>
                     </a>
-                    <p>Guiding lives through authentic Vedic astrology since 2015.</p>
+                    <p data-translate="footer_brand_text">Guiding lives through authentic Vedic astrology since 2015.</p>
                     <div class="social-links">
                         <a href="https://www.facebook.com/share/17bUfkce35/" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://www.instagram.com/hrimkarastro?igsh=MWd4M3MwMTduaDU4Mw==" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -618,17 +622,17 @@
                 </div>
                 
                 <div class="footer-links">
-                    <h4>Quick Links</h4>
+                    <h4 data-translate="footer_quick_links">Quick Links</h4>
                     <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="testimonials.html">Testimonials</a></li>
-                        <li><a href="dashboard.html">Book Consultation</a></li>
+                        <li><a href="about.html" data-translate="nav_about">About Us</a></li>
+                        <li><a href="services.html" data-translate="nav_services">Services</a></li>
+                        <li><a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+                        <li><a href="dashboard.html" data-translate="cta_book">Book Consultation</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
-                    <h4>Legal</h4>
+                    <h4 data-translate="footer_legal">Legal</h4>
                     <ul>
                         <li><a href="privacy.html">Privacy Policy</a></li>
                         <li><a href="terms.html">Terms & Conditions</a></li>
@@ -638,7 +642,7 @@
                 </div>
                 
                 <div class="footer-contact">
-                    <h4>Contact Us</h4>
+                    <h4 data-translate="footer_contact">Contact Us</h4>
                     <ul>
                         <li><i class="fas fa-phone"></i> <a href="tel:+919930676179">+91 99306 76179</a></li>
                         <li><i class="fas fa-envelope"></i> <a href="mailto:hrimkarastro@gmail.com">hrimkarastro@gmail.com</a></li>
@@ -647,11 +651,12 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 Hrimkar Astro. All rights reserved.</p>
+                <p>&copy; 2024 Hrimkar Astro. <span data-translate="footer_rights">All rights reserved.</span></p>
             </div>
         </div>
     </footer>
 
+    <script src="js/translations.js"></script>
     <script src="js/main.js"></script>
     
     <style>
