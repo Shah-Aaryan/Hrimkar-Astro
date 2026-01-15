@@ -1,20 +1,15 @@
-const nodemailer = require('nodemailer');
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+/**
+ * Send Booking Notification Email using Brevo API (formerly Sendinblue)
+ * Free 300 emails/day, no domain verification required
+ */
 
 // Admin email for booking notifications
 const ADMIN_EMAIL = 'hrimkarastro@gmail.com';
 
 async function sendBookingNotification(booking) {
-  // Check if email credentials are configured
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.error('Email credentials not configured. Skipping booking notification email.');
+  // Check if Brevo API key is configured
+  if (!process.env.BREVO_API_KEY) {
+    console.error('[Brevo] BREVO_API_KEY not configured. Skipping booking notification email.');
     return null;
   }
 
@@ -25,11 +20,7 @@ async function sendBookingNotification(booking) {
     day: 'numeric'
   });
 
-  const mailOptions = {
-    from: `"Hrimkar Astro" <${process.env.EMAIL_USER}>`,
-    to: ADMIN_EMAIL,
-    subject: `New Booking Alert - ${booking.service.name} - ${booking.bookingId}`,
-    html: `
+  const emailHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; background-color: #f9fafb;">
         <div style="background: linear-gradient(135deg, #6b21a8, #9333ea); padding: 20px; border-radius: 10px 10px 0 0;">
           <h2 style="color: white; text-align: center; margin: 0;">🔔 New Booking Received!</h2>
@@ -145,22 +136,43 @@ async function sendBookingNotification(booking) {
         <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
         <p style="color: #888; font-size: 12px; text-align: center;">© 2026 Hrimkar Astro. All rights reserved.</p>
       </div>
-    `
-  };
+    `;
 
   try {
-    console.log('[Gmail] Attempting to send booking notification to:', ADMIN_EMAIL);
-    console.log('[Gmail] EMAIL_USER configured:', !!process.env.EMAIL_USER);
-    console.log('[Gmail] EMAIL_PASS configured:', !!process.env.EMAIL_PASS);
-    console.log('[Gmail] EMAIL_PASS length:', process.env.EMAIL_PASS?.length);
+    console.log('[Brevo] Attempting to send booking notification to:', ADMIN_EMAIL);
+    console.log('[Brevo] API Key present:', !!process.env.BREVO_API_KEY);
+    console.log('[Brevo] Booking ID:', booking.bookingId);
+    console.log('[Brevo] Service:', booking.service?.name);
     
-    const info = await transporter.sendMail(mailOptions);
-    console.log('[Gmail] Booking notification email sent successfully! MessageId:', info.messageId);
-    return info;
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'api-key': process.env.BREVO_API_KEY,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        sender: { name: 'Hrimkar Astro Bookings', email: 'hrimkarastro@gmail.com' },
+        to: [{ email: ADMIN_EMAIL }],
+        subject: `🔔 New Booking Alert - ${booking.service?.name || 'Service'} - ${booking.bookingId}`,
+        htmlContent: emailHtml
+      })
+    });
+
+    console.log('[Brevo] Response status:', response.status, response.statusText);
+    const data = await response.json();
+    
+    if (!response.ok) {
+      console.error('[Brevo] API error response:', JSON.stringify(data, null, 2));
+      // Don't throw error - booking should still complete even if email fails
+      return null;
+    }
+
+    console.log('[Brevo] Booking notification email sent successfully! MessageId:', data.messageId);
+    return data;
   } catch (error) {
-    console.error('[Gmail] Error sending booking notification email:', error.message);
-    console.error('[Gmail] Error code:', error.code);
-    console.error('[Gmail] Full error:', error);
+    console.error('[Brevo] Error sending booking notification email:', error.message);
+    console.error('[Brevo] Full error:', error);
     // Don't throw error - booking should still complete even if email fails
     return null;
   }

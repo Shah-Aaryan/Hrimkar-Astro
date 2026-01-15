@@ -69,9 +69,9 @@ const validateEnvVars = () => {
         }
     }
     
-    // Check email configuration
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-        warnings.push('EMAIL_USER and EMAIL_PASS not configured - email functionality will not work');
+    // Check email configuration (Brevo API)
+    if (!process.env.BREVO_API_KEY) {
+        warnings.push('BREVO_API_KEY not configured - email functionality will not work');
     }
     
     // Check Cloudinary configuration
@@ -172,9 +172,8 @@ const config = {
     jwtExpire: () => getConfig('JWT_EXPIRE'),
     jwtCookieExpire: () => getConfigInt('JWT_COOKIE_EXPIRE'),
     
-    // Email
-    emailUser: () => process.env.EMAIL_USER,
-    emailPass: () => process.env.EMAIL_PASS,
+    // Email (Brevo API)
+    brevoApiKey: () => process.env.BREVO_API_KEY,
     
     // Cloudinary
     cloudinaryCloudName: () => process.env.CLOUDINARY_CLOUD_NAME,
