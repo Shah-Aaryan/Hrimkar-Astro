@@ -26,6 +26,9 @@ async function sendPasswordResetEmail(to, otp, firstName) {
   `;
 
   try {
+    console.log('[Brevo] Attempting to send password reset email to:', to);
+    console.log('[Brevo] API Key present:', !!process.env.BREVO_API_KEY);
+    
     const response = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
@@ -41,17 +44,19 @@ async function sendPasswordResetEmail(to, otp, firstName) {
       })
     });
 
+    console.log('[Brevo] Response status:', response.status, response.statusText);
     const data = await response.json();
     
     if (!response.ok) {
-      console.error('Brevo API error:', data);
-      throw new Error(data.message || 'Failed to send email');
+      console.error('[Brevo] API error response:', JSON.stringify(data, null, 2));
+      throw new Error(data.message || data.code || 'Failed to send email');
     }
 
-    console.log('Password reset email sent successfully:', data.messageId);
+    console.log('[Brevo] Password reset email sent successfully! MessageId:', data.messageId);
     return data;
   } catch (error) {
-    console.error('Error sending password reset email:', error.message);
+    console.error('[Brevo] Error sending password reset email:', error.message);
+    console.error('[Brevo] Full error:', error);
     throw error;
   }
 }

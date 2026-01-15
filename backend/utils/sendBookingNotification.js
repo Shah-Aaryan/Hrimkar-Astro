@@ -149,11 +149,18 @@ async function sendBookingNotification(booking) {
   };
 
   try {
+    console.log('[Gmail] Attempting to send booking notification to:', ADMIN_EMAIL);
+    console.log('[Gmail] EMAIL_USER configured:', !!process.env.EMAIL_USER);
+    console.log('[Gmail] EMAIL_PASS configured:', !!process.env.EMAIL_PASS);
+    console.log('[Gmail] EMAIL_PASS length:', process.env.EMAIL_PASS?.length);
+    
     const info = await transporter.sendMail(mailOptions);
-    console.log('Booking notification email sent successfully:', info.messageId);
+    console.log('[Gmail] Booking notification email sent successfully! MessageId:', info.messageId);
     return info;
   } catch (error) {
-    console.error('Error sending booking notification email:', error.message);
+    console.error('[Gmail] Error sending booking notification email:', error.message);
+    console.error('[Gmail] Error code:', error.code);
+    console.error('[Gmail] Full error:', error);
     // Don't throw error - booking should still complete even if email fails
     return null;
   }
