@@ -45,21 +45,43 @@ exports.registerWithOtp = async (req, res) => {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            console.log('[OTP] Validation errors:', errors.array());
             return res.status(400).json({ success: false, errors: errors.array() });
         }
         const { firstName, lastName, email, phone, password, otp } = req.body;
+        
+        console.log('[OTP] Register attempt - Email:', email);
+        console.log('[OTP] Received OTP:', otp, 'Type:', typeof otp, 'Length:', otp?.length);
+        
         if (!otp) return res.status(400).json({ success: false, message: 'OTP required' });
-        const otpDoc = await Otp.findOne({ email, otp });
-        if (!otpDoc) return res.status(400).json({ success: false, message: 'Invalid or expired OTP' });
+        
+        // Check all OTPs for this email to debug
+        const allOtps = await Otp.find({ email });
+        console.log('[OTP] All OTPs in DB for this email:', allOtps.map(o => ({ 
+            otp: o.otp, 
+            type: typeof o.otp, 
+            length: o.otp.length,
+            createdAt: o.createdAt 
+        })));
+        
+        const otpDoc = await Otp.findOne({ email, otp: otp.toString().trim() });
+        console.log('[OTP] Found matching OTP:', !!otpDoc);
+        
+        if (!otpDoc) {
+            console.log('[OTP] No matching OTP found for email:', email, 'OTP:', otp);
+            return res.status(400).json({ success: false, message: 'Invalid or expired OTP' });
+        }
+        
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ success: false, message: 'Email already registered' });
         }
         const user = await User.create({ firstName, lastName, email, phone, password });
         await Otp.deleteMany({ email });
+        console.log('[OTP] Registration successful for:', email);
         sendTokenResponse(user, 201, res, 'Registration successful');
     } catch (error) {
-        console.error('Register with OTP error:', error);
+        console.error('[OTP] Register with OTP error:', error);
         res.status(500).json({ success: false, message: 'Error registering user' });
     }
 };

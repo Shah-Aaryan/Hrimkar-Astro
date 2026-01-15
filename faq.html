@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Frequently Asked Questions about Vedic Astrology, Online Astrology Consultation, KP Astrology, and Astrology Services in India. Get answers from our expert astrologers.">
+    <meta name="keywords" content="astrologer in India, online astrology consultation, vedic astrology expert, KP astrology consultation, astrology FAQ">
+    <meta name="author" content="Pandit Shastri Ji">
+    <title>FAQ | Hrimkar Astro - Astrology Questions & Answers</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    
+    <style>
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .faq-item {
+            background: linear-gradient(135deg, rgba(107, 33, 168, 0.05), rgba(147, 51, 234, 0.05));
+            border-left: 4px solid #6b21a8;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .faq-question:hover {
+            background: rgba(107, 33, 168, 0.1);
+        }
+        
+        .faq-question i {
+            color: #6b21a8;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 20px;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 20px;
+        }
+        
+        .faq-answer p {
+            color: #555;
+            line-height: 1.8;
+            margin: 10px 0;
+        }
+        
+        .faq-answer ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        .faq-answer li {
+            margin: 8px 0;
+            color: #555;
+        }
+        
+        .faq-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .category-btn {
+            padding: 12px 20px;
+            border: 2px solid #6b21a8;
+            background: white;
+            color: #6b21a8;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .category-btn.active {
+            background: #6b21a8;
+            color: white;
+        }
+        
+        .category-btn:hover {
+            background: #6b21a8;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Hrimkar Astro Logo">
+                <span>Hrimkar Astro</span>
+            </a>
+            
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" data-translate="nav_home">Home</a></li>
+                <li><a href="about.html" data-translate="nav_about">About</a></li>
+                <li><a href="services.html" data-translate="nav_services">Services</a></li>
+                <li><a href="planets.html" data-translate="nav_navagraha">Navagraha</a></li>
+                <li><a href="testimonials.html" data-translate="nav_testimonials">Testimonials</a></li>
+                <li><a href="dashboard.html" data-translate="nav_book_now">Book Now</a></li>
+                <li class="nav-lang">
+                    <button class="lang-toggle" id="langToggleBtn" onclick="toggleLanguage()" title="Switch Language">
+                        <i class="fas fa-globe"></i>
+                        <span class="lang-toggle-text" id="langToggleText">हिंदी</span>
+                    </button>
+                </li>
+                <li class="nav-user">
+                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> <span data-translate="nav_login">Login</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <span class="section-badge">Common Questions</span>
+            <h1>Frequently Asked Questions</h1>
+            <p>Expert answers to your astrology questions from our professional astrologers in India</p>
+        </div>
+    </header>
+
+    <!-- FAQ Content -->
+    <section class="faq-section">
+        <div class="container faq-container">
+            
+            <!-- General Questions -->
+            <h2 style="margin-top: 30px; margin-bottom: 20px; color: #6b21a8;">General Astrology Questions</h2>
+            
+            <div class="faq-item active">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What is Vedic Astrology?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p><strong>Vedic Astrology</strong>, also known as Jyotish Shastra, is an ancient Indian science that originated over 5,000 years ago. It is based on the principles of how planetary positions and movements influence human life and destiny.</p>
+                    <p>Unlike Western astrology, Vedic astrology uses the sidereal zodiac and provides detailed insights into:</p>
+                    <ul>
+                        <li>Your birth chart (Kundli) analysis</li>
+                        <li>Planetary positions and their effects on your life</li>
+                        <li>Career and professional guidance</li>
+                        <li>Marriage compatibility and relationship advice</li>
+                        <li>Health predictions and remedies</li>
+                        <li>Financial prospects and business advice</li>
+                    </ul>
+                    <p>Our expert astrologers in India use this profound knowledge to guide you through life's challenges and opportunities.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How accurate is astrology consultation?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>The accuracy of astrology depends on several factors:</p>
+                    <ul>
+                        <li><strong>Accurate Birth Details:</strong> Exact time, date, and place of birth are crucial</li>
+                        <li><strong>Expertise of the Astrologer:</strong> Our professional astrologer have 10+ years of experience</li>
+                        <li><strong>Quality of Analysis:</strong> We use traditional Vedic methods combined with modern calculations</li>
+                        <li><strong>Your Open-mindedness:</strong> Receptivity to guidance improves outcomes</li>
+                    </ul>
+                    <p>At Hrimkar Astro, our clients report 85%+ satisfaction rate with our predictions and recommendations. We focus on practical guidance rather than just predictions.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Do I need to provide my birth chart before consultation?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>No, you don't need to provide your birth chart beforehand. Our expert astrologers will:</p>
+                    <ul>
+                        <li>Create your complete birth chart during the consultation</li>
+                        <li>Use your exact date, time, and place of birth</li>
+                        <li>Analyze your chart comprehensively in real-time</li>
+                        <li>Provide you with a detailed PDF report after consultation</li>
+                    </ul>
+                    <p>Make sure you have your accurate birth time, as even 2-3 minutes of difference can affect the accuracy of your chart.</p>
+                </div>
+            </div>
+
+            <!-- Online Consultation Questions -->
+            <h2 style="margin-top: 40px; margin-bottom: 20px; color: #6b21a8;">Online Astrology Consultation</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How does online astrology consultation work?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Our <strong>online astrology consultation service</strong> is designed for maximum convenience:</p>
+                    <ul>
+                        <li>Book a consultation slot through our website</li>
+                        <li>Choose between  phone call or chat consultation</li>
+                        <li>Consult with our expert astrologers from the comfort of your home</li>
+                        <li>Get a detailed PDF report delivered within 24 hours</li>
+                        <li>Ask follow-up questions during the consultation</li>
+                    </ul>
+                    <p>This is ideal for people living anywhere in the world who want professional astrology guidance without travel.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What's the difference between phone and chat consultation?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>All three formats provide the same quality of consultation. Choose based on your preference:</p>
+                    <ul>
+                        <li><strong>Phone Call:</strong> Audio-only, great for privacy, same in-depth analysis</li>
+                        <li><strong>Chat Consultation:</strong> Text-based, best for people who prefer written communication, perfect for international time zones</li>
+                    </ul>
+                    <p>All consultations are equally thorough and include a comprehensive PDF report with your birth chart and remedies.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Can I get astrology consultation outside India?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! We provide <strong>online astrology consultation to clients worldwide</strong>. Our services are available for:</p>
+                    <ul>
+                        <li>USA, Canada, UK, Australia, and all countries</li>
+                        <li>All time zones - we accommodate international schedules</li>
+                        <li>Multiple consultation modes -  call or chat</li>
+                        <li>Payment methods - all major international payment gateways accepted</li>
+                    </ul>
+                    <p>Our astrology guidance is universal and applies regardless of where you live.</p>
+                </div>
+            </div>
+
+            <!-- KP Astrology Questions -->
+            <h2 style="margin-top: 40px; margin-bottom: 20px; color: #6b21a8;">KP Astrology Consultation</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What is KP Astrology and how is it different from Vedic Astrology?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p><strong>KP Astrology (Krishnamurti Paddhati)</strong> is a modern system of astrology developed by the late Prof. K.S. Krishnamurti. It combines classical Vedic principles with mathematical precision.</p>
+                    <p><strong>Key differences from traditional Vedic Astrology:</strong></p>
+                    <ul>
+                        <li><strong>Precision:</strong> Uses sub-divisions (Nakshatras) for more accurate predictions</li>
+                        <li><strong>Timing:</strong> Better for predicting exact timing of events (to days/weeks)</li>
+                        <li><strong>Simplicity:</strong> Easier to understand through its systematic approach</li>
+                        <li><strong>Remedies:</strong> Focuses on planetary sub-lords for targeted remedies</li>
+                        <li><strong>House System:</strong> Uses Placidus house system (mathematical houses)</li>
+                    </ul>
+                    <p>Our expert astrologers are skilled in both KP and traditional Vedic astrology, choosing the best approach for your needs.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Should I choose KP astrology or Vedic astrology consultation?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Both systems are valuable and can be used together:</p>
+                    <ul>
+                        <li><strong>Choose Vedic Astrology if:</strong> You want comprehensive life guidance, spiritual insights, and traditional remedies</li>
+                        <li><strong>Choose KP Astrology if:</strong> You want precise timing of events, specific event predictions, or detailed career/business analysis</li>
+                        <li><strong>Combination Approach:</strong> Our expert astrologers often use both systems for maximum accuracy</li>
+                    </ul>
+                    <p>During your consultation, we'll recommend the best approach based on your specific questions and needs.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Can KP astrology predict exact dates of events?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>KP Astrology is known for its precision in timing predictions. Our <strong>KP astrology experts</strong> can often predict:</p>
+                    <ul>
+                        <li>Job change or promotion dates (within weeks)</li>
+                        <li>Marriage timing (remarkably accurate)</li>
+                        <li>Business success timelines</li>
+                        <li>Financial gains or losses (often to the exact month)</li>
+                        <li>Health issues and recovery periods</li>
+                    </ul>
+                    <p>While absolute exactitude is rare, KP Astrology provides significantly better timing accuracy than other systems. This is why many business owners and executives prefer KP consultation.</p>
+                </div>
+            </div>
+
+            <!-- Astrologer Expert Questions -->
+            <h2 style="margin-top: 40px; margin-bottom: 20px; color: #6b21a8;">Our Astrology Experts</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Who are Hrimkar Astro's expert astrologers?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>At Hrimkar Astro, you get guidance from professional astrologers with extensive credentials:</p>
+                    <ul>
+                        <li><strong>Experience:</strong> 10+ years in Vedic and KP Astrology</li>
+                        <li><strong>Training:</strong> Certified from renowned astrology institutes</li>
+                        <li><strong>Specializations:</strong> Vedic Astrology, KP Astrology, Marriage Counseling, Career Guidance</li>
+                        <li><strong>Client Base:</strong> 5000+ satisfied clients across the globe</li>
+                        <li><strong>Approach:</strong> Practical, solution-oriented guidance rather than just predictions</li>
+                    </ul>
+                    <p>All our astrologers adhere to strict ethical standards and maintain complete client confidentiality.</p>
+                </div>
+            </div>
+
+            <!-- Services & Pricing Questions -->
+            <h2 style="margin-top: 40px; margin-bottom: 20px; color: #6b21a8;">Services & Pricing</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What astrology services do you offer in India?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>As a leading <strong>astrology service in India</strong>, we offer:</p>
+                    <ul>
+                        <li><strong>Vedic Astrology:</strong> Birth chart analysis and life guidance</li>
+                        <li><strong>Marriage Matching:</strong> Kundli matching and compatibility analysis</li>
+                        <li><strong>Career Guidance:</strong> Professional and business consultation</li>
+                        <li><strong>Health Prediction:</strong> Health analysis and preventive measures</li>
+                        <li><strong>Tarot Reading:</strong> Spiritual guidance and intuitive insights</li>
+                        <li><strong>Numerology:</strong> Name and number analysis</li>
+                        <li><strong>Love and Compatibility:</strong> Relationship insights and compatibility analysis</li>
+                    </ul>
+                    <p>All services are available both for in-person and online consultations.</p>
+                </div>
+            </div>
+
+            <!-- Booking & Process Questions -->
+            <h2 style="margin-top: 40px; margin-bottom: 20px; color: #6b21a8;">Booking & Process</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How do I book an astrology consultation?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Booking is simple and quick:</p>
+                    <ul>
+                        <li>Visit our <a href="dashboard.html">booking page</a></li>
+                        <li>Select your preferred service </li>
+                        <li>Choose your preferred time slot and consultation mode</li>
+                        <li>Fill in your birth details (date, time, place)</li>
+                        <li>Make payment through provided QR code</li>
+                        <li>Receive booking confirmation and consultation link</li>
+                    </ul>
+                    <p>The entire process takes less than 5 minutes!</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What should I prepare before my consultation?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>To get the most from your consultation:</p>
+                    <ul>
+                        <li><strong>Prepare your birth details:</strong> Exact date, time (hour and minute), and place of birth</li>
+                        <li><strong>Write down your questions:</strong> Specific areas you want guidance on</li>
+                        <li><strong>Find a quiet place:</strong> Ensure a peaceful environment for video/phone calls</li>
+                        <li><strong>Have pen and paper:</strong> Take notes during consultation</li>
+                        <li><strong>Be on time:</strong> Join the consultation 2-3 minutes before scheduled time</li>
+                        <li><strong>Be open-minded:</strong> Receptive attitude helps in better guidance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What if I don't know my exact birth time?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Exact birth time is important, but don't worry if you don't have it:</p>
+                    <ul>
+                        <li><strong>Check documents:</strong> Birth certificate, hospital records, or passport often have the time</li>
+                        <li><strong>Ask family:</strong> Parents, grandparents, or older relatives may remember</li>
+                        <li><strong>Birth registration office:</strong> Contact your local registry for official records</li>
+                        <li><strong>Time rectification:</strong> Our astrologers can approximate your birth time using significant life events</li>
+                    </ul>
+                    <p>While approximation is possible, accurate birth time (within 5-10 minutes) ensures the most reliable analysis.</p>
+                </div>
+            </div>
+
+            <!-- Remedies Questions -->
+            <h2 style="margin-top: 40px; margin-bottom: 20px; color: #6b21a8;">Remedies & Guidance</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What are astrological remedies and how effective are they?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Astrological remedies are time-tested solutions based on Vedic wisdom:</p>
+                    <ul>
+                        <li><strong>Gemstone Therapy:</strong> Wearing specific gemstones to strengthen benefic planets</li>
+                        <li><strong>Mantra Chanting:</strong> Planetary mantras for spiritual alignment</li>
+                        <li><strong>Puja Rituals:</strong> Customized rituals to appease specific deities</li>
+                        <li><strong>Fasting & Diet:</strong> Dietary adjustments based on your chart</li>
+                        <li><strong>Meditation:</strong> Specific meditation practices for balance</li>
+                        <li><strong>Donations & Charity:</strong> Strategic giving to neutralize negative influences</li>
+                    </ul>
+                    <p>Remedies work best when combined with positive action and right mindset. Our clients report 70-80% improvement when they follow recommendations consistently.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How long does it take to see results from remedies?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Remedies work on multiple timelines:</p>
+                    <ul>
+                        <li><strong>Immediate Effects:</strong> Mantras and meditation can show benefits in 2-4 weeks</li>
+                        <li><strong>Medium Term (3-6 months):</strong> Gemstones typically show results within 40 days to 3 months</li>
+                        <li><strong>Long Term (6-12 months):</strong> Pujas and rituals work gradually over months</li>
+                        <li><strong>Consistency is Key:</strong> Regular practice yields better results</li>
+                    </ul>
+                    <p>Remember, remedies support your efforts but don't replace action. Combined effort + astrological remedies = best outcomes.</p>
+                </div>
+            </div>
+
+            <!-- Confidentiality & Trust -->
+            <h2 style="margin-top: 40px; margin-bottom: 20px; color: #6b21a8;">Confidentiality & Trust</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Is my personal information kept confidential?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p><strong>Yes, 100% confidentiality guaranteed.</strong> We follow strict privacy policies:</p>
+                    <ul>
+                        <li>Your birth chart and personal data are never shared</li>
+                        <li>Consultations are completely private</li>
+                        <li>No recordings or transcripts without consent</li>
+                        <li>Secure encrypted storage of all information</li>
+                        <li>Compliant with data protection regulations</li>
+                    </ul>
+                    <p>Your privacy is our top priority. See our <a href="privacy.html">privacy policy</a> for complete details.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Why should I choose Hrimkar Astro?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Hrimkar Astro stands out for these reasons:</p>
+                    <ul>
+                        <li><strong>Expert Team:</strong> 10+ years experience, certified astrologers</li>
+                        <li><strong>Proven Results:</strong> 5000+ satisfied clients worldwide</li>
+                        <li><strong>Modern + Traditional:</strong> Combines ancient wisdom with modern convenience</li>
+                        <li><strong>Affordable Pricing:</strong> Quality consultation without breaking the bank</li>
+                        <li><strong>Flexible Services:</strong> Online, phone, video, or chat consultations</li>
+                        <li><strong>Transparent Approach:</strong> No false promises, practical guidance</li>
+                        <li><strong>Complete Support:</strong> Follow-up guidance and remedy recommendations</li>
+                    </ul>
+                    <p>Join thousands of happy clients who have transformed their lives with our guidance.</p>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div style="background: linear-gradient(135deg, #6b21a8, #9333ea); color: white; padding: 40px; border-radius: 15px; text-align: center; margin-top: 50px;">
+                <h3 style="font-size: 28px; margin-bottom: 15px;">Ready for Your Consultation?</h3>
+                <p style="font-size: 16px; margin-bottom: 25px;">Connect with our expert astrologers today and transform your life</p>
+                <a href="dashboard.html" style="display: inline-block; background: white; color: #6b21a8; padding: 15px 40px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.3s ease;">Book Your Consultation Now</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Hrimkar Astro</h3>
+                    <p>Guiding lives through authentic Vedic astrology consultation</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="testimonials.html">Testimonials</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Hrimkar Astro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleFaq(element) {
+            element.parentElement.classList.toggle('active');
+        }
+
+        // Set active state for first FAQ item
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstItem = document.querySelector('.faq-item.active');
+            if (firstItem) {
+                firstItem.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
