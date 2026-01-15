@@ -84,8 +84,14 @@ app.use(cors({
             return callback(null, true);
         }
         
-        // Check if origin is allowed
+        // Check if origin is in the whitelist
         if (uniqueOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        
+        // Allow Vercel preview URLs (*.vercel.app)
+        if (origin.match(/^https:\/\/.*\.vercel\.app$/)) {
+            console.log(`[CORS] Allowing Vercel preview URL: ${origin}`);
             return callback(null, true);
         }
         
