@@ -661,6 +661,10 @@ function initPersonalDetails() {
         if (!fullName) {
             showFieldError('fullName');
             isValid = false;
+        } else if (!/^[a-zA-Z\s'-]+$/.test(fullName)) {
+            showNotification('Name can only contain letters, spaces, hyphens, and apostrophes', 'error');
+            showFieldError('fullName');
+            isValid = false;
         }
         
         if (!email || !isValidEmail(email)) {
@@ -669,6 +673,10 @@ function initPersonalDetails() {
         }
         
         if (!phone || phone.length < 10) {
+            showFieldError('phoneNumber');
+            isValid = false;
+        } else if (!/^[\d\s-]{10,15}$/.test(phone)) {
+            showNotification('Phone number must be 10-15 characters and contain only digits, spaces, or hyphens', 'error');
             showFieldError('phoneNumber');
             isValid = false;
         }
@@ -1466,6 +1474,39 @@ function showToast(message, type = 'info') {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
+
+/* ==================== Real-time Input Validation ==================== */
+document.addEventListener('DOMContentLoaded', function() {
+    // Full name validation - only letters, spaces, hyphens, apostrophes
+    const fullNameField = document.getElementById('fullName');
+    if (fullNameField) {
+        fullNameField.addEventListener('input', function(e) {
+            const invalidChars = this.value.match(/[^a-zA-Z\s'-]/g);
+            if (invalidChars) {
+                const cursorPos = this.selectionStart;
+                this.value = this.value.replace(/[^a-zA-Z\s'-]/g, '');
+                this.setSelectionRange(cursorPos - 1, cursorPos - 1);
+                this.style.borderColor = '#ef4444';
+                setTimeout(() => { this.style.borderColor = ''; }, 1000);
+            }
+        });
+    }
+    
+    // Phone number validation - only digits, spaces, hyphens
+    const phoneField = document.getElementById('phoneNumber');
+    if (phoneField) {
+        phoneField.addEventListener('input', function(e) {
+            const invalidChars = this.value.match(/[^\d\s-]/g);
+            if (invalidChars) {
+                const cursorPos = this.selectionStart;
+                this.value = this.value.replace(/[^\d\s-]/g, '');
+                this.setSelectionRange(cursorPos - 1, cursorPos - 1);
+                this.style.borderColor = '#ef4444';
+                setTimeout(() => { this.style.borderColor = ''; }, 1000);
+            }
+        });
+    }
+});
 
 /* ==================== Calendar Add Events ==================== */
 document.getElementById('addGoogleCal')?.addEventListener('click', function() {

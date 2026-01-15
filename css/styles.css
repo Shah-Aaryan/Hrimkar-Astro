@@ -2335,6 +2335,12 @@ ul {
         transition: var(--transition-normal);
     }
     
+    .nav-menu a {
+        color: var(--text-white) !important;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+    
     .nav-menu.active {
         transform: translateY(0);
         opacity: 1;

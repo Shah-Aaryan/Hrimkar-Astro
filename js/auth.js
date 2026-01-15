@@ -42,8 +42,22 @@ async function handleRegisterWithOtp() {
         showNotification('Please fill in all fields and OTP', 'error');
         return;
     }
+    // Validate name fields (only letters, spaces, hyphens, apostrophes)
+    if (!/^[a-zA-Z\s'-]+$/.test(firstName)) {
+        showNotification('First name can only contain letters, spaces, hyphens, and apostrophes', 'error');
+        return;
+    }
+    if (!/^[a-zA-Z\s'-]+$/.test(lastName)) {
+        showNotification('Last name can only contain letters, spaces, hyphens, and apostrophes', 'error');
+        return;
+    }
     if (!validateEmail(email)) {
         showNotification('Please enter a valid email', 'error');
+        return;
+    }
+    // Validate phone number (10-15 characters, only digits, spaces, hyphens)
+    if (!/^[\d\s-]{10,15}$/.test(phone)) {
+        showNotification('Phone number must be 10-15 characters and contain only digits, spaces, or hyphens', 'error');
         return;
     }
     if (password.length < 6) {
@@ -235,8 +249,24 @@ async function handleRegister() {
         return;
     }
     
+    // Validate name fields (only letters, spaces, hyphens, apostrophes)
+    if (!/^[a-zA-Z\s'-]+$/.test(firstName)) {
+        showNotification('First name can only contain letters, spaces, hyphens, and apostrophes', 'error');
+        return;
+    }
+    if (!/^[a-zA-Z\s'-]+$/.test(lastName)) {
+        showNotification('Last name can only contain letters, spaces, hyphens, and apostrophes', 'error');
+        return;
+    }
+    
     if (!validateEmail(email)) {
         showNotification('Please enter a valid email', 'error');
+        return;
+    }
+    
+    // Validate phone number (10-15 characters, only digits, spaces, hyphens)
+    if (!/^[\d\s-]{10,15}$/.test(phone)) {
+        showNotification('Phone number must be 10-15 characters and contain only digits, spaces, or hyphens', 'error');
         return;
     }
     

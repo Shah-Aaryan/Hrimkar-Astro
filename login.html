@@ -257,20 +257,53 @@
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script>
-        // Ensure OTP input only accepts numeric digits
+        // Real-time input validation and filtering
         document.addEventListener('DOMContentLoaded', function() {
+            // OTP input - only numeric digits
             const otpInput = document.getElementById('registerOtp');
             if (otpInput) {
                 otpInput.addEventListener('input', function(e) {
-                    // Remove all non-numeric characters
                     this.value = this.value.replace(/\D/g, '');
                 });
                 otpInput.addEventListener('paste', function(e) {
-                    // Prevent paste of non-numeric content
                     e.preventDefault();
                     const pasteData = (e.clipboardData || window.clipboardData).getData('text');
                     const numericOnly = pasteData.replace(/\D/g, '').slice(0, 6);
                     this.value = numericOnly;
+                });
+            }
+            
+            // Name fields validation - only letters, spaces, hyphens, apostrophes
+            const nameFields = ['firstName', 'lastName'];
+            nameFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.addEventListener('input', function(e) {
+                        const invalidChars = this.value.match(/[^a-zA-Z\s'-]/g);
+                        if (invalidChars) {
+                            const cursorPos = this.selectionStart;
+                            this.value = this.value.replace(/[^a-zA-Z\s'-]/g, '');
+                            this.setSelectionRange(cursorPos - 1, cursorPos - 1);
+                            // Show brief warning
+                            this.style.borderColor = '#ef4444';
+                            setTimeout(() => { this.style.borderColor = ''; }, 1000);
+                        }
+                    });
+                }
+            });
+            
+            // Phone number validation - only digits, spaces, hyphens
+            const phoneField = document.getElementById('registerPhone');
+            if (phoneField) {
+                phoneField.addEventListener('input', function(e) {
+                    const invalidChars = this.value.match(/[^\d\s-]/g);
+                    if (invalidChars) {
+                        const cursorPos = this.selectionStart;
+                        this.value = this.value.replace(/[^\d\s-]/g, '');
+                        this.setSelectionRange(cursorPos - 1, cursorPos - 1);
+                        this.style.borderColor = '#ef4444';
+                        setTimeout(() => { this.style.borderColor = ''; }, 1000);
+                    }
                 });
             }
         });

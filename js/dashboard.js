@@ -15,6 +15,28 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = document.getElementById('profileEmail').value.trim();
             const phone = document.getElementById('profilePhone').value.trim();
             const whatsapp = document.getElementById('profileWhatsapp').value.trim();
+            
+            // Validate name (only letters, spaces, hyphens, apostrophes)
+            if (name && !/^[a-zA-Z\s'-]+$/.test(name)) {
+                showToast('Name can only contain letters, spaces, hyphens, and apostrophes', 'error');
+                hideLoadingOverlay();
+                return;
+            }
+            
+            // Validate phone number (10-15 characters, only digits, spaces, hyphens)
+            if (phone && !/^[\d\s-]{10,15}$/.test(phone)) {
+                showToast('Phone number must be 10-15 characters and contain only digits, spaces, or hyphens', 'error');
+                hideLoadingOverlay();
+                return;
+            }
+            
+            // Validate WhatsApp number (10-15 characters, only digits, spaces, hyphens)
+            if (whatsapp && !/^[\d\s-]{10,15}$/.test(whatsapp)) {
+                showToast('WhatsApp number must be 10-15 characters and contain only digits, spaces, or hyphens', 'error');
+                hideLoadingOverlay();
+                return;
+            }
+            
             try {
                 const res = await AuthAPI.updateDetails({ name, email, phone, whatsapp });
                 showToast('Profile updated successfully', 'success');
