@@ -150,7 +150,7 @@
                         <label>Enter OTP</label>
                         <div class="input-with-icon">
                             <i class="fas fa-key"></i>
-                            <input type="text" id="registerOtp" placeholder="Enter OTP" maxlength="6">
+                            <input type="text" id="registerOtp" placeholder="Enter 6-digit OTP" maxlength="6" pattern="[0-9]{6}" inputmode="numeric">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block btn-glow" id="registerBtn" style="display:none;" onclick="handleRegisterWithOtp()">
@@ -256,5 +256,24 @@
     <script src="js/translations.js"></script>
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
+    <script>
+        // Ensure OTP input only accepts numeric digits
+        document.addEventListener('DOMContentLoaded', function() {
+            const otpInput = document.getElementById('registerOtp');
+            if (otpInput) {
+                otpInput.addEventListener('input', function(e) {
+                    // Remove all non-numeric characters
+                    this.value = this.value.replace(/\D/g, '');
+                });
+                otpInput.addEventListener('paste', function(e) {
+                    // Prevent paste of non-numeric content
+                    e.preventDefault();
+                    const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+                    const numericOnly = pasteData.replace(/\D/g, '').slice(0, 6);
+                    this.value = numericOnly;
+                });
+            }
+        });
+    </script>
 </body>
 </html>

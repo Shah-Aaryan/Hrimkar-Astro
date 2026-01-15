@@ -50,6 +50,11 @@ async function handleRegisterWithOtp() {
         showNotification('Password must be at least 6 characters', 'error');
         return;
     }
+    // Validate OTP format
+    if (!/^\d{6}$/.test(otp)) {
+        showNotification('OTP must be exactly 6 digits', 'error');
+        return;
+    }
     if (!agreeTerms) {
         showNotification('Please agree to the Terms of Service', 'error');
         return;
