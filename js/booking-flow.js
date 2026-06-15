@@ -23,49 +23,49 @@ const services = {
         name: 'Vedic Astrology',
         description: 'Complete Kundli analysis with detailed predictions',
         icon: 'fa-scroll',
-        price: 1000,
+        price: 1100,
         duration: 30
     },
     'marriage-matching': {
         name: 'Marriage Astrology',
         description: 'Kundli Milan & compatibility analysis',
         icon: 'fa-heart',
-        price: 1000,
+        price: 1100,
         duration: 30
     },
     'career-guidance': {
         name: 'Career Astrology',
         description: 'Professional & business advice',
         icon: 'fa-briefcase',
-        price: 1000,
+        price: 1100,
         duration: 30
     },
     'health-astrology': {
         name: 'Medical/Health Astrology',
         description: 'Medical astrology analysis',
         icon: 'fa-heartbeat',
-        price: 1000,
+        price: 1100,
         duration: 30
     },
     'tarot-reading': {
         name: 'Tarot Card Reading',
         description: 'Intuitive card guidance',
         icon: 'fa-th-large',
-        price: 1000,
+        price: 1100,
         duration: 30
     },
     'numerology': {
         name: 'Numerology',
         description: 'Power of numbers analysis',
         icon: 'fa-calculator',
-        price: 1000,
+        price: 1100,
         duration: 30
     },
     'love-compatibility': {
         name: 'Love & Compatibility Guidance',
         description: 'Comprehensive relationship and compatibility guidance',
         icon: 'fa-heart',
-        price: 1000,
+        price: 1100,
         duration: 30
     }
 };

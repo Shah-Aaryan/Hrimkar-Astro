@@ -22,13 +22,13 @@ function parseLocalDate(dateString) {
 
 // Service pricing data
 const services = {
-    'birth-chart': { name: 'Vedic Astrology', price: 2500, duration: 30 },
-    'marriage-matching': { name: 'Marriage Matching', price: 1000, duration: 30 },
-    'career-guidance': { name: 'Career Guidance', price: 1500, duration: 30 },
-    'health-astrology': { name: 'Health Astrology', price: 1500, duration: 30 },
-    'tarot-reading': { name: 'Tarot Card Reading', price: 1000, duration: 30 },
-    'numerology': { name: 'Numerology', price: 1000, duration: 30 },
-    'love-compatibility': { name: 'Love & Compatibility Guidance', price: 1000, duration: 30 }
+    'birth-chart': { name: 'Vedic Astrology', price: 1100, duration: 30 },
+    'marriage-matching': { name: 'Marriage Matching', price: 1100, duration: 30 },
+    'career-guidance': { name: 'Career Guidance', price: 1100, duration: 30 },
+    'health-astrology': { name: 'Health Astrology', price: 1100, duration: 30 },
+    'tarot-reading': { name: 'Tarot Card Reading', price: 1100, duration: 30 },
+    'numerology': { name: 'Numerology', price: 1100, duration: 30 },
+    'love-compatibility': { name: 'Love & Compatibility Guidance', price: 1100, duration: 30 }
 };
 
 // Valid coupon codes
