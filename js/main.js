@@ -581,7 +581,7 @@ const API = {
             '/services': {
                 success: true,
                 data: [
-                    { id: 1, name: 'Vedic Astrology', price: 2500, duration: 30 },
+                    { id: 1, name: 'Vedic Astrology', price: 1000, duration: 30 },
                     { id: 2, name: 'Marriage Matching', price: 1000, duration: 30 },
                     { id: 3, name: 'Career Guidance', price: 1500, duration: 30 },
                     { id: 4, name: 'Health Astrology', price: 1500, duration: 30 },

@@ -23,7 +23,7 @@ const services = {
         name: 'Vedic Astrology',
         description: 'Complete Kundli analysis with detailed predictions',
         icon: 'fa-scroll',
-        price: 2500,
+        price: 1000,
         duration: 30
     },
     'marriage-matching': {
@@ -37,14 +37,14 @@ const services = {
         name: 'Career Astrology',
         description: 'Professional & business advice',
         icon: 'fa-briefcase',
-        price: 1500,
+        price: 1000,
         duration: 30
     },
     'health-astrology': {
         name: 'Medical/Health Astrology',
         description: 'Medical astrology analysis',
         icon: 'fa-heartbeat',
-        price: 1500,
+        price: 1000,
         duration: 30
     },
     'tarot-reading': {

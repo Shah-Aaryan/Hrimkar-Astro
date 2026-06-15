@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Services Data
     const servicesData = {
-        vedic: { name: 'Vedic Astrology', price: 2500, duration: 30 },
+        vedic: { name: 'Vedic Astrology', price: 1000, duration: 30 },
         marriage: { name: 'Marriage Matching', price: 1000, duration: 30 },
-        career: { name: 'Career Guidance', price: 1500, duration: 30 },
-        health: { name: 'Health Astrology', price: 1500, duration: 30 },
+        career: { name: 'Career Guidance', price: 1000, duration: 30 },
+        health: { name: 'Health Astrology', price: 1000, duration: 30 },
         tarot: { name: 'Tarot Card Reading', price: 1000, duration: 30 },
         numerology: { name: 'Numerology', price: 1000, duration: 30 },
         'love-compatibility': { name: 'Love & Compatibility Guidance', price: 1000, duration: 30 }

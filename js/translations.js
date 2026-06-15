@@ -131,7 +131,7 @@ const translations = {
         about_subtitle: "Your Cosmic Guide",
         about_tagline: "Cosmic Energy That Heals, Guides, and Protects",
         about_heading: "Guiding you through the stars to smarter life choices",
-        about_intro: "I am Kavita Shah, an experienced Occult Guru dedicated to helping individuals overcome life's challenges through the power of karma and cosmic wisdom.",
+        about_intro: "I am Kavitaa Shah, an experienced Occult Guru dedicated to helping individuals overcome life's challenges through the power of karma and cosmic wisdom.",
         about_para1: "For more than a decade, I have been practicing Occult Sciences, with deep expertise in Vedic Astrology and Krishnamurthy Paddhati (KP System), known for its accuracy and practical predictions.",
         about_para2: "Alongside astrology, I offer Numerology guidance, including mobile number selection, to help align personal energies with success, peace, and clarity. My guidance is honest, ethical, and focused on real-life solutions.",
         about_para3: "Through the wisdom of karma, I help transform difficult times into simple, practical solutions. From hard times to clear solutions – that's my promise to you.",
@@ -206,7 +206,7 @@ const translations = {
         
         // About CTA
         about_cta_title: "Ready to Transform Your Life Path?",
-        about_cta_subtitle: "Book your personalized consultation with Kavita Shah today. From hard times to clear solutions.",
+        about_cta_subtitle: "Book your personalized consultation with kavitaa Shah today. From hard times to clear solutions.",
         
         // Cosmic Card Section (index.html)
         cosmic_guidance: "Your Cosmic Guidance",
