@@ -1500,7 +1500,7 @@ class AdminAPI {
                 scheduledDate: new Date(now.getTime() + 86400000),
                 scheduledTime: '10:00 AM',
                 status: 'confirmed',
-                payment: { total: 1000, status: 'completed' },
+                payment: { total: 1100, status: 'completed' },
                 createdAt: new Date()
             },
             {
@@ -1512,7 +1512,7 @@ class AdminAPI {
                 scheduledDate: new Date(now.getTime() + 172800000),
                 scheduledTime: '12:00 PM',
                 status: 'pending',
-                payment: { total: 1000, status: 'pending' },
+                payment: { total: 1100, status: 'pending' },
                 createdAt: new Date(now.getTime() - 3600000)
             },
             {
@@ -1524,7 +1524,7 @@ class AdminAPI {
                 scheduledDate: now,
                 scheduledTime: '3:00 PM',
                 status: 'confirmed',
-                payment: { total: 1000, status: 'completed' },
+                payment: { total: 1100, status: 'completed' },
                 createdAt: new Date(now.getTime() - 86400000)
             },
             {
@@ -1536,7 +1536,7 @@ class AdminAPI {
                 scheduledDate: now,
                 scheduledTime: '5:30 PM',
                 status: 'pending',
-                payment: { total: 1000, status: 'pending' },
+                payment: { total: 1100, status: 'pending' },
                 createdAt: new Date(now.getTime() - 7200000)
             }
         ];
