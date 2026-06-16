@@ -17,7 +17,7 @@ const BookingSchema = new mongoose.Schema({
         id: {
             type: String,
             required: [true, 'Service ID is required'],
-            enum: ['birth-chart', 'marriage-matching', 'career-guidance', 'health-astrology', 'tarot-reading', 'numerology']
+            enum: ['birth-chart', 'marriage-matching', 'career-guidance', 'health-astrology', 'tarot-reading', 'numerology', 'love-compatibility']
         },
         name: {
             type: String,
@@ -36,7 +36,7 @@ const BookingSchema = new mongoose.Schema({
     consultationMode: {
         type: String,
         required: [true, 'Consultation mode is required'],
-        enum: ['phone', 'chat']
+        enum: ['phone', 'chat', 'video']
     },
     // Scheduling
     scheduledDate: {
